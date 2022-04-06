@@ -1,4 +1,4 @@
-## Dashbooard Wheel The World
+## Dashboard Wheel The World
 
 This repository contains Wheel The World's Dashboard project source code.
 
