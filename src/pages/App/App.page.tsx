@@ -1,19 +1,15 @@
 import * as React from "react"
 import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
+  Container,
+  Flex,
 } from "@chakra-ui/react"
 
 export const App = () => (
-  <ChakraProvider theme={theme}>
-    
-  </ChakraProvider>
+  <Container maxWidth="container.xxl" bg='#f8f9d'>
+		<Flex h="100vh" w='full' p='7% 20% 5% 15%' direction={{ base: "column", md: "row" }} >
+      {/*Aquí se deben probar todos los componentes.*/}
+		</Flex>
+	</Container>
 )
 
 export default App;
