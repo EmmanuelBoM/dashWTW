@@ -22,6 +22,17 @@ import { FaDoorOpen, FaUtensils } from 'react-icons/fa'
 
 import { SignInForm } from '../../components';
 
+import {
+  ComposableMap,
+  Geographies,
+  Geography,
+  Sphere,
+  Graticule,
+  ZoomableGroup
+} from "react-simple-maps";
+
+import { Chart } from "react-google-charts";
+
 // This var contains the Username
 let username:string = 'Arturo Gaona'
 
@@ -36,6 +47,39 @@ let leastMappedAreasIcons:string[] = ["FaDoorOpen", "FaUtensils"]
 
 // Var for avgTimeMapCompletion
 let avgCompletionTimePerMap = 6
+
+// Testing maps, var containing data
+const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
+
+// Testing charts, vars containing data
+const data = [
+  [
+    "Element",
+    "Published Listings",
+    { role: "style" },
+    {
+      sourceColumn: 0,
+      role: "annotation",
+      type: "string",
+      calc: "stringify",
+    },
+  ],
+  ["US", 18, "#FF7562", 18],
+  ["MX", 12, "#FF7562", 12],
+  ["PE", 8, "#FF7562", 8],
+  ["CN", 8, "color: #FF7562", 8],
+  ["RU", 6, "color: #FF7562", 6],
+];
+
+const options = {
+  title: "Listing Highlights",
+  width: 350,
+  height: 500,
+  fontName: "Lato",
+  fontWeight: '500',
+  bar: { groupWidth: "95%" },
+  legend: { position: "none" },
+};
 
 export const MapsOverview = () => (
   <Container maxWidth="container.xxl" >
@@ -80,8 +124,28 @@ export const MapsOverview = () => (
           <Heading fontSize='xl'>Worldwide Insights</Heading>
           <Text color='black.400' marginBottom='1.5vw'>Zoom and Pan   |    This Week</Text>
           <HStack justifyContent='space-evenly'>
-            <Box borderWidth='5px' borderRadius='lg' borderColor='black.main' w='40vw' h='25vw' textAlign='center'/>
-            <Box borderWidth='5px' borderRadius='lg' borderColor='black.main' w='20vw' h='25vw' textAlign='center'/>
+            <Wrap borderRadius='lg'  w='40vw' h='auto' textAlign='center'>
+            <ComposableMap>
+              <ZoomableGroup zoom={1}>
+                <Geographies geography={geoUrl}>
+                  {({ geographies }) =>
+                    geographies.map(geo => (
+                      <Geography key={geo.rsmKey} geography={geo} />
+                    ))
+                  }
+                </Geographies>
+              </ZoomableGroup>
+            </ComposableMap>
+            </Wrap>
+            <Box w='17vw' h='auto' textAlign='center'>
+            <Chart
+              chartType="BarChart"
+              width="100px"
+              height="500px"
+              data={data}
+              options={options}
+            />
+            </Box>
           </HStack>
         </Box>
 
