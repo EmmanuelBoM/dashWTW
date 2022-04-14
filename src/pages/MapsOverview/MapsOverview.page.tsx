@@ -18,9 +18,11 @@ import {
   createIcon
 } from "@chakra-ui/react"
 
-import { FaDoorOpen, FaUtensils } from 'react-icons/fa'
+import  MenuComponent  from '../../components/Menu/menu.component';
 
-import { SignInForm } from '../../components';
+import Table from '../../components/Table/table.component';
+
+import { FaDoorOpen, FaUtensils } from 'react-icons/fa'
 
 import {
   ComposableMap,
@@ -76,14 +78,32 @@ const options = {
   width: 350,
   height: 500,
   fontName: "Lato",
-  fontWeight: '500',
   bar: { groupWidth: "95%" },
   legend: { position: "none" },
 };
 
+const dataLineChart = [
+  ["Week", "Maps"],
+  ["1 '22", 45],
+  ["2 '22", 20],
+  ["3 '22", 70],
+  ["4 '22", 50],
+  ["5 '22", 20],
+  ["6 '22", 35],
+  ["7 '22", 60],
+  ["8 '22", 50],
+];
+
+const optionsLineChart = {
+  curveType: "function",
+  fontName: "Lato",
+  legend: { position: "bottom" },
+};
+
 export const MapsOverview = () => (
   <Container maxWidth="container.xxl" >
-		<Flex h="full" w='full' p='7% 20% 5% 15%' direction={{ base: "column", md: "row" }}>
+		<MenuComponent window={"ams"}/>
+    <Flex h="full" w='full' p='7% 20% 5% 15%' marginLeft="3vw" direction={{ base: "column", md: "row" }}>
       <VStack spacing={4}>
         <HStack w='70vw' justifyContent='space-between'>
           <VStack alignItems='flex-start'>
@@ -152,16 +172,26 @@ export const MapsOverview = () => (
         <HStack w='full' justifyContent='space-between'>
           <Box p={5} shadow='md' borderWidth='1px'  w='40vw' borderRadius='lg'>
             <Heading fontSize='xl'>All Maps</Heading>
-            <Text color='black.400' marginBottom='1.5vw'>This Week</Text>
+            <Text color='black.400' marginBottom='1.5vw'>This Year</Text>
             <HStack justifyContent='space-evenly'>
-              <Box borderWidth='5px' borderRadius='lg' borderColor='black.main' w='full' h='25vw' textAlign='center'/>
+              <Box borderWidth='5px' borderRadius='lg' borderColor='black.main' w='full' h='25vw' textAlign='center'>
+                <Table></Table>
+              </Box>
             </HStack>
           </Box>
           <Box p={5} shadow='md' borderWidth='1px'  w='29vw' borderRadius='lg'>
             <Heading fontSize='xl'>History: Completed AMS Maps</Heading>
-            <Text color='black.400' marginBottom='1.5vw'>This Week</Text>
+            <Text color='black.400' marginBottom='1.5vw'>This Year</Text>
             <HStack justifyContent='space-evenly'>
-              <Box borderWidth='5px' borderRadius='lg' borderColor='black.main' w='full' h='25vw' textAlign='center'/>
+              <Box w='full' h='25vw' textAlign='center'>
+              <Chart
+                chartType="LineChart"
+                width="100%"
+                height="400px"
+                data={dataLineChart}
+                options={optionsLineChart}
+              />
+              </Box>
             </HStack>
           </Box>
         </HStack>
