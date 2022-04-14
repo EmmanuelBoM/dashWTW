@@ -103,7 +103,7 @@ const optionsLineChart = {
 export const MapsOverview = () => (
   <Container maxWidth="container.xxl" >
 		<MenuComponent window={"ams"}/>
-    <Flex h="full" w='full' p='7% 20% 5% 15%' marginLeft="3vw" direction={{ base: "column", md: "row" }}>
+    <Flex h="full" p='7% 20% 5% 15%' marginLeft="3vw" direction={{ base: "column", md: "row" }}>
       <VStack spacing={4}>
         <HStack w='70vw' justifyContent='space-between'>
           <VStack alignItems='flex-start'>
