@@ -20,6 +20,8 @@ import {
 
 import  MenuComponent  from '../../components/Menu/menu.component';
 
+import CalendarDatePicker from '../../components/CalendarDatePicker/CalendarDatePicker.component';
+
 import Table from '../../components/Table/table.component';
 
 import { FaDoorOpen, FaUtensils } from 'react-icons/fa'
@@ -114,11 +116,7 @@ export const MapsOverview = () => (
           </VStack>
           <VStack alignItems='flex-start' w='25vw'>
             <Text color='black.600'>View statistics by:</Text>
-            <Select placeholder='Pick a date' color='black.600'>
-              <option value='option1'>May 25th 2022 - June 31st 2022</option>
-              <option value='option2'>Option 2</option>
-              <option value='option3'>Option 3</option>
-            </Select>
+            <CalendarDatePicker/>
           </VStack>
         </HStack>
 
