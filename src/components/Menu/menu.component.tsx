@@ -65,7 +65,7 @@ function MenuComponent(props: IPropTypes): JSX.Element {
   }
    
   return(
-    <Box bg='#000000' display="inline-block" position="fixed">
+    <Box bg='#000000' display="inline-block" position="fixed" left={0}>
       <Menu >
           <Image src={Logo} />
           <Box h={10}></Box>
