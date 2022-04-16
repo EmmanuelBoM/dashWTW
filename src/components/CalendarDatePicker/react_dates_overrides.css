@@ -145,3 +145,24 @@
     color: white;
     font-weight: 300;
 }
+
+.buttonsDatePresets {
+    color: #2F6FE4;
+    font-size: 1em;
+    font-weight: 600;
+    border-color: #2F6FE4;
+    border-width: 3px;
+    border-radius: 21px;
+    padding: 5% 0% 5% 0%;
+    width: 7vw;
+}
+
+.buttonsDatePresets:hover {
+    background-color: #2F6FE4;
+    color: white;
+}
+
+#clicked {
+    background-color: #2F6FE4;
+    color: white;
+}
