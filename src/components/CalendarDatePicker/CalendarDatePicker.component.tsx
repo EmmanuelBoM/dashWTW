@@ -1,18 +1,206 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { useState } from "react";
 import {
   DateRangePicker,
   isInclusivelyBeforeDay
 } from "react-dates";
+
 import moment from "moment";
 
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
+import "./react_dates_overrides.css";
+import { Grid, GridItem, Center } from "@chakra-ui/react";
 
 function CalendarDatePicker() {
-  const [startDate, setStartDate] = React.useState<any>(null);
-  const [endDate, setEndDate] = React.useState<any>(null);
-  const [focusedInput, setFocusedInput] = React.useState<any>(null);
+
+const [ startDate, setStartDate ] = useState<any>(null);
+const [ endDate, setEndDate ] = useState<any>(null);
+const [ focusedInput, setFocusedInput ] = useState<any>(null);
+
+const [ thisWeekController, setThisWeekController ] = useState<string|undefined>(undefined);
+const [ lastWeekController, setLastWeekController ] = useState<string|undefined>(undefined);
+
+const [ thisMonthController, setThisMonthController ] = useState<string|undefined>(undefined);
+const [ lastMonthController, setLastMonthController ] = useState<string|undefined>(undefined);
+
+const [ thisTrimesterController, setThisTrimesterController ] = useState<string|undefined>(undefined);
+const [ lastTrimesterController, setLastTrimesterController ] = useState<string|undefined>(undefined);
+
+const [ thisYearController, setThisYearController ] = useState<string|undefined>(undefined);
+const [ lastYearController, setLastYearController ] = useState<string|undefined>(undefined);
+
+
+function handleDateChanges (event:any):void{
+  event.preventDefault();
+  if(event.target.name === 'This week') {
+    setStartDate(moment().startOf("week"))
+    setEndDate(moment())
+    setThisWeekController('clicked')
+    setLastWeekController(undefined)
+    setThisMonthController(undefined)
+    setLastMonthController(undefined)
+    setThisTrimesterController(undefined)
+    setLastTrimesterController(undefined)
+    setThisYearController(undefined)
+    setLastYearController(undefined)
+  }
+  else if(event.target.name === 'Last week') {
+    setStartDate(moment().subtract(1, "weeks").startOf("week"))
+    setEndDate(moment().subtract(1, "weeks").endOf("week"))
+    setThisWeekController(undefined)
+    setLastWeekController('clicked')
+    setThisMonthController(undefined)
+    setLastMonthController(undefined)
+    setThisTrimesterController(undefined)
+    setLastTrimesterController(undefined)
+    setThisYearController(undefined)
+    setLastYearController(undefined)
+  }
+
+  else if(event.target.name === 'This month') {
+    setStartDate(moment().startOf("month"))
+    setEndDate(moment())
+    setThisWeekController(undefined)
+    setLastWeekController(undefined)
+    setThisMonthController('clicked')
+    setLastMonthController(undefined)
+    setThisTrimesterController(undefined)
+    setLastTrimesterController(undefined)
+    setThisYearController(undefined)
+    setLastYearController(undefined)
+  }
+  else if(event.target.name === 'Last month') {
+    setStartDate(moment().subtract(1, "months").startOf("month"))
+    setEndDate(moment().subtract(1, "months").endOf("month"))
+    setThisWeekController(undefined)
+    setLastWeekController(undefined)
+    setThisMonthController(undefined)
+    setLastMonthController('clicked')
+    setThisTrimesterController(undefined)
+    setLastTrimesterController(undefined)
+    setThisYearController(undefined)
+    setLastYearController(undefined)
+  }
+
+  else if(event.target.name === 'This trimester') {
+    setStartDate(moment().subtract(2, "months").startOf("month"))
+    setEndDate(moment())
+    setThisWeekController(undefined)
+    setLastWeekController(undefined)
+    setThisMonthController(undefined)
+    setLastMonthController(undefined)
+    setThisTrimesterController('clicked')
+    setLastTrimesterController(undefined)
+    setThisYearController(undefined)
+    setLastYearController(undefined)
+  }
+  else if(event.target.name === 'Last trimester') {
+    setStartDate(moment().subtract(6, "months").startOf("month"))
+    setEndDate(moment().subtract(3, "months").endOf("month"))
+    setThisWeekController(undefined)
+    setLastWeekController(undefined)
+    setThisMonthController(undefined)
+    setLastMonthController(undefined)
+    setThisTrimesterController(undefined)
+    setLastTrimesterController('clicked')
+    setThisYearController(undefined)
+    setLastYearController(undefined)
+  }
+
+  else if(event.target.name === 'This year') {
+    setStartDate(moment().startOf("year"))
+    setEndDate(moment())
+    setThisWeekController(undefined)
+    setLastWeekController(undefined)
+    setThisMonthController(undefined)
+    setLastMonthController(undefined)
+    setThisTrimesterController(undefined)
+    setLastTrimesterController(undefined)
+    setThisYearController('clicked')
+    setLastYearController(undefined)
+  }
+  else if(event.target.name === 'Last year') {
+    setStartDate(moment().subtract(1, "years").startOf("year"))
+    setEndDate(moment().subtract(1, "years").endOf("year"))
+    setThisWeekController(undefined)
+    setLastWeekController(undefined)
+    setThisMonthController(undefined)
+    setLastMonthController(undefined)
+    setThisTrimesterController(undefined)
+    setLastTrimesterController(undefined)
+    setThisYearController(undefined)
+    setLastYearController('clicked')
+  }
+}
+
+function handleCloseCalendar (event:any):void{
+  setThisWeekController(undefined)
+  setLastWeekController(undefined)
+  setThisMonthController(undefined)
+  setLastMonthController(undefined)
+  setThisTrimesterController(undefined)
+  setLastTrimesterController(undefined)
+  setThisYearController(undefined)
+  setLastYearController(undefined)
+}
+
+function renderDatePresets() {
+  return (
+    <Grid templateRows='repeat(2, 1fr)'
+          templateColumns='repeat(4, 1fr)'
+          gap={4}
+          p="1.5vw"
+    >
+      <GridItem>
+        <Center>
+          <button className="buttonsDatePresets" id={thisWeekController} name="This week" onClick={handleDateChanges}>This week</button>
+        </Center>
+      </GridItem>
+
+      <GridItem>
+        <Center>
+          <button className="buttonsDatePresets" id={thisMonthController} name="This month" onClick={handleDateChanges}>This month</button>
+          </Center>
+      </GridItem>
+
+      <GridItem>
+        <Center>
+          <button className="buttonsDatePresets" id={thisTrimesterController} name="This trimester" onClick={handleDateChanges}>This trimester</button>
+          </Center>
+      </GridItem>
+
+      <GridItem>
+        <Center>
+          <button className="buttonsDatePresets" id={thisYearController} name="This year" onClick={handleDateChanges}>This year</button>
+          </Center>
+      </GridItem>
+
+      <GridItem>
+        <Center>
+          <button className="buttonsDatePresets" id={lastWeekController} name="Last week" onClick={handleDateChanges}>Last week</button>
+          </Center>
+      </GridItem>
+
+      <GridItem>
+        <Center>
+          <button className="buttonsDatePresets" id={lastMonthController} name="Last month" onClick={handleDateChanges}>Last month</button>
+          </Center>
+      </GridItem>
+
+      <GridItem>
+        <Center>
+          <button className="buttonsDatePresets" id={lastTrimesterController} name="Last trimester" onClick={handleDateChanges}>Last trimester</button>
+          </Center>
+      </GridItem>
+
+      <GridItem>
+        <Center>
+          <button className="buttonsDatePresets" id={lastYearController} name="Last year" onClick={handleDateChanges}>Last year</button>
+          </Center>
+      </GridItem>
+    </Grid>
+  );
+}
 
   return (
     <div className="App">
@@ -30,6 +218,14 @@ function CalendarDatePicker() {
         isOutsideRange={day => !isInclusivelyBeforeDay(day, moment())}
         initialVisibleMonth={() => moment().subtract(1, "month")}
         orientation={"horizontal"}
+        monthFormat="MMMM YYYY"
+        showClearDates={true}
+        displayFormat="MMMM DD YYYY"
+        keepOpenOnDateSelect= {true}
+        reopenPickerOnClearDates= {false}
+        readOnly={true}
+        renderCalendarInfo={renderDatePresets}
+        onClose={handleCloseCalendar}
       />
     </div>
   );
