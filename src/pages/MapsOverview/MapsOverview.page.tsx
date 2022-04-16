@@ -114,7 +114,7 @@ export const MapsOverview = () => (
             </Box>
             <Heading size="xl">AMS Maps Overview</Heading>
           </VStack>
-          <VStack alignItems='flex-start' w='25vw'>
+          <VStack alignItems='flex-start' w='33vw'>
             <Text color='black.600'>View statistics by:</Text>
             <CalendarDatePicker/>
           </VStack>
