@@ -27,10 +27,10 @@ function MapProgressBar(props: IPropTypes): JSX.Element {
 	}
 
 	return (
-		<HStack w="80%" borderRadius="full" background="black.300" h={props.showProgress? "2.5rem" : "1.5rem"} justifyContent="left">
+		<HStack w="80%" borderRadius="full" position='relative'background="black.300" h={props.showProgress? "2.5rem" : "1.5rem"} justifyContent="left">
 			<Box w={`${props.progress}%`} borderRadius="full" background="#FFF962" h={props.showProgress? "2.5rem" : "1.5rem"} >
 			</Box>
-			{props.showProgress ? <Text position="absolute" textAlign="center" 	fontWeight="black">{`${props.progress}%`}</Text> : null }
+			{props.showProgress ? <Text textAlign="center" position='absolute' width='100%' fontWeight="black">{`${props.progress}%`}</Text> : null }
 		</HStack>
 	)
 }
