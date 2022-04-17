@@ -1,10 +1,10 @@
 /*This stylesheet will override the styles provided by default in the react-dates library*/
 
- .DateRangePickerInput{
-     background-color: transparent;
- }
+.DateRangePickerInput{
+    background-color: transparent;
+}
 
- .DateInput_input {
+.DateInput_input {
     background-color: transparent;
     border-color: transparent;
     border-left: 0;
