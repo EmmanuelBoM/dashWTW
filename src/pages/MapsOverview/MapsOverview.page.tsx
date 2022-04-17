@@ -1,31 +1,34 @@
-import * as React from "react"
+import React from "react";
+
+// Imports from d3-fetch y d3-scale
+import { csv } from "d3-fetch";
+import { scaleLinear } from "d3-scale";
+
+// Imports from Chakra UI
 import {
   Container,
   Flex,
-  Image,
   Heading,
   Box,
   Text,
-  AspectRatio,
   Wrap,
   VStack,
   HStack,
-  Select,
   Grid,
   GridItem,
   StackDivider,
   Icon,
-  createIcon
 } from "@chakra-ui/react"
 
-import  MenuComponent  from '../../components/Menu/menu.component';
-
+// Imports of custom components
+import MenuComponent from '../../components/Menu/menu.component';
 import CalendarDatePicker from '../../components/CalendarDatePicker/CalendarDatePicker.component';
-
 import Table from '../../components/Table/table.component';
 
+// Imports of icons from React Icons (Font Awesome)
 import { FaDoorOpen, FaUtensils } from 'react-icons/fa'
 
+// Imports of Map Items from React Simple Maps
 import {
   ComposableMap,
   Geographies,
@@ -35,27 +38,37 @@ import {
   ZoomableGroup
 } from "react-simple-maps";
 
+// Imports of charts from React Google Charts
 import { Chart } from "react-google-charts";
 
-// This var contains the Username
+// VARS-------------------------------------------------------------
+
+// View
+let window:string = "ams"
+
+// Username
 let username:string = 'Arturo Gaona'
 
-// Vars for submitted and inProgress maps
+// Submitted and inProgress maps
 let submittedMaps = 16
 let inProgressMaps = 11
 
-// Vars to map the least mapped areas and least answered questions
+// Arrays of least mapped areas and least answered questions
 let leastAnsweredQuestions:string[] = ["Which type is the room?", "What is the maximum occupancy (adults/children) of this room?"]
 let leastMappedAreas:string[] = ["Building Entrance", "Food Service Area"]
 let leastMappedAreasIcons:string[] = ["FaDoorOpen", "FaUtensils"]
 
-// Var for avgTimeMapCompletion
+// AvgTimeMapCompletion
 let avgCompletionTimePerMap = 6
 
-// Testing maps, var containing data
+// Data of map
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
+const colours:any = ["#ffedea", "#ff5233"]
+const colorScale = scaleLinear()
+  .domain([0.29, 0.68])
+  .range(colours);
 
-// Testing charts, vars containing data
+// Data of bar chart
 const data = [
   [
     "Element",
@@ -75,6 +88,7 @@ const data = [
   ["RU", 6, "color: #FF7562", 6],
 ];
 
+// Options of bar chart
 const options = {
   title: "Listing Highlights",
   width: 350,
@@ -84,6 +98,7 @@ const options = {
   legend: { position: "none" },
 };
 
+// Data of line chart
 const dataLineChart = [
   ["Week", "Maps"],
   ["1 '22", 45],
@@ -96,6 +111,7 @@ const dataLineChart = [
   ["8 '22", 50],
 ];
 
+// Options of line chart
 const optionsLineChart = {
   curveType: "function",
   fontName: "Lato",
@@ -104,84 +120,158 @@ const optionsLineChart = {
 
 export const MapsOverview = () => (
   <Container maxWidth="container.xxl" >
-		<MenuComponent window={"ams"}/>
-    <Flex h="full" p='7% 20% 5% 15%' marginLeft="3vw" direction={{ base: "column", md: "row" }}>
+		<MenuComponent window={window}/>
+    <Flex h="full" 
+          p='7% 20% 5% 15%' 
+          marginLeft="3vw" 
+          direction={{ base: "column", md: "row" }}>
       <VStack spacing={4}>
-        <HStack w='70vw' justifyContent='space-between'>
+        <HStack w='70vw' 
+                justifyContent='space-between'>
           <VStack alignItems='flex-start'>
             <Box>
-              <Heading fontSize='1.5em' color='blue.600'>Welcome, {username}</Heading>
+              <Heading fontSize='1.5em' 
+                       color='blue.600'>Welcome, {username}
+              </Heading>
             </Box>
             <Heading size="xl">AMS Maps Overview</Heading>
           </VStack>
-          <VStack alignItems='flex-start' w='33vw'>
-            <Text color='black.600'>View statistics by:</Text>
+          <VStack alignItems='flex-start' 
+                  w='33vw'>
+            <Text color='black.600'>View statistics by:
+            </Text>
             <CalendarDatePicker/>
           </VStack>
         </HStack>
 
-        <Box p={5} shadow='md' borderWidth='1px'  w='full' borderRadius='lg'>
+        <Box p={5} 
+             shadow='md' 
+             w='full' 
+             borderWidth='1px' 
+             borderColor='black.200' 
+             borderRadius='lg'>
           <Heading fontSize='xl'>Weekly Summary</Heading>
           <HStack justifyContent='space-evenly'>
             <VStack w='8vw'>
               <Text><span><b>Submitted</b></span> Maps</Text>
-              <Box borderWidth='5px' borderRadius='lg' borderColor='blue.main' w='7vw' h='7vw' textAlign='center'>
-                <Text fontSize='2em' fontWeight='bold' marginTop='25%'>{submittedMaps}</Text>
+              <Box borderWidth='5px' 
+                   borderRadius='lg' 
+                   borderColor='blue.main' 
+                   w='7vw' 
+                   h='7vw' 
+                   textAlign='center'>
+                <Text fontSize='2em' 
+                      fontWeight='bold' 
+                      marginTop='25%'>{submittedMaps}
+                </Text>
               </Box>
             </VStack>
             <VStack w='8vw'>
               <Text><span><b>In Progress</b></span> Maps</Text>
-              <Box borderWidth='5px' borderRadius='lg' borderColor='black.main' w='7vw' h='7vw' textAlign='center'>
-                <Text fontSize='2em' fontWeight='bold' marginTop='25%'>{inProgressMaps}</Text>
+              <Box borderWidth='5px' 
+                   borderRadius='lg' 
+                   borderColor='black.main' 
+                   w='7vw' 
+                   h='7vw' 
+                   textAlign='center'>
+                <Text fontSize='2em' 
+                      fontWeight='bold' 
+                      marginTop='25%'>{inProgressMaps}
+                </Text>
               </Box>
             </VStack>
           </HStack>
         </Box>
 
-        <Box p={5} shadow='md' borderWidth='1px'  w='full' borderRadius='lg'>
+        <Box p={5} 
+             shadow='md' 
+             borderWidth='1px'  
+             w='full' 
+             borderRadius='lg' 
+             borderColor='black.200'>
           <Heading fontSize='xl'>Worldwide Insights</Heading>
-          <Text color='black.400' marginBottom='1.5vw'>Zoom and Pan   |    This Week</Text>
+          <Text color='black.400' 
+                marginBottom='1.5vw'>Zoom and Pan   |    This Week
+          </Text>
           <HStack justifyContent='space-evenly'>
-            <Wrap borderRadius='lg'  w='40vw' h='auto' textAlign='center'>
-            <ComposableMap>
-              <ZoomableGroup zoom={1}>
-                <Geographies geography={geoUrl}>
-                  {({ geographies }) =>
-                    geographies.map(geo => (
-                      <Geography key={geo.rsmKey} geography={geo} />
-                    ))
-                  }
-                </Geographies>
-              </ZoomableGroup>
-            </ComposableMap>
+            <Wrap borderRadius='lg'  
+                  w='40vw' 
+                  h='auto' 
+                  textAlign='center'>
+              <ComposableMap projectionConfig={{rotate: [-10, 0, 0], scale: 147}}>
+                <ZoomableGroup zoom={1}>
+                  <Sphere id='1' 
+                          fill='transparent' 
+                          stroke="#E4E5E6" 
+                          strokeWidth={0.5}/>
+                  <Graticule stroke="#E4E5E6" 
+                            strokeWidth={0.5} />
+                    <Geographies geography={geoUrl}>
+                      {({ geographies }) =>
+                        geographies.map((geo, idx:number) => {
+                          const d = data.find((s) => true);
+                          console.log(colorScale(1))
+                          return(
+                          <Geography key={geo.rsmKey} geography={geo} fill={"#FF7562"}
+                          />
+                          )
+                        })
+                      }
+                    </Geographies>
+                </ZoomableGroup>
+              </ComposableMap>
             </Wrap>
-            <Box w='17vw' h='auto' textAlign='center'>
-            <Chart
-              chartType="BarChart"
-              width="100px"
-              height="500px"
-              data={data}
-              options={options}
-            />
+            <Box w='17vw' 
+                 h='auto' 
+                 textAlign='center'>
+              <Chart
+                chartType="BarChart"
+                width="100px"
+                height="500px"
+                data={data}
+                options={options}
+              />
             </Box>
           </HStack>
         </Box>
 
-        <HStack w='full' justifyContent='space-between'>
-          <Box p={5} shadow='md' borderWidth='1px'  w='40vw' borderRadius='lg'>
+        <HStack w='full' 
+                justifyContent='space-between'>
+          <Box p={5} 
+               shadow='md' 
+               borderWidth='1px'  
+               w='40vw' 
+               borderRadius='lg' 
+               borderColor='black.200'>
             <Heading fontSize='xl'>All Maps</Heading>
-            <Text color='black.400' marginBottom='1.5vw'>This Year</Text>
+            <Text color='black.400' 
+                  marginBottom='1.5vw'>This Year
+            </Text>
             <HStack justifyContent='space-evenly'>
-              <Box borderWidth='5px' borderRadius='lg' borderColor='black.main' w='full' h='25vw' textAlign='center'>
+              <Box borderWidth='5px' 
+                   borderRadius='lg' 
+                   borderColor='black.main' 
+                   w='full' 
+                   h='25vw' 
+                   textAlign='center'>
                 <Table></Table>
               </Box>
             </HStack>
           </Box>
-          <Box p={5} shadow='md' borderWidth='1px'  w='29vw' borderRadius='lg'>
+          <Box p={5} 
+               shadow='md' 
+               borderWidth='1px'  
+               w='29vw' 
+               borderRadius='lg' 
+               borderColor='black.200'>
             <Heading fontSize='xl'>History: Completed AMS Maps</Heading>
-            <Text color='black.400' marginBottom='1.5vw'>This Year</Text>
+            <Text color='black.400' 
+                  marginBottom='1.5vw'>This Year
+            </Text>
             <HStack justifyContent='space-evenly'>
-              <Box w='full' h='25vw' textAlign='center'>
+              <Box w='full' 
+                   h='25vw' 
+                   textAlign='center'>
               <Chart
                 chartType="LineChart"
                 width="100%"
@@ -195,21 +285,58 @@ export const MapsOverview = () => (
         </HStack>
 
         <HStack w='full'>
-          <Grid column={3} columnGap={3} rowGap={3} w="full" h='3vw' marginTop='3vw' color='black.main'>
-            <GridItem colSpan={2} bg='blue.main' h='4px' marginTop='0.7vw'>
-              <HStack width='full' height='0.9em' borderWidth='1px' borderColor='transparent' borderBottomColor='white'></HStack>
+          <Grid column={3} 
+                columnGap={3} 
+                rowGap={3} 
+                w="full" 
+                h='3vw' 
+                marginTop='3vw' 
+                color='black.main'>
+            <GridItem colSpan={2} 
+                      bg='blue.main' 
+                      h='4px' 
+                      marginTop='0.7vw'>
+              <HStack width='full' 
+                      height='0.9em' 
+                      borderWidth='1px' 
+                      borderColor='transparent' 
+                      borderBottomColor='white'>
+              </HStack>
             </GridItem>
-            <GridItem colSpan={1} textAlign='center' paddingTop={0}> <Heading fontSize='xl'>All Time Statistics </Heading></GridItem>
-            <GridItem colStart={4} colEnd={6} bg='blue.main' h='4px' marginTop='0.7vw'>
-              <HStack width='full' height='0.9em' borderWidth='1px' borderColor='transparent' borderBottomColor='white'></HStack>
+            <GridItem colSpan={1} 
+                      textAlign='center' 
+                      paddingTop={0}> 
+              <Heading fontSize='xl'>All Time Statistics</Heading>
+            </GridItem>
+            <GridItem colStart={4} 
+                      colEnd={6} 
+                      bg='blue.main' 
+                      h='4px' 
+                      marginTop='0.7vw'>
+              <HStack width='full' 
+                      height='0.9em' 
+                      borderWidth='1px' 
+                      borderColor='transparent' 
+                      borderBottomColor='white'>
+              </HStack>
             </GridItem>
           </Grid>
         </HStack>
         
-        <HStack spacing={4} textAlign='center' marginBottom='6vw'>
-          <VStack divider={<StackDivider borderColor='black.200' />}
-                  p={5} shadow='md' borderWidth='1px'  w='22vw' borderRadius='lg'>
-            <Heading fontSize='xl' color='blue.main' fontWeight='bold'>Least Answered Questions</Heading>
+        <HStack spacing={4} 
+                textAlign='center' 
+                marginBottom='6vw'>
+          <VStack divider={<StackDivider borderColor='black.200'/>}
+                  p={5} 
+                  shadow='md' 
+                  borderWidth='1px'  
+                  w='22vw' 
+                  borderRadius='lg' 
+                  borderColor='black.200'>
+            <Heading fontSize='xl' 
+                     color='blue.main' 
+                     fontWeight='bold'>Least Answered Questions
+            </Heading>
             {leastAnsweredQuestions.map((answer:string) => (
               <Box color='black.800'>{answer}</Box>
               )
@@ -217,21 +344,42 @@ export const MapsOverview = () => (
           </VStack>
 
           <VStack divider={<StackDivider borderColor='black.200' />}
-                  p={5} shadow='md' borderWidth='1px'  w='22vw' borderRadius='lg'>
-            <Heading fontSize='xl' color='blue.main' fontWeight='bold'>Least Mapped Areas</Heading>
+                  p={5} 
+                  shadow='md' 
+                  borderWidth='1px'  
+                  w='22vw' 
+                  borderRadius='lg' 
+                  borderColor='black.200'>
+            <Heading fontSize='xl' 
+                     color='blue.main' 
+                     fontWeight='bold'>Least Mapped Areas
+            </Heading>
             {leastMappedAreas.map((area:string) => (
               <Box color='black.800'><span><Icon as={FaUtensils} /></span>{area}</Box>
               )
             )}
           </VStack>
 
-          <Box p={5} shadow='md' borderWidth='1px'  w='22vw' borderRadius='lg'>
-              <Heading fontSize='xl' color='blue.main' fontWeight='bold'>Average completion time per map</Heading>
-              <Text fontSize='2em' color='black.800' fontWeight='bold' marginTop='15%'>{avgCompletionTimePerMap}</Text>
-              <Text color='black.800' marginBottom='1.5vw'>Days</Text>
+          <Box p={5} 
+               shadow='md' 
+               borderWidth='1px'  
+               w='22vw' 
+               borderRadius='lg' 
+               borderColor='black.200'>
+            <Heading fontSize='xl' 
+                      color='blue.main' 
+                      fontWeight='bold'>Average completion time per map
+            </Heading>
+            <Text fontSize='2em' 
+                  color='black.800' 
+                  fontWeight='bold' 
+                  marginTop='15%'>{avgCompletionTimePerMap}
+            </Text>
+            <Text color='black.800' 
+                  marginBottom='1.5vw'>Days
+            </Text>
           </Box>
         </HStack>
-
       </VStack>
 		</Flex>
 	</Container>

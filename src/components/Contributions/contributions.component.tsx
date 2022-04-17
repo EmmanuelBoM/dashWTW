@@ -1,4 +1,6 @@
 import * as React from "react"
+
+// Importing ChakraUI Components
 import {
 	VStack,
 	Stack,
@@ -6,10 +8,11 @@ import {
 	Divider,
 	
 } from "@chakra-ui/react";
+
+// Importing PropTypes
 import { IPropTypes } from './contributions.types';
 
-{/*F*/}
-
+// CONTRIBUTIONS COMPONENT-----------------------------
 function Contributions(props: IPropTypes): JSX.Element {
 	return(
 		<Stack 
