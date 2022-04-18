@@ -16,20 +16,20 @@ function MapperCart(props: IPropTypes): JSX.Element {
 	return (
 
 		<VStack
-			borderRadius="xl"
-			h="26em"
-			w="17.5em"//rems /16
-			//p={10}
-			//spacing={10}
-			alignItems="center"
-			bg="gray.50"
+			borderRadius="2xl"
+      bg="black.100"
+			p={3}
+			w="17rem"
+			marginBottom="1.5rem !important"
 			spacing={2}	
+			boxShadow="4px 11px 28px rgba(0, 0, 0, 0.08);"
+			cursor="pointer"	
 			_hover={{ backgroundColor: '#3E5A8C',color:'white' }}
 
 		>
 			<VStack alignItems="center" p={0} >
-				<AspectRatio  w={24} height={24}>
-						<Image marginTop="12%" borderRadius="full" src="http://purepng.com/public/uploads/large/purepng.com-sitting-catcatcatsanimalspetscute-cat-25152016380020k8o.png" alt="cat picture" />
+				<AspectRatio  w={20} height={20}>
+						<Image marginTop="12%" borderRadius="full" src={props.mapper.profileImg} alt="Mapper Profile Image" />
 				</AspectRatio>
 			</VStack>
 
@@ -103,5 +103,5 @@ function MapperCart(props: IPropTypes): JSX.Element {
     </VStack>
   );
 
-
+  }
 export default MapperCart;
