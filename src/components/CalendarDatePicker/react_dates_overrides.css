@@ -4,6 +4,10 @@
     background-color: transparent;
 }
 
+.DateInput {
+    background: transparent;
+}
+
 .DateInput_input {
     background-color: transparent;
     border-color: transparent;
