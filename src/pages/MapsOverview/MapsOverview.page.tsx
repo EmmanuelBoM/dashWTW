@@ -133,7 +133,7 @@ export const MapsOverview = () => (
       direction={{ base: "column", md: "row" }}
     >
       <VStack spacing={4}>
-        <HStack w="70vw" justifyContent="space-between">
+        <HStack w="70vw" justifyContent="space-between" marginBottom={10}>
           <VStack alignItems="flex-start">
             <Box>
               <Heading fontSize="1.5em" color="blue.600">
@@ -366,6 +366,9 @@ export const MapsOverview = () => (
           textAlign="center"
           marginBottom="6vw"
           alignItems="start"
+          height="15%"
+          width="100%"
+          justifyContent="space-evenly"
         >
           <VStack
             divider={<StackDivider borderColor="black.200" />}
@@ -376,10 +379,14 @@ export const MapsOverview = () => (
             borderRadius="lg"
             borderColor="black.200"
             bgColor="#FFF"
+            height="100%"
+            justify='space-around'
           >
-            <Heading fontSize="xl" color="blue.main" fontWeight="bold">
-              Least Answered Questions
-            </Heading>
+            <Box>
+              <Heading fontSize="xl" color="blue.main" fontWeight="bold">
+                Least Answered Questions
+              </Heading>
+            </Box>
             {leastAnsweredQuestions.map((answer: string) => (
               <Box color="black.800">{answer}</Box>
             ))}
@@ -394,6 +401,8 @@ export const MapsOverview = () => (
             borderRadius="lg"
             borderColor="black.200"
             bgColor="#FFF"
+            height="100%"
+            justify='space-around'
           >
             <Heading fontSize="xl" color="blue.main" fontWeight="bold">
               Least Mapped Areas
@@ -416,6 +425,7 @@ export const MapsOverview = () => (
             borderRadius="lg"
             borderColor="black.200"
             bgColor="#FFF"
+            height="100%"
           >
             <Heading fontSize="xl" color="blue.main" fontWeight="bold">
               Average completion time per map
