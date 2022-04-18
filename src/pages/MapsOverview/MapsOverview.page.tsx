@@ -20,7 +20,8 @@ import {
   Icon,
   InputGroup,
   InputLeftElement,
-  Input
+  Input,
+  Stack
 } from "@chakra-ui/react"
 import { Search2Icon } from "@chakra-ui/icons";
 
@@ -133,7 +134,7 @@ export const MapsOverview = () => (
       direction={{ base: "column", md: "row" }}
     >
       <VStack spacing={4}>
-        <HStack w="70vw" justifyContent="space-between">
+        <HStack w="70vw" justifyContent="space-between" marginBottom={10}>
           <VStack alignItems="flex-start">
             <Box>
               <Heading fontSize="1.5em" color="blue.600">
@@ -366,47 +367,66 @@ export const MapsOverview = () => (
           textAlign="center"
           marginBottom="6vw"
           alignItems="start"
+          height="15%"
+          width="100%"
+          justifyContent="space-evenly"
         >
-          <VStack
-            divider={<StackDivider borderColor="black.200" />}
-            p={5}
-            shadow="md"
-            borderWidth="1px"
-            w="22vw"
-            borderRadius="lg"
-            borderColor="black.200"
-            bgColor="#FFF"
-          >
+          <Stack divider={<StackDivider borderColor="black.200" />}
+              p={5}
+              shadow="md"
+              borderWidth="1px"
+              w="22vw"
+              borderRadius="lg"
+              borderColor="black.200"
+              bgColor="#FFF"
+              height="100%"
+              justify='space-around'>
             <Heading fontSize="xl" color="blue.main" fontWeight="bold">
               Least Answered Questions
             </Heading>
-            {leastAnsweredQuestions.map((answer: string) => (
+            <VStack
+              divider={<StackDivider borderColor="black.200" />}
+              p={2}
+              w="100%"
+              height="100%"
+              justify='space-around'
+            >
+              {leastAnsweredQuestions.map((answer: string) => (
               <Box color="black.800">{answer}</Box>
-            ))}
-          </VStack>
+              ))}
+            </VStack>
+          </Stack>
 
-          <VStack
-            divider={<StackDivider borderColor="black.200" />}
-            p={5}
-            shadow="md"
-            borderWidth="1px"
-            w="22vw"
-            borderRadius="lg"
-            borderColor="black.200"
-            bgColor="#FFF"
-          >
+          <Stack divider={<StackDivider borderColor="black.200" />}
+              p={5}
+              shadow="md"
+              borderWidth="1px"
+              w="22vw"
+              borderRadius="lg"
+              borderColor="black.200"
+              bgColor="#FFF"
+              height="100%"
+              justify='space-around'>
             <Heading fontSize="xl" color="blue.main" fontWeight="bold">
               Least Mapped Areas
             </Heading>
-            {leastMappedAreas.map((area: string) => (
-              <Box color="black.800">
-                <span>
-                  <Icon as={FaUtensils} />
-                </span>
-                {area}
-              </Box>
-            ))}
-          </VStack>
+            <VStack
+              divider={<StackDivider borderColor="black.200" />}
+              p={2}
+              w="100%"
+              height="100%"
+              justify='space-around'
+            >
+              {leastMappedAreas.map((area: string) => (
+                <Box color="black.800">
+                  <span>
+                    <Icon as={FaUtensils} />
+                  </span>
+                  {area}
+                </Box>
+              ))}
+            </VStack>
+          </Stack>
 
           <Box
             p={5}
@@ -416,21 +436,23 @@ export const MapsOverview = () => (
             borderRadius="lg"
             borderColor="black.200"
             bgColor="#FFF"
+            height="100%"
           >
             <Heading fontSize="xl" color="blue.main" fontWeight="bold">
               Average completion time per map
             </Heading>
-            <Text
-              fontSize="2em"
-              color="black.800"
-              fontWeight="bold"
-              marginTop="15%"
-            >
-              {avgCompletionTimePerMap}
-            </Text>
-            <Text color="black.800" marginBottom="1.5vw">
-              Days
-            </Text>
+            <Box display='flex' height='100%' flexDirection='column' justifyContent='center'>
+              <Text
+                fontSize="2em"
+                color="black.800"
+                fontWeight="bold"
+              >
+                {avgCompletionTimePerMap}
+              </Text>
+              <Text color="black.800" marginBottom="1.5vw">
+                Days
+              </Text>
+            </Box>
           </Box>
         </HStack>
       </VStack>
