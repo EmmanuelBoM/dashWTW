@@ -76,7 +76,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
                 <Box
                   backgroundColor={colorsProgressCompletionMaps[0]}
                   p="0% 2% 0% 2%"
-                  w="7vw"
+                  w="10vw"
                   textAlign="center"
                   borderRadius="2em"
                   borderWidth="3px"
