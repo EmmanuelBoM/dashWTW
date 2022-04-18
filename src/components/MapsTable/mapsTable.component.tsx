@@ -2,10 +2,10 @@
 import React from 'react'
 import { IPropTypes } from './mapsTable.types';
 import {TableContainer, Thead, Tbody, Tr, Th, Td, chakra, Table, Button } from '@chakra-ui/react';
-import { useTable, useSortBy } from 'react-table'
+import { useTable, useSortBy, useFlexLayout } from 'react-table'
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons'
 import MapProgressbar from '../MapProgressbar';
-
+import "./mapsTable.modules.css"
 
 function MapsTable(props: IPropTypes): JSX.Element {
 	const data = React.useMemo(
@@ -13,7 +13,7 @@ function MapsTable(props: IPropTypes): JSX.Element {
 		  {
 			placeName: 'The Grand Mayan',
 			city: 'Puerto Vallarta, MX',
-			progress: 25,
+			progress: 10,
 		  },
 		  {
 			placeName: 'Holiday Inn',
@@ -28,7 +28,7 @@ function MapsTable(props: IPropTypes): JSX.Element {
 		  {
 			placeName: 'The Grand Mayan',
 			city: 'Puerto Vallarta, MX',
-			progress: 25,
+			progress: 100,
 		  },
 		  {
 			placeName: 'Holiday Inn',
@@ -89,9 +89,8 @@ function MapsTable(props: IPropTypes): JSX.Element {
 			{
 			Header: 'Mapping progress',
 			accessor: 'progress',
-			width: 20,
 			Cell: ({ cell: { value } }) => (
-				<MapProgressbar progress = {value}></MapProgressbar>
+				<MapProgressbar progress = {value} showProgress={false}></MapProgressbar>
 				)
 			},
 		],
@@ -102,10 +101,10 @@ function MapsTable(props: IPropTypes): JSX.Element {
 			getTableBodyProps, 
 			headerGroups, 
 			rows, 
-			prepareRow } = useTable({ columns, data }, useSortBy)
+			prepareRow } = useTable({ columns, data }, useSortBy, useFlexLayout)
 	
 	return (
-		<Table {...getTableProps()} size="md" w="full" maxHeight="20vh" overflowY="scroll">
+		<Table {...getTableProps()} size="md" w="full" display="grid" >
 			<Thead >
 				{headerGroups.map((headerGroup) => (
 				<Tr {...headerGroup.getHeaderGroupProps()}>
@@ -133,7 +132,7 @@ function MapsTable(props: IPropTypes): JSX.Element {
 				</Tr>
 				))}
 			</Thead>
-			<Tbody {...getTableBodyProps()}>
+			<Tbody {...getTableBodyProps()} >
 				{rows.map((row) => {
 				prepareRow(row)
 				return (
