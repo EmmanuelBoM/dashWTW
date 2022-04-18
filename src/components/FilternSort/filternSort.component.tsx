@@ -12,7 +12,6 @@ import {
 	MenuItemOption
 } from "@chakra-ui/react";
 
-{/*F*/}
 
 let paises:string[]=[
 	"Albania​",
@@ -55,11 +54,13 @@ let perCity=(x:string[],name:string)=>(
 
 function FilternSort(): JSX.Element {
 	return(
-		<HStack w={160} justifyContent="space-between" >
+		<HStack  justifyContent="space-between" >
 			<Menu closeOnSelect={false} >
-				<MenuButton as={Button} w="full" colorScheme='black' variant='ghost'>
-					Sort
-				</MenuButton>
+					
+					<MenuButton as={Button}  leftIcon={<i className="fa-solid fa-arrow-up-wide-short sort-icon"></i>} w="450%" colorScheme='black' variant='ghost'>
+						Sort
+					</MenuButton>
+				
 				<MenuList>
 					<MenuOptionGroup defaultValue='0' title='Sort by' color="#2F6FE4" type='radio'>
 						<MenuItemOption value='1'>Latest Sign In</MenuItemOption>
@@ -73,11 +74,11 @@ function FilternSort(): JSX.Element {
 			</Menu>
 
 			<Menu closeOnSelect={false}>
-				<MenuButton as={Button} w="full" colorScheme='black' variant='ghost'>
+				<MenuButton as={Button} leftIcon={<i className="fa-solid fa-filter sort-icon"></i>} w="450%" colorScheme='black' variant='ghost' color="black.600">
 					Filter
 				</MenuButton>
 				<MenuList>
-				<MenuOptionGroup defaultValue='0' type='radio'>
+				<MenuOptionGroup defaultValue='0' type='radio' title='Filter by' color="#2F6FE4">
 					{perCity(ciudades,name[0])}
 					{perCity(paises,name[1])}
 				</MenuOptionGroup>
