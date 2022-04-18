@@ -7,7 +7,7 @@ import {
 	AspectRatio,
 	Image,
 	Divider,
-	Button, ButtonGroup,
+	Button, ButtonGroup, color,
 } from "@chakra-ui/react";
 import { IPropTypes } from './mapperCart.types';
 
@@ -22,6 +22,8 @@ function MapperCart(props: IPropTypes): JSX.Element {
 			alignItems="center"
 			bg="gray.50"
 			spacing={2}	
+			_hover={{ backgroundColor: '#3E5A8C',color:'white' }}
+
 		>
 			<VStack alignItems="center" p={0} >
 				<AspectRatio  w={24} height={24}>
@@ -59,7 +61,7 @@ function MapperCart(props: IPropTypes): JSX.Element {
 			</VStack>
 
 			<VStack >
-				<Button marginTop={3.5} border=" 1px solid #DFE0EB" color="#2F6FE4" borderRadius="20%/50%" px={6} size='sm'>
+				<Button marginTop={3.5} backgroundColor="transparent" border=" 1px solid #DFE0EB" color="#2F6FE4" borderRadius="20%/50%" px={6} size='sm'>
 				Contact
 				</Button>
 					
