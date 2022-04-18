@@ -18,7 +18,11 @@ import {
   GridItem,
   StackDivider,
   Icon,
+  InputGroup,
+  InputLeftElement,
+  Input
 } from "@chakra-ui/react"
+import { Search2Icon } from "@chakra-ui/icons";
 
 // Imports of custom components
 import MenuComponent from '../../components/Menu/menu.component';
@@ -40,6 +44,7 @@ import {
 
 // Imports of charts from React Google Charts
 import { Chart } from "react-google-charts";
+import FilterMapsComp from "../../components/FilterMapsComp";
 
 // VARS-------------------------------------------------------------
 
@@ -243,10 +248,26 @@ export const MapsOverview = () => (
                w='40vw' 
                borderRadius='lg' 
                borderColor='black.200'>
-            <Heading fontSize='xl'>All Maps</Heading>
-            <Text color='black.400' 
-                  marginBottom='1.5vw'>This Year
-            </Text>
+            <HStack w="100%" justifyContent="space-between">
+              <VStack >
+                <Heading fontSize='xl'>All Maps</Heading>
+                <Text color='black.400' 
+                      marginBottom='1.5vw'>This Year
+                </Text>
+              </VStack>
+              <HStack >
+                <InputGroup w="80%">
+                  <InputLeftElement
+                      pointerEvents='none'
+                      children={<Search2Icon color='gray.300' />}
+                      />
+                  <Input placeholder="Search by: Name" borderColor="lightgray.main" borderRadius="lg"></Input>
+                </InputGroup>
+                <FilterMapsComp></FilterMapsComp>
+              </HStack>
+              
+            </HStack>
+            
             <HStack justifyContent='space-evenly'>
               <MapsTable></MapsTable>
             </HStack>
@@ -318,7 +339,8 @@ export const MapsOverview = () => (
         
         <HStack spacing={4} 
                 textAlign='center' 
-                marginBottom='6vw'>
+                marginBottom='6vw'
+                alignItems="start">
           <VStack divider={<StackDivider borderColor='black.200'/>}
                   p={5} 
                   shadow='md' 
