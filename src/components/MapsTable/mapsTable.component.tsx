@@ -1,10 +1,12 @@
-
 import React from 'react'
 import { IPropTypes } from './mapsTable.types';
+
 import {Thead, Tbody, Tr, Th, Td, chakra, Table} from '@chakra-ui/react';
 import { useTable, useSortBy, useFlexLayout } from 'react-table'
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons'
+
 import MapProgressbar from '../MapProgressbar';
+
 import "./mapsTable.modules.css"
 
 function MapsTable(props: IPropTypes): JSX.Element {

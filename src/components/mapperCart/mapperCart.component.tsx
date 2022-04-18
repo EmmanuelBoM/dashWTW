@@ -2,12 +2,10 @@ import React from 'react';
 import {
 	VStack,
 	HStack,
-	Heading,
 	Text,
 	AspectRatio,
 	Image,
-	Divider,
-	Button, ButtonGroup,
+	Button, 
 } from "@chakra-ui/react";
 import { IPropTypes } from './mapperCart.types';
 

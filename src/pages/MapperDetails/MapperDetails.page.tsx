@@ -3,6 +3,7 @@ import * as React from "react"
 // Importing PropTypes
 import { IPropTypes } from './MapperDetails.types';
 
+//Imports chakra ui Components
 import {
   Container,
   Flex,
@@ -18,15 +19,20 @@ import {
   Button
 } from "@chakra-ui/react"
 
+//Imports custom Componentes
 import MapsTable from "../../components/MapsTable";
 import MenuComponent from "../../components/Menu/menu.component";
 import FilterMapsComp from "../../components/FilterMapsComp";
 
+//Imports icons 
 import { Search2Icon } from "@chakra-ui/icons";
 import { RiArrowGoBackLine } from "react-icons/ri";
 
+
+//Imports useNavigate hook from React Router
 import { useNavigate } from "react-router-dom";
 
+//Variables used
 let mapperName:string = "Tom Cruise"
 
 function MapperDetails(props: IPropTypes): JSX.Element  {
@@ -45,7 +51,6 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
             <VStack alignItems="flex-start">
               <HStack>
                 <Heading size="xl">{mapperName}</Heading>
-                {/*TO DO: Barrita de progreso*/}
               </HStack>
 
               <Text color="black.400" fontSize="xl">

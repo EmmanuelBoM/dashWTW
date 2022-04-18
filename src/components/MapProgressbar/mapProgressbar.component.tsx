@@ -3,8 +3,6 @@ import React from 'react'
 import { IPropTypes } from './mapProgressbar.types';
 import {Box, Text, Container, HStack } from '@chakra-ui/react';
 
-
-
 function MapProgressBar(props: IPropTypes): JSX.Element {
 	let bgColor:string="#000";
 

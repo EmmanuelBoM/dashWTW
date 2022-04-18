@@ -1,35 +1,29 @@
 import * as React from "react"
+
+//Imports chakra ui Components
 import {
   Container,
   Flex,
-  Image,
   Heading,
   Box,
-  Text,
-  AspectRatio,
-  Wrap,
   VStack,
   HStack,
-  Select,
-  Grid,
-  GridItem,
-  StackDivider,
-  Icon,
-  createIcon,
   Input,
   InputGroup,
   InputLeftElement
 } from "@chakra-ui/react"
+import { Search2Icon } from "@chakra-ui/icons";
 
-
-import  MenuComponent  from '../../components/Menu/menu.component';
-
+//Imports stylesheet
 import './MappersOverview.modules.css'
 
+
+//Imports custom Components
 import MapperCart from "../../components/mapperCart";
-import { Search2Icon } from "@chakra-ui/icons";
+import  MenuComponent  from '../../components/Menu/menu.component';
 import FilternSort from "../../components/FilternSort";
 
+//Variables used
 let window:string = "mappers"
 let username:string = "Arturo Gaona"
 let mappers = [
