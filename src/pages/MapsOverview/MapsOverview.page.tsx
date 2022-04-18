@@ -441,17 +441,18 @@ export const MapsOverview = () => (
             <Heading fontSize="xl" color="blue.main" fontWeight="bold">
               Average completion time per map
             </Heading>
-            <Text
-              fontSize="2em"
-              color="black.800"
-              fontWeight="bold"
-              marginTop="15%"
-            >
-              {avgCompletionTimePerMap}
-            </Text>
-            <Text color="black.800" marginBottom="1.5vw">
-              Days
-            </Text>
+            <Box display='flex' height='100%' flexDirection='column' justifyContent='center'>
+              <Text
+                fontSize="2em"
+                color="black.800"
+                fontWeight="bold"
+              >
+                {avgCompletionTimePerMap}
+              </Text>
+              <Text color="black.800" marginBottom="1.5vw">
+                Days
+              </Text>
+            </Box>
           </Box>
         </HStack>
       </VStack>
