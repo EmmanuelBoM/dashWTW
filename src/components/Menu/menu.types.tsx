@@ -1,3 +1,3 @@
 export interface IPropTypes {
-    mapper:any
+    window:string
 }

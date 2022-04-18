@@ -2,17 +2,19 @@ import React from 'react';
 import {
 	VStack,
 	HStack,
-	Heading,
 	Text,
 	AspectRatio,
 	Image,
 	Divider,
 	Button, ButtonGroup, color,
+
 } from "@chakra-ui/react";
 import { IPropTypes } from './mapperCart.types';
 
 function MapperCart(props: IPropTypes): JSX.Element {
+	
 	return (
+
 		<VStack
 			borderRadius="xl"
 			h="26em"
@@ -31,46 +33,75 @@ function MapperCart(props: IPropTypes): JSX.Element {
 				</AspectRatio>
 			</VStack>
 
-			<VStack spacing={0}>
-				<Heading size="md">Ronald Michards</Heading>
-				<Text color="#C4C4C4" >Vancouver, CA</Text>
-			</VStack>
-			<VStack spacing={0}>
-				<Text fontWeight="bold" >Last Sign In</Text>
-				<Text>Aug 30, 2023</Text>
-				<Text color="#C4C4C4" >6:30 pm</Text>
-			</VStack>
 
-			<VStack border="1px solid #DFE0EB" borderRadius="5%/10%" w="2363m" h="6.5em">
-				<VStack>
-					<Text fontWeight="bold" size='md'>Maps</Text>
-				</VStack>
-				
-				<VStack flexDirection="row" alignContent="flex-start">
-					<VStack w="7em" h="3em">
-						<Text color="#C4C4C4">Done</Text>
-						<Text fontWeight="bold" size='md'>1</Text>
-					</VStack>
-					<VStack  width="37px" height= "0px" backgroundColor="#DFE0EB"  border=" 1px solid #DFE0EB" transform= "rotate(90deg)"></VStack>
-					<VStack w="7em" >
-						<Text color="#C4C4C4">In progress</Text>
-						<Text fontWeight="bold" size='md'>1</Text>
-					</VStack>
+      <VStack spacing={0}>
+        <Text fontWeight="600">{props.mapper.mapperName}</Text>
+        <Text
+          color="black.400"
+          fontSize="sm"
+        >{`${props.mapper.mapperCity}, ${props.mapper.mapperCountry}`}</Text>
+      </VStack>
+      <VStack spacing={0}>
+        <Text fontWeight="bold" fontSize="sm">
+          Last Sign In
+        </Text>
+        <Text fontSize="smaller">{props.mapper.lastSignInDate}</Text>
+        <Text color="black.400" fontSize="smaller">
+          {props.mapper.lastSignInHour}
+        </Text>
+      </VStack>
 
-				</VStack>
-			</VStack>
+      <VStack border="1px solid #DFE0EB" borderRadius="lg" w="15rem" p={3}>
+        <VStack>
+          <Text fontWeight="bold" size="md">
+            Maps
+          </Text>
+        </VStack>
 
-			<VStack >
-				<Button marginTop={3.5} backgroundColor="transparent" border=" 1px solid #DFE0EB" color="#2F6FE4" borderRadius="20%/50%" px={6} size='sm'>
-				Contact
-				</Button>
-					
-			</VStack>
+        <HStack w="80%" justifyContent="space-between" alignItems="center">
+          <VStack w="50%" h="3em">
+            <Text color="black.400" fontSize="sm">
+              Done
+            </Text>
+            <Text fontWeight="bold" size="md">
+              {props.mapper.mapsDone}
+            </Text>
+          </VStack>
+          <VStack
+            w="0.15rem"
+            h="2.5em"
+            borderRadius="full"
+            backgroundColor="#DFE0EB"
+            border=" 1px solid #DFE0EB"
+          ></VStack>
+          <VStack w="50%" h="3em">
+            <Text color="black.400" fontSize="sm">
+              In progress
+            </Text>
+            <Text fontWeight="bold" size="md">
+              {props.mapper.mapsInProgress}
+            </Text>
+          </VStack>
+        </HStack>
+      </VStack>
 
-			
 
-		</VStack>
-	);
-}
+      <VStack>
+        <Button
+          marginTop={3.5}
+          border=" 1px solid #DFE0EB"
+          color="#2F6FE4"
+          fontWeight="700"
+          borderRadius="full"
+          px={6}
+          size="md"
+          bg="transparent"
+        >
+          Contact
+        </Button>
+      </VStack>
+    </VStack>
+  );
+
 
 export default MapperCart;

@@ -1,15 +1,32 @@
 import * as React from "react"
+
+// Imports of app views
+import MapDetails from "../MapDetails";
+import MapsOverview from "../MapsOverview";
+import MapperDetails from "../MapperDetails"
+import MappersOverview from "../MappersOverview";
+import LogIn from "../LogIn";
+import Error404 from "../Error404";
+
+// Importing react-router-dom library
 import {
-  Container,
-  Flex,
-} from "@chakra-ui/react"
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 
 export const App = () => (
-  <Container maxWidth="container.xxl" bg='#f8f9d'>
-		<Flex h="100vh" w='full' p='7% 20% 5% 15%' direction={{ base: "column", md: "row" }} >
-      {/*Aquí se deben probar todos los componentes.*/}
-		</Flex>
-	</Container>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<LogIn />}/>
+      <Route path="login" element={<LogIn />} />
+      <Route path="landing" element={<MapsOverview />}/>
+      <Route path="mappers" element={<MappersOverview/>} />
+      <Route path="mapper" element={<MapperDetails />}/>
+      <Route path="the-grand-mayan" element={<MapDetails />} />
+      <Route path="*" element={<Error404/>} />
+    </Routes>
+  </BrowserRouter>
 )
 
 export default App;
