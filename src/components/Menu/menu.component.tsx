@@ -60,17 +60,20 @@ function MenuComponent(props: IPropTypes): JSX.Element {
 
   let navigate = useNavigate()
    
-  return(
-    <Box bg='#000000' display="inline-block" position="fixed" left={0}>
-      <Menu >
+  return (
+    <Box bg="#000000" display="inline-block" position="fixed" left={0}>
+      <Menu>
         <Image src={Logo} />
         <Box h={10}></Box>
-        <MenuItem display="inline-block"
-                  _focus={{ bg: 'black.main' }}
-                  _hover={{ transform: 'scale(0.98)',
-                            bg: 'black.main' }}
-                  onClick={()=>{navigate(`/landing`)}}>
-          <Image src={ChangeImageAMS(props.window)} paddingLeft = {9}/>
+        <MenuItem
+          display="inline-block"
+          _focus={{ bg: "black.main" }}
+          _hover={{ transform: "scale(0.98)", bg: "black.main" }}
+          onClick={() => {
+            navigate(`/landing`);
+          }}
+        >
+          <Image src={ChangeImageAMS(props.window)} paddingLeft={9} />
           <Box>
             <Text align="center" color={ChangeColorAMS(props.window)}>
               AMS
@@ -81,31 +84,41 @@ function MenuComponent(props: IPropTypes): JSX.Element {
           </Box>
         </MenuItem>
         <Box h={25}></Box>
-        <MenuItem display="inline-block"
-                  _focus={{ bg: 'black.main' }}
-                  _hover={{ transform: 'scale(0.98)',
-                            bg: 'black.main' }}
-                  onClick={()=>{navigate(`/mappers`)}}>
+        <MenuItem
+          display="inline-block"
+          _focus={{ bg: "black.main" }}
+          _hover={{ transform: "scale(0.98)", bg: "black.main" }}
+          onClick={() => {
+            navigate(`/mappers`);
+          }}
+        >
           <VStack>
-            <Image src={ChangeImageMAP(props.window)} paddingLeft ='0px'/>
-            <Text paddingLeft='0px' color={ChangeColorMAP(props.window)}>Mappers</Text>
+            <Image src={ChangeImageMAP(props.window)} paddingLeft="0px" />
+            <Text paddingLeft="0px" color={ChangeColorMAP(props.window)}>
+              Mappers
+            </Text>
           </VStack>
         </MenuItem>
         <Box h={300}></Box>
-        <MenuItem display="inline-block"
-                  _focus={{ bg: 'black.main' }}
-                  _hover={{ transform: 'scale(0.98)',
-                            bg: 'black.main' }}
-                  onClick={()=>{navigate(`/login`)}}>
+        <MenuItem
+          display="inline-block"
+          _focus={{ bg: "black.main" }}
+          _hover={{ transform: "scale(0.98)", bg: "black.main" }}
+          onClick={() => {
+            navigate(`/login`);
+          }}
+        >
           <VStack>
-            <Image src={LogOutIMG} paddingLeft ='0px'/>
-            <Text paddingLeft ='0px' color='white'>Log Out</Text>
+            <Image src={LogOutIMG} paddingLeft="0px" />
+            <Text paddingLeft="0px" color="white">
+              Log Out
+            </Text>
           </VStack>
         </MenuItem>
         <Box h={40}></Box>
       </Menu>
     </Box>
-  )
+  );
 }
 
 export default MenuComponent

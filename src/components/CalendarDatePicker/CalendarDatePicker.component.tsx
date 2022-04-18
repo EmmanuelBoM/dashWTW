@@ -160,87 +160,112 @@ function CalendarDatePicker() {
   // Function that renders the default date selectors
   function renderDatePresets() {
     return (
-      <Grid templateRows='repeat(2, 1fr)'
-            templateColumns='repeat(4, 1fr)'
-            gap={4}
-            p="1.5vw">
-
+      <Grid
+        templateRows="repeat(2, 1fr)"
+        templateColumns="repeat(4, 1fr)"
+        gap={4}
+        p="1.5vw"
+      >
         <GridItem>
           <Center>
-            <button className="buttonsDatePresets" 
-                    id={thisWeekController} 
-                    name="This week" 
-                    onClick={handleDateChanges}>This week
+            <button
+              className="buttonsDatePresets"
+              id={thisWeekController}
+              name="This week"
+              onClick={handleDateChanges}
+            >
+              This week
             </button>
           </Center>
         </GridItem>
 
         <GridItem>
           <Center>
-            <button className="buttonsDatePresets" 
-                    id={thisMonthController} 
-                    name="This month" 
-                    onClick={handleDateChanges}>This month
+            <button
+              className="buttonsDatePresets"
+              id={thisMonthController}
+              name="This month"
+              onClick={handleDateChanges}
+            >
+              This month
             </button>
           </Center>
         </GridItem>
 
         <GridItem>
           <Center>
-            <button className="buttonsDatePresets" 
-                    id={thisTrimesterController} 
-                    name="This trimester" 
-                    onClick={handleDateChanges}>This trimester
+            <button
+              className="buttonsDatePresets"
+              id={thisTrimesterController}
+              name="This trimester"
+              onClick={handleDateChanges}
+            >
+              This trimester
             </button>
           </Center>
         </GridItem>
 
         <GridItem>
           <Center>
-            <button className="buttonsDatePresets" 
-                    id={thisYearController} 
-                    name="This year" 
-                    onClick={handleDateChanges}>This year
+            <button
+              className="buttonsDatePresets"
+              id={thisYearController}
+              name="This year"
+              onClick={handleDateChanges}
+            >
+              This year
             </button>
           </Center>
         </GridItem>
 
         <GridItem>
           <Center>
-            <button className="buttonsDatePresets" 
-                    id={lastWeekController} 
-                    name="Last week" 
-                    onClick={handleDateChanges}>Last week
+            <button
+              className="buttonsDatePresets"
+              id={lastWeekController}
+              name="Last week"
+              onClick={handleDateChanges}
+            >
+              Last week
             </button>
           </Center>
         </GridItem>
 
         <GridItem>
           <Center>
-            <button className="buttonsDatePresets" 
-                    id={lastMonthController} 
-                    name="Last month" 
-                    onClick={handleDateChanges}>Last month
+            <button
+              className="buttonsDatePresets"
+              id={lastMonthController}
+              name="Last month"
+              onClick={handleDateChanges}
+            >
+              Last month
             </button>
           </Center>
         </GridItem>
 
         <GridItem>
           <Center>
-            <button className="buttonsDatePresets" 
-                    id={lastTrimesterController} 
-                    name="Last trimester" 
-                    onClick={handleDateChanges}>Last trimester
+            <button
+              className="buttonsDatePresets"
+              id={lastTrimesterController}
+              name="Last trimester"
+              onClick={handleDateChanges}
+            >
+              Last trimester
             </button>
           </Center>
         </GridItem>
 
         <GridItem>
           <Center>
-            <button className="buttonsDatePresets" 
-                    id={lastYearController} 
-                    name="Last year" 
-                    onClick={handleDateChanges}>Last year
+            <button
+              className="buttonsDatePresets"
+              id={lastYearController}
+              name="Last year"
+              onClick={handleDateChanges}
+            >
+              Last year
             </button>
           </Center>
         </GridItem>

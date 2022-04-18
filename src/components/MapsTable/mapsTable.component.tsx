@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { IPropTypes } from './mapsTable.types';
-import {TableContainer, Thead, Tbody, Tr, Th, Td, chakra, Table, Button } from '@chakra-ui/react';
+import {Thead, Tbody, Tr, Th, Td, chakra, Table} from '@chakra-ui/react';
 import { useTable, useSortBy, useFlexLayout } from 'react-table'
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons'
 import MapProgressbar from '../MapProgressbar';
@@ -76,27 +76,29 @@ function MapsTable(props: IPropTypes): JSX.Element {
 
 
 	const columns = React.useMemo(
-		() => [
-			{
-			Header: 'Place name',
-			accessor: 'placeName',
-			
-			},
-			{
-			Header: 'City',
-			accessor: 'city',
-			},
-			{
-			Header: 'Mapping progress',
-			accessor: 'progress',
-			isNumeric: true,
-			Cell: ({ cell: { value } }) => (
-				<MapProgressbar progress = {value} showProgress={false}></MapProgressbar>
-				)
-			},
-		],
-		[]
-	)
+    () => [
+      {
+        Header: "Place name",
+        accessor: "placeName",
+      },
+      {
+        Header: "City",
+        accessor: "city",
+      },
+      {
+        Header: "Mapping progress",
+        accessor: "progress",
+        isNumeric: true,
+        Cell: ({ cell: { value } }) => (
+          <MapProgressbar
+            progress={value}
+            showProgress={false}
+          ></MapProgressbar>
+        ),
+      },
+    ],
+    []
+  );
 
 	const { getTableProps, 
 			getTableBodyProps, 

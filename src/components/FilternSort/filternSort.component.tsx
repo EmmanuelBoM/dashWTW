@@ -53,39 +53,63 @@ let perCity=(x:string[],name:string)=>(
 )
 
 function FilternSort(): JSX.Element {
-	return(
-		<HStack  justifyContent="space-between" >
-			<Menu closeOnSelect={false} >
-					
-					<MenuButton as={Button}  leftIcon={<i className="fa-solid fa-arrow-up-wide-short sort-icon"></i>} w="450%" colorScheme='black' variant='ghost'>
-						Sort
-					</MenuButton>
-				
-				<MenuList>
-					<MenuOptionGroup defaultValue='0' title='Sort by' color="#2F6FE4" type='radio'>
-						<MenuItemOption value='1'>Latest Sign In</MenuItemOption>
-						<MenuItemOption value='2'>Oldest Sign In</MenuItemOption>
-						<MenuItemOption value='3'>Completed maps (Asc.)</MenuItemOption>
-						<MenuItemOption value='4'>Completed maps (Desc.)</MenuItemOption>
-						<MenuItemOption value='5'>Maps in progress (Asc.)</MenuItemOption>
-						<MenuItemOption value='6'>Maps in progress (Desc.)</MenuItemOption>
-					</MenuOptionGroup>
-				</MenuList>
-			</Menu>
+	return (
+    <HStack justifyContent="space-between">
+      <Menu closeOnSelect={false}>
+        <MenuButton
+          as={Button}
+          leftIcon={
+            <i className="fa-solid fa-arrow-up-wide-short sort-icon"></i>
+          }
+          w="450%"
+          colorScheme="black"
+          variant="ghost"
+        >
+          Sort
+        </MenuButton>
 
-			<Menu closeOnSelect={false}>
-				<MenuButton as={Button} leftIcon={<i className="fa-solid fa-filter sort-icon"></i>} w="450%" colorScheme='black' variant='ghost' color="black.600">
-					Filter
-				</MenuButton>
-				<MenuList>
-				<MenuOptionGroup defaultValue='0' type='radio' title='Filter by' color="#2F6FE4">
-					{perCity(ciudades,name[0])}
-					{perCity(paises,name[1])}
-				</MenuOptionGroup>
-				</MenuList>
-			</Menu>	
-		</HStack>
-	)
+        <MenuList>
+          <MenuOptionGroup
+            defaultValue="0"
+            title="Sort by"
+            color="#2F6FE4"
+            type="radio"
+          >
+            <MenuItemOption value="1">Latest Sign In</MenuItemOption>
+            <MenuItemOption value="2">Oldest Sign In</MenuItemOption>
+            <MenuItemOption value="3">Completed maps (Asc.)</MenuItemOption>
+            <MenuItemOption value="4">Completed maps (Desc.)</MenuItemOption>
+            <MenuItemOption value="5">Maps in progress (Asc.)</MenuItemOption>
+            <MenuItemOption value="6">Maps in progress (Desc.)</MenuItemOption>
+          </MenuOptionGroup>
+        </MenuList>
+      </Menu>
+
+      <Menu closeOnSelect={false}>
+        <MenuButton
+          as={Button}
+          leftIcon={<i className="fa-solid fa-filter sort-icon"></i>}
+          w="450%"
+          colorScheme="black"
+          variant="ghost"
+          color="black.600"
+        >
+          Filter
+        </MenuButton>
+        <MenuList>
+          <MenuOptionGroup
+            defaultValue="0"
+            type="radio"
+            title="Filter by"
+            color="#2F6FE4"
+          >
+            {perCity(ciudades, name[0])}
+            {perCity(paises, name[1])}
+          </MenuOptionGroup>
+        </MenuList>
+      </Menu>
+    </HStack>
+  );
 }
 
 export default FilternSort;

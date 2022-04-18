@@ -62,31 +62,38 @@ let perCity=(x:string[],name:string)=>(
 )
 
 function MapsFilter(): JSX.Element {
-	return(
-    <Menu closeOnSelect={false} >
-      <MenuButton as={Button} leftIcon={<i className="fa-solid fa-filter sort-icon"></i>}  colorScheme='black' variant='ghost' color="black.600">
+	return (
+    <Menu closeOnSelect={false}>
+      <MenuButton
+        as={Button}
+        leftIcon={<i className="fa-solid fa-filter sort-icon"></i>}
+        colorScheme="black"
+        variant="ghost"
+        color="black.600"
+      >
         Filter
       </MenuButton>
       <MenuList p={4}>
-        <MenuOptionGroup defaultValue='1' 
-                title='Filter by' 
-                color="#2F6FE4" 
-                type='radio'>
-          <MenuItemOption value='1'>All</MenuItemOption>
-          <MenuItemOption value='2'>Completed</MenuItemOption>
-          <MenuItemOption value='3'>Non completed</MenuItemOption>
+        <MenuOptionGroup
+          defaultValue="1"
+          title="Filter by"
+          color="#2F6FE4"
+          type="radio"
+        >
+          <MenuItemOption value="1">All</MenuItemOption>
+          <MenuItemOption value="2">Completed</MenuItemOption>
+          <MenuItemOption value="3">Non completed</MenuItemOption>
         </MenuOptionGroup>
-        
-        <MenuDivider/>
-        
-        <MenuOptionGroup defaultValue='0' 
-                type='radio'>
-          {perCity(ciudades,name[0])}
-          {perCity(paises,name[1])}
+
+        <MenuDivider />
+
+        <MenuOptionGroup defaultValue="0" type="radio">
+          {perCity(ciudades, name[0])}
+          {perCity(paises, name[1])}
         </MenuOptionGroup>
       </MenuList>
     </Menu>
-	)
+  );
 }
 
 export default MapsFilter;
