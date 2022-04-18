@@ -8,6 +8,7 @@ import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons'
 import MapProgressbar from '../MapProgressbar';
 
 import "./mapsTable.modules.css"
+import { Link } from 'react-router-dom';
 
 function MapsTable(props: IPropTypes): JSX.Element {
 	const data = React.useMemo(
@@ -82,6 +83,9 @@ function MapsTable(props: IPropTypes): JSX.Element {
       {
         Header: "Place name",
         accessor: "placeName",
+		Cell: ({ cell: { value } }) => (
+			<Link to="/the-grand-mayan">{value}</Link>
+		  ),
       },
       {
         Header: "City",
