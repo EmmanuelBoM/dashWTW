@@ -20,7 +20,8 @@ import {
   Icon,
   InputGroup,
   InputLeftElement,
-  Input
+  Input,
+  Stack
 } from "@chakra-ui/react"
 import { Search2Icon } from "@chakra-ui/icons";
 
@@ -370,52 +371,62 @@ export const MapsOverview = () => (
           width="100%"
           justifyContent="space-evenly"
         >
-          <VStack
-            divider={<StackDivider borderColor="black.200" />}
-            p={5}
-            shadow="md"
-            borderWidth="1px"
-            w="22vw"
-            borderRadius="lg"
-            borderColor="black.200"
-            bgColor="#FFF"
-            height="100%"
-            justify='space-around'
-          >
-            <Box>
-              <Heading fontSize="xl" color="blue.main" fontWeight="bold">
-                Least Answered Questions
-              </Heading>
-            </Box>
-            {leastAnsweredQuestions.map((answer: string) => (
+          <Stack divider={<StackDivider borderColor="black.200" />}
+              p={5}
+              shadow="md"
+              borderWidth="1px"
+              w="22vw"
+              borderRadius="lg"
+              borderColor="black.200"
+              bgColor="#FFF"
+              height="100%"
+              justify='space-around'>
+            <Heading fontSize="xl" color="blue.main" fontWeight="bold">
+              Least Answered Questions
+            </Heading>
+            <VStack
+              divider={<StackDivider borderColor="black.200" />}
+              p={2}
+              w="100%"
+              height="100%"
+              justify='space-around'
+            >
+              {leastAnsweredQuestions.map((answer: string) => (
               <Box color="black.800">{answer}</Box>
-            ))}
-          </VStack>
+              ))}
+            </VStack>
+          </Stack>
 
-          <VStack
-            divider={<StackDivider borderColor="black.200" />}
-            p={5}
-            shadow="md"
-            borderWidth="1px"
-            w="22vw"
-            borderRadius="lg"
-            borderColor="black.200"
-            bgColor="#FFF"
-            height="100%"
-            justify='space-around'
-          >
+          <Stack divider={<StackDivider borderColor="black.200" />}
+              p={5}
+              shadow="md"
+              borderWidth="1px"
+              w="22vw"
+              borderRadius="lg"
+              borderColor="black.200"
+              bgColor="#FFF"
+              height="100%"
+              justify='space-around'>
             <Heading fontSize="xl" color="blue.main" fontWeight="bold">
               Least Mapped Areas
             </Heading>
-            {leastMappedAreas.map((area: string) => (
-              <Box color="black.800">
-                <span>
-                  <Icon as={FaUtensils} />
-                </span>
-                {area}
-              </Box>
-            ))}
-          </VStack>
+            <VStack
+              divider={<StackDivider borderColor="black.200" />}
+              p={2}
+              w="100%"
+              height="100%"
+              justify='space-around'
+            >
+              {leastMappedAreas.map((area: string) => (
+                <Box color="black.800">
+                  <span>
+                    <Icon as={FaUtensils} />
+                  </span>
+                  {area}
+                </Box>
+              ))}
+            </VStack>
+          </Stack>
 
           <Box
             p={5}
