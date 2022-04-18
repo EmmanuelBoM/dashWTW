@@ -241,14 +241,16 @@ export const MapsOverview = () => (
         </Box>
 
         <HStack w='full' 
-                justifyContent='space-between'>
-          <Box p={5} 
+                justifyContent='space-between'
+                alignItems="start">
+            <VStack  p={5} 
                shadow='md' 
                borderWidth='1px'  
                w='40vw' 
                borderRadius='lg' 
-               borderColor='black.200'>
-            <HStack w="100%" justifyContent="space-between">
+               borderColor='black.200'
+               spacing={8}>
+              <HStack justifyContent="space-between" w="100%">
               <VStack >
                 <Heading fontSize='xl'>All Maps</Heading>
                 <Text color='black.400' 
@@ -265,13 +267,10 @@ export const MapsOverview = () => (
                 </InputGroup>
                 <FilterMapsComp></FilterMapsComp>
               </HStack>
+              </HStack>
               
-            </HStack>
-            
-            <HStack justifyContent='space-evenly'>
               <MapsTable></MapsTable>
-            </HStack>
-          </Box>
+            </VStack>
           <Box p={5} 
                shadow='md' 
                borderWidth='1px'  
