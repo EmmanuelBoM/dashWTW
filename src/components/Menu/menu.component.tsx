@@ -84,7 +84,8 @@ function MenuComponent(props: IPropTypes): JSX.Element {
         <MenuItem display="inline-block"
                   _focus={{ bg: 'black.main' }}
                   _hover={{ transform: 'scale(0.98)',
-                            bg: 'black.main' }}>
+                            bg: 'black.main' }}
+                  onClick={()=>{navigate(`/mappers`)}}>
           <VStack>
             <Image src={ChangeImageMAP(props.window)} paddingLeft ='0px'/>
             <Text paddingLeft='0px' color={ChangeColorMAP(props.window)}>Mappers</Text>
