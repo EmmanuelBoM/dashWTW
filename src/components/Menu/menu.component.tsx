@@ -61,10 +61,10 @@ function MenuComponent(props: IPropTypes): JSX.Element {
   let navigate = useNavigate()
    
   return (
-    <Box bg="#000000" display="inline-block" position="fixed" left={0}>
+    <Box bg="#000000" display="inline-block" position="fixed" left={0} height="full">
       <Menu>
         <Image src={Logo} />
-        <Box h={10}></Box>
+        <Box h="2%"></Box>
         <MenuItem
           display="inline-block"
           _focus={{ bg: "black.main" }}
@@ -83,7 +83,7 @@ function MenuComponent(props: IPropTypes): JSX.Element {
             </Text>
           </Box>
         </MenuItem>
-        <Box h={25}></Box>
+        <Box h="2%"></Box>
         <MenuItem
           display="inline-block"
           _focus={{ bg: "black.main" }}
@@ -99,7 +99,7 @@ function MenuComponent(props: IPropTypes): JSX.Element {
             </Text>
           </VStack>
         </MenuItem>
-        <Box h={300}></Box>
+        <Box h="25%"></Box>
         <MenuItem
           display="inline-block"
           _focus={{ bg: "black.main" }}
@@ -115,7 +115,7 @@ function MenuComponent(props: IPropTypes): JSX.Element {
             </Text>
           </VStack>
         </MenuItem>
-        <Box h={40}></Box>
+        <Box h="25%"></Box>
       </Menu>
     </Box>
   );
