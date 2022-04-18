@@ -23,7 +23,7 @@ import {
 // Imports of custom components
 import MenuComponent from '../../components/Menu/menu.component';
 import CalendarDatePicker from '../../components/CalendarDatePicker/CalendarDatePicker.component';
-import Table from '../../components/Table/table.component';
+import MapsTable from '../../components/MapsTable/mapsTable.component';
 
 // Imports of icons from React Icons (Font Awesome)
 import { FaDoorOpen, FaUtensils } from 'react-icons/fa'
@@ -248,14 +248,7 @@ export const MapsOverview = () => (
                   marginBottom='1.5vw'>This Year
             </Text>
             <HStack justifyContent='space-evenly'>
-              <Box borderWidth='5px' 
-                   borderRadius='lg' 
-                   borderColor='black.main' 
-                   w='full' 
-                   h='25vw' 
-                   textAlign='center'>
-                <Table></Table>
-              </Box>
+              <MapsTable></MapsTable>
             </HStack>
           </Box>
           <Box p={5} 
