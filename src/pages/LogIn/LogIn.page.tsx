@@ -10,7 +10,6 @@ import { SignInForm } from "../../components";
 export const LogIn = () => (
   <Container maxWidth="container.xxl" bg="black">
     <Flex
-      h="100vh"
       w="full"
       textAlign="center"
       p="7% 20% 5% 15%"
