@@ -19,7 +19,7 @@ export const LogIn = () => (
         marginLeft="0vw"
         marginTop="5vw"
         marginRight="6vw"
-        boxSize="70%"
+        boxSize="42%"
         objectFit="cover"
         src="https://yt3.ggpht.com/ytc/AKedOLTqfmzzNJXFj_68GOpz6aZDrXKWDXlp_SCpc5Vr=s900-c-k-c0x00ffffff-no-rj"
         alt="Wheel The World Logo"
