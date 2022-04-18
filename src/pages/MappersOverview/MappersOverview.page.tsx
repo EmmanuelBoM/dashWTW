@@ -156,42 +156,52 @@ let mappers = [
 ]
 
 export const MappersOverview = () => (
-    <Container maxWidth="container.xxl" bgColor="#F8F9FD">
-        <MenuComponent window={window}/>
-        <Flex  p='7% 20% 5% 15%' marginLeft="3vw" direction={{ base: "column", md: "row" }}>
-            <VStack spacing={20}>
-                <HStack w='70vw' justifyContent='space-between' alignItems="end">
-                    <VStack alignItems='flex-start'>
-                        <Box>
-                            <Heading fontSize='1.5em' color='blue.600'>Welcome, {username}</Heading>
-                        </Box>
-                        <Heading size="xl">Mappers Overview</Heading>
-                    </VStack>
-                    <HStack alignItems='center' w='35vw' justifyContent="space-around">
-                        <InputGroup marginRight="1rem">
-                            <InputLeftElement
-                                pointerEvents='none'
-                                children={<Search2Icon color='gray.300' />}
-                                />
-                            <Input placeholder="Search by: Name" borderColor="lightgray.main" borderRadius="lg"></Input>
-                        </InputGroup>
-                        <FilternSort></FilternSort>
-                        
-                    </HStack>
-                </HStack>
-                
-                <HStack w="full" flexWrap="wrap" justifyContent="space-around" alignItems="start">
-                    {mappers.map((mapperInfo, i)=>(
-                        <MapperCart mapper={mapperInfo}></MapperCart>)
-                    )}
-                </HStack>
-                
-                
-                
+  <Container maxWidth="container.xxl" bgColor="#F8F9FD">
+    <MenuComponent window={window} />
+    <Flex
+      p="7% 20% 5% 15%"
+      marginLeft="3vw"
+      direction={{ base: "column", md: "row" }}
+    >
+      <VStack spacing={20}>
+        <HStack w="70vw" justifyContent="space-between" alignItems="end">
+          <VStack alignItems="flex-start">
+            <Box>
+              <Heading fontSize="1.5em" color="blue.600">
+                Welcome, {username}
+              </Heading>
+            </Box>
+            <Heading size="xl">Mappers Overview</Heading>
+          </VStack>
+          <HStack alignItems="center" w="35vw" justifyContent="space-around">
+            <InputGroup marginRight="1rem">
+              <InputLeftElement
+                pointerEvents="none"
+                children={<Search2Icon color="gray.300" />}
+              />
+              <Input
+                placeholder="Search by: Name"
+                borderColor="lightgray.main"
+                borderRadius="lg"
+              ></Input>
+            </InputGroup>
+            <FilternSort></FilternSort>
+          </HStack>
+        </HStack>
 
-            </VStack>
-        </Flex>
-    </Container>
-)
+        <HStack
+          w="full"
+          flexWrap="wrap"
+          justifyContent="space-around"
+          alignItems="start"
+        >
+          {mappers.map((mapperInfo, i) => (
+            <MapperCart mapper={mapperInfo}></MapperCart>
+          ))}
+        </HStack>
+      </VStack>
+    </Flex>
+  </Container>
+);
 
 export default MappersOverview;
