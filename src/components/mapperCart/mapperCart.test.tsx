@@ -4,5 +4,4 @@ import { render } from "../../test-utils";
 import MapperCart from "./mapperCart.component";
  
 test("MapperCart component", () => {
-  render(<MapperCart />)
 })
