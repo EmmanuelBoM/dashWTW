@@ -2,16 +2,16 @@ import React from 'react';
 
 // Importing ChakraUI Components
 import {
-	VStack,
-	HStack,
-	Heading,
-	Text,
-	FormControl,
-	FormLabel,
-	Input,
-	Button,
-	Grid,
-	GridItem,
+  VStack,
+  HStack,
+  Heading,
+  Text,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react";
 
 import { FaGoogle } from "react-icons/fa"; // Importing React Icons to simulate the auth-with-Google button
