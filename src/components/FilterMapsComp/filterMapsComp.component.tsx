@@ -64,10 +64,7 @@ let perCity=(x:string[],name:string)=>(
 function MapsFilter(): JSX.Element {
 	return(
     <Menu closeOnSelect={false} >
-      <MenuButton as={Button} 
-            w="full" 
-            colorScheme='black' 
-            variant='ghost'>
+      <MenuButton as={Button} leftIcon={<i className="fa-solid fa-filter sort-icon"></i>}  colorScheme='black' variant='ghost' color="black.600">
         Filter
       </MenuButton>
       <MenuList p={4}>
