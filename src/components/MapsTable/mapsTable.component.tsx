@@ -89,6 +89,7 @@ function MapsTable(props: IPropTypes): JSX.Element {
 			{
 			Header: 'Mapping progress',
 			accessor: 'progress',
+			isNumeric: true,
 			Cell: ({ cell: { value } }) => (
 				<MapProgressbar progress = {value} showProgress={false}></MapProgressbar>
 				)
