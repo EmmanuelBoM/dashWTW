@@ -5,33 +5,34 @@ import {
 	Text,
 	AspectRatio,
 	Image,
-	Button, 
+	Divider,
+	Button, ButtonGroup, color,
+
 } from "@chakra-ui/react";
 import { IPropTypes } from './mapperCart.types';
 
 function MapperCart(props: IPropTypes): JSX.Element {
 	
 	return (
-    <VStack
-      borderRadius="2xl"
-      alignItems="center"
-      bg="black.100"
-      p={3}
-      w="17rem"
-      marginBottom="1.5rem !important"
-      spacing={2}
-      boxShadow="4px 11px 28px rgba(0, 0, 0, 0.08);"
-      cursor="pointer"
-    >
-      <VStack alignItems="center" p={0}>
-        <AspectRatio w={20} height={20}>
-          <Image
-            borderRadius="full"
-            src={props.mapper.profileImg}
-            alt="cat picture"
-          />
-        </AspectRatio>
-      </VStack>
+
+		<VStack
+			borderRadius="xl"
+			h="26em"
+			w="17.5em"//rems /16
+			//p={10}
+			//spacing={10}
+			alignItems="center"
+			bg="gray.50"
+			spacing={2}	
+			_hover={{ backgroundColor: '#3E5A8C',color:'white' }}
+
+		>
+			<VStack alignItems="center" p={0} >
+				<AspectRatio  w={24} height={24}>
+						<Image marginTop="12%" borderRadius="full" src="http://purepng.com/public/uploads/large/purepng.com-sitting-catcatcatsanimalspetscute-cat-25152016380020k8o.png" alt="cat picture" />
+				</AspectRatio>
+			</VStack>
+
 
       <VStack spacing={0}>
         <Text fontWeight="600">{props.mapper.mapperName}</Text>
@@ -84,6 +85,7 @@ function MapperCart(props: IPropTypes): JSX.Element {
         </HStack>
       </VStack>
 
+
       <VStack>
         <Button
           marginTop={3.5}
@@ -100,6 +102,6 @@ function MapperCart(props: IPropTypes): JSX.Element {
       </VStack>
     </VStack>
   );
-}
+
 
 export default MapperCart;
