@@ -10,12 +10,14 @@ import {
 
 } from "@chakra-ui/react";
 import { IPropTypes } from './mapperCart.types';
+import { Link } from 'react-router-dom';
 
 function MapperCart(props: IPropTypes): JSX.Element {
 	
 	return (
-
-		<VStack
+  
+    <Link to="/mapper">
+        <VStack
 			borderRadius="2xl"
       bg="black.100"
 			p={3}
@@ -101,6 +103,8 @@ function MapperCart(props: IPropTypes): JSX.Element {
         </Button>
       </VStack>
     </VStack>
+    </Link>
+		
   );
 
   }
