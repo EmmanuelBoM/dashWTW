@@ -22,18 +22,16 @@ import {
 } from "@chakra-ui/react"
 
 
-
 import  MenuComponent  from '../../components/Menu/menu.component';
 
 import './MappersOverview.modules.css'
 
-import { Chart } from "react-google-charts";
 import MapperCart from "../../components/mapperCart";
 import { Search2Icon } from "@chakra-ui/icons";
 import FilternSort from "../../components/FilternSort";
 
-
-let username = "Arturo Gaona"
+let window:string = "mappers"
+let username:string = "Arturo Gaona"
 let mappers = [
     {
         mapperName: "Tom Cruise",
@@ -159,7 +157,7 @@ let mappers = [
 
 export const MappersOverview = () => (
     <Container maxWidth="container.xxl" bg='#f8f9d'>
-        <MenuComponent window={"ams"}/>
+        <MenuComponent window={window}/>
         <Flex  p='7% 20% 5% 15%' marginLeft="3vw" direction={{ base: "column", md: "row" }}>
             <VStack spacing={20}>
                 <HStack w='70vw' justifyContent='space-between' alignItems="end">
