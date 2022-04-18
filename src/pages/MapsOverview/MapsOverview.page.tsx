@@ -124,7 +124,7 @@ const optionsLineChart = {
 };
 
 export const MapsOverview = () => (
-  <Container maxWidth="container.xxl" >
+  <Container maxWidth="container.xxl" bgColor="#F8F9FD">
 		<MenuComponent window={window}/>
     <Flex h="full" 
           p='7% 20% 5% 15%' 
@@ -154,7 +154,8 @@ export const MapsOverview = () => (
              w='full' 
              borderWidth='1px' 
              borderColor='black.200' 
-             borderRadius='lg'>
+             borderRadius='lg'
+             bgColor="#FFF">
           <Heading fontSize='xl'>Weekly Summary</Heading>
           <HStack justifyContent='space-evenly'>
             <VStack w='8vw'>
@@ -193,7 +194,8 @@ export const MapsOverview = () => (
              borderWidth='1px'  
              w='full' 
              borderRadius='lg' 
-             borderColor='black.200'>
+             borderColor='black.200'
+             bgColor="#FFF">
           <Heading fontSize='xl'>Worldwide Insights</Heading>
           <Text color='black.400' 
                 marginBottom='1.5vw'>Zoom and Pan   |    This Week
@@ -249,7 +251,8 @@ export const MapsOverview = () => (
                w='40vw' 
                borderRadius='lg' 
                borderColor='black.200'
-               spacing={8}>
+               spacing={8}
+               bgColor="#FFF">
               <HStack justifyContent="space-between" w="100%">
               <VStack >
                 <Heading fontSize='xl'>All Maps</Heading>
@@ -276,7 +279,8 @@ export const MapsOverview = () => (
                borderWidth='1px'  
                w='29vw' 
                borderRadius='lg' 
-               borderColor='black.200'>
+               borderColor='black.200'
+               bgColor="#FFF">
             <Heading fontSize='xl'>History: Completed AMS Maps</Heading>
             <Text color='black.400' 
                   marginBottom='1.5vw'>This Year
@@ -346,7 +350,8 @@ export const MapsOverview = () => (
                   borderWidth='1px'  
                   w='22vw' 
                   borderRadius='lg' 
-                  borderColor='black.200'>
+                  borderColor='black.200'
+                  bgColor="#FFF">
             <Heading fontSize='xl' 
                      color='blue.main' 
                      fontWeight='bold'>Least Answered Questions
@@ -363,7 +368,8 @@ export const MapsOverview = () => (
                   borderWidth='1px'  
                   w='22vw' 
                   borderRadius='lg' 
-                  borderColor='black.200'>
+                  borderColor='black.200'
+                  bgColor="#FFF">
             <Heading fontSize='xl' 
                      color='blue.main' 
                      fontWeight='bold'>Least Mapped Areas
@@ -379,7 +385,8 @@ export const MapsOverview = () => (
                borderWidth='1px'  
                w='22vw' 
                borderRadius='lg' 
-               borderColor='black.200'>
+               borderColor='black.200'
+               bgColor="#FFF">
             <Heading fontSize='xl' 
                       color='blue.main' 
                       fontWeight='bold'>Average completion time per map

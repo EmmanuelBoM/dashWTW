@@ -39,7 +39,7 @@ let hotelAddress:string = "Blvrd Riviera Nayarit 254, 63735 Nuevo Vallarta, Nay.
 function MapperDetails(props: IPropTypes): JSX.Element  {
 	let navigate = useNavigate();
 	return(
-		<Container maxWidth="container.xxl" bg='#f8f9d'>
+		<Container maxWidth="container.xxl" bgColor="#F8F9FD">
 			<MenuComponent window={"mappers"}/>
 			<Flex h="full" p='7% 20% 5% 15%' marginLeft="3vw" direction={{ base: "column", md: "row" }}>
 				<VStack spacing={10}>
@@ -74,7 +74,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
 					</HStack>
 	
 					<HStack spacing={4} w="full">
-					<VStack h="full" w="65%" p={4} shadow='md' borderWidth='1px' borderColor='black.200' borderRadius='lg' justifyContent="space-around">
+					<VStack h="full" w="65%" p={4} shadow='md' borderWidth='1px' borderColor='black.200'  bgColor="#FFF" borderRadius='lg' justifyContent="space-around">
 						<Heading fontSize='xl' mb={4}>Overview</Heading>
 						<Image
 								borderRadius='full'
@@ -105,7 +105,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
 						</VStack>
 						
 					</VStack>
-					<VStack spacing={3} alignItems="start" w="35%" p={4} shadow='md' borderWidth='1px' borderColor='black.200' borderRadius='lg'>
+					<VStack spacing={3} alignItems="start"  bgColor="#FFF" w="35%" p={4} shadow='md' borderWidth='1px' borderColor='black.200' borderRadius='lg'>
 						<Heading fontSize='xl' mb={4}>Contributions</Heading>
 						<VStack textAlign="center" w="full">
 							<Text color="blue.main" fontWeight="700" >Total Contributions</Text>
@@ -125,7 +125,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
 					</HStack>
 					
 					<HStack spacing={4} w="full" alignItems="start">
-						<VStack spacing={3} alignItems="start" w="35%" p={4} shadow='md' borderWidth='1px' borderColor='black.200' borderRadius='lg'>
+						<VStack spacing={3} alignItems="start" w="35%"  bgColor="#FFF" p={4} shadow='md' borderWidth='1px' borderColor='black.200' borderRadius='lg'>
 								<Heading fontSize='xl' mb={4}>Contributions</Heading>
 								<VStack textAlign="center" w="full">
 									<Text color="blue.main" fontWeight="700" fontSize="lg" >Last Reply</Text>
@@ -141,7 +141,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
 								
 						</VStack>
 	
-						<VStack alignItems="start" h="full" w="65%" p={4} shadow='md' borderWidth='1px' borderColor='black.200' borderRadius='lg' spacing={8}>
+						<VStack alignItems="start" h="full" w="65%" p={4}  bgColor="#FFF" shadow='md' borderWidth='1px' borderColor='black.200' borderRadius='lg' spacing={8}>
 							<HStack justifyContent="space-between" w="100%">
 					
 								<Heading fontSize='xl'>Contributions in progress</Heading>

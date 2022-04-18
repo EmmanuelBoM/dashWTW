@@ -156,7 +156,7 @@ let mappers = [
 ]
 
 export const MappersOverview = () => (
-    <Container maxWidth="container.xxl" bg='#f8f9d'>
+    <Container maxWidth="container.xxl" bgColor="#F8F9FD">
         <MenuComponent window={window}/>
         <Flex  p='7% 20% 5% 15%' marginLeft="3vw" direction={{ base: "column", md: "row" }}>
             <VStack spacing={20}>

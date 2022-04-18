@@ -58,8 +58,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
 	let navigate = useNavigate()
 
 	return(
-		<Container maxWidth="container.xxl" 
-               bg='#f8f9d'>
+		<Container maxWidth="container.xxl" bgColor="#F8F9FD">
 			<MenuComponent window={"ams"}/>
 			<Flex h="full" 
             p='7% 20% 5% 15%' 
@@ -115,7 +114,8 @@ function MapDetails(props: IPropTypes): JSX.Element {
                     shadow='md' 
                     borderWidth='1px' 
                     borderColor='black.200' 
-                    borderRadius='lg'>
+                    borderRadius='lg'
+                    bgColor="#FFF">
               <Image borderRadius='full'
                       boxSize='50px'
                       src='https://bit.ly/dan-abramov'
@@ -136,7 +136,8 @@ function MapDetails(props: IPropTypes): JSX.Element {
                     shadow='md' 
                     borderWidth='1px' 
                     borderColor='black.200'  
-                    borderRadius='lg'>
+                    borderRadius='lg'
+                    bgColor="#FFF" >
               <Image boxSize='50px'
                       src={hotelLogo}
                       alt='Dan Abramov'/>
@@ -156,7 +157,8 @@ function MapDetails(props: IPropTypes): JSX.Element {
                     shadow='md' 
                     borderWidth='1px' 
                     borderColor='black.200'  
-                    borderRadius='lg'>
+                    borderRadius='lg'
+                    bgColor="#FFF">
               <Image boxSize='50px'
                       src={locationIcon}
                       alt='Dan Abramov'/>
@@ -178,7 +180,8 @@ function MapDetails(props: IPropTypes): JSX.Element {
                   w="full" 
                   p={5} 
                   shadow='md' 
-                  borderWidth='1px' 
+                  borderWidth='1px'
+                  bgColor="#FFF" 
                   borderColor='black.200' 
                   borderRadius='lg'>
 						<Heading fontSize='xl' 
@@ -289,7 +292,8 @@ function MapDetails(props: IPropTypes): JSX.Element {
               <GridItem>
                 <VStack p={5} 
                         shadow='md' 
-                        borderWidth='1px'  
+                        borderWidth='1px'
+                        bgColor="#FFF"  
                         w='22vw' 
                         borderRadius='lg'>
                   <Heading fontSize='xl' 
