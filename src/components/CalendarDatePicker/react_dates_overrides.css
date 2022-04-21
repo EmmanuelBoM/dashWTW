@@ -170,3 +170,11 @@
     background-color: #2F6FE4;
     color: white;
 }
+
+.DayPicker_transitionContainer {
+    height: 350px !important;
+}
+
+.DayPicker_transitionContainer__horizontal {
+    height: 350px !important;
+}
