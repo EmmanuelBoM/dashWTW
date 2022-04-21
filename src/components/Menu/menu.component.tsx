@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { IPropTypes } from './menu.types';
 
 // Importing images
-import Logo from '../../assets/descargaWTW1.png'
+import Logo from '../../assets/WTW-logo.png'
 import AMSMapsLogo from '../../assets/amsLogo.png'
 import AMSMapsLogoB from '../../assets/amsLogoB.png'
 import LogOutIMG from '../../assets/logOutLogo.png'
