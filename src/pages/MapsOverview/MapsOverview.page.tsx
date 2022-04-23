@@ -26,12 +26,12 @@ import {
 import { Search2Icon } from "@chakra-ui/icons";
 
 // Imports of custom components
-import MenuComponent from '../../components/Menu/menu.component';
 import CalendarDatePicker from '../../components/CalendarDatePicker/CalendarDatePicker.component';
 import MapsTable from '../../components/MapsTable/mapsTable.component';
 
-// Imports of icons from React Icons (Font Awesome)
-import { FaDoorOpen, FaUtensils } from 'react-icons/fa'
+// Imports of icons from wtw icons
+import Entrance from 'wtw-icons/_icons/Entrance'
+import Restaurant from 'wtw-icons/_icons/Restaurant'
 
 // Imports of Map Items from React Simple Maps
 import {
@@ -48,9 +48,6 @@ import { Chart } from "react-google-charts";
 import FilterMapsComp from "../../components/FilterMapsComp";
 
 // VARS-------------------------------------------------------------
-
-// View
-let window:string = "ams"
 
 // Username
 let username:string = 'Arturo Gaona'
@@ -126,7 +123,6 @@ const optionsLineChart = {
 
 export const MapsOverview = () => (
   <Container maxWidth="container.xxl" bgColor="#F8F9FD">
-    <MenuComponent window={window} />
     <Flex
       h="full"
       p="7% 20% 5% 15%"
@@ -161,12 +157,12 @@ export const MapsOverview = () => (
           <Heading fontSize="xl">Weekly Summary</Heading>
           <HStack justifyContent="space-evenly">
             <VStack w="8vw">
-              <Text>
-                <span>
-                  <b>Submitted</b>
-                </span>{" "}
-                Maps
-              </Text>
+              <Box display='inline-flex'>
+                <Text> 
+                  <b>Submitted </b>
+                </Text>  
+                <Text paddingLeft='5px'>Maps</Text>
+              </Box>
               <Box
                 borderWidth="5px"
                 borderRadius="lg"
@@ -181,12 +177,12 @@ export const MapsOverview = () => (
               </Box>
             </VStack>
             <VStack w="8vw">
-              <Text>
-                <span>
-                  <b>In Progress</b>
-                </span>{" "}
-                Maps
-              </Text>
+              <Box display='inline-flex'>
+                <Text> 
+                  <b>Submitted </b>
+                </Text>  
+                <Text paddingLeft='5px'>Maps</Text>
+              </Box>
               <Box
                 borderWidth="5px"
                 borderRadius="lg"
@@ -247,11 +243,11 @@ export const MapsOverview = () => (
                 </ZoomableGroup>
               </ComposableMap>
             </Wrap>
-            <Box w="17vw" h="auto" textAlign="center">
+            <Box h="auto" textAlign="center">
               <Chart
                 chartType="BarChart"
-                width="100px"
-                height="500px"
+                width="100%"
+                height="100%"
                 data={data}
                 options={options}
               />
@@ -313,7 +309,7 @@ export const MapsOverview = () => (
                 <Chart
                   chartType="LineChart"
                   width="100%"
-                  height="400px"
+                  height="100%"
                   data={dataLineChart}
                   options={optionsLineChart}
                 />
@@ -418,11 +414,13 @@ export const MapsOverview = () => (
               justify='space-around'
             >
               {leastMappedAreas.map((area: string) => (
-                <Box color="black.800">
+                <Box color="black.800" display='inline-flex' justifyContent='space-around'>
                   <span>
-                    <Icon as={FaUtensils} />
+                    <Restaurant width="1em" height='1em'/>
                   </span>
-                  {area}
+                  <Text marginLeft='0.7em'>
+                    {area}
+                  </Text>
                 </Box>
               ))}
             </VStack>
