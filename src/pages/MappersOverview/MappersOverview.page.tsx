@@ -17,14 +17,11 @@ import { Search2Icon } from "@chakra-ui/icons";
 //Imports stylesheet
 import './MappersOverview.modules.css'
 
-
 //Imports custom Components
 import MapperCart from "../../components/mapperCart";
-import  MenuComponent  from '../../components/Menu/menu.component';
 import FilternSort from "../../components/FilternSort";
 
 //Variables used
-let window:string = "mappers"
 let username:string = "Arturo Gaona"
 let mappers = [
     {
@@ -151,7 +148,6 @@ let mappers = [
 
 export const MappersOverview = () => (
   <Container maxWidth="container.xxl" bgColor="#F8F9FD">
-    <MenuComponent window={window} />
     <Flex
       p="7% 20% 5% 15%"
       marginLeft="3vw"

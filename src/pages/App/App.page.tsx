@@ -8,6 +8,9 @@ import MappersOverview from "../MappersOverview";
 import LogIn from "../LogIn";
 import Error404 from "../Error404";
 
+// Importing the menu bar to improve app performance
+import Menu from '../../components/Menu/menu.component'
+
 // Importing react-router-dom library
 import {
   BrowserRouter,
@@ -16,17 +19,23 @@ import {
 } from "react-router-dom";
 
 export const App = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<LogIn />}/>
-      <Route path="login" element={<LogIn />} />
-      <Route path="landing" element={<MapsOverview />}/>
-      <Route path="mappers" element={<MappersOverview/>} />
-      <Route path="mapper" element={<MapperDetails />}/>
-      <Route path="the-grand-mayan" element={<MapDetails />} />
-      <Route path="*" element={<Error404/>} />
-    </Routes>
-  </BrowserRouter>
+  <React.Fragment>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LogIn />}/>
+        <Route path="login" element={<LogIn />} />
+      </Routes>
+
+    <Menu window='ams'/>
+      <Routes>
+        <Route path="landing" element={<MapsOverview />}/>
+        <Route path="mappers" element={<MappersOverview/>} />
+        <Route path="mapper" element={<MapperDetails />}/>
+        <Route path="the-grand-mayan" element={<MapDetails />} />
+        <Route path="*" element={<Error404/>} />
+      </Routes>
+    </BrowserRouter>
+  </React.Fragment>
 )
 
 export default App;
