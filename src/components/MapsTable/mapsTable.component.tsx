@@ -2,16 +2,18 @@ import React from 'react'
 import { IPropTypes } from './mapsTable.types';
 
 import {Thead, Tbody, Tr, Th, Td, chakra, Table} from '@chakra-ui/react';
-import { useTable, useSortBy, useFlexLayout } from 'react-table'
+import { useTable, useSortBy, useFlexLayout, Column } from 'react-table'
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons'
 
 import MapProgressbar from '../MapProgressbar';
 
 import "./mapsTable.modules.css"
 import { Link } from 'react-router-dom';
+import {IData} from './mapsTable.types'
 
 function MapsTable(props: IPropTypes): JSX.Element {
-	const data = React.useMemo(
+	
+	const data = React.useMemo<IData[]>(
 		() => [
 		  {
 			placeName: 'The Grand Mayan',
@@ -78,7 +80,7 @@ function MapsTable(props: IPropTypes): JSX.Element {
 	  )
 
 
-	const columns = React.useMemo(
+	const columns = React.useMemo<Column[]>(
     () => [
       {
         Header: "Place name",
