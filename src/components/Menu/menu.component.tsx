@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 // Importing PropTypes
 import { IPropTypes } from './menu.types';
@@ -62,7 +62,7 @@ function MenuComponent(props: IPropTypes): JSX.Element {
    
   return (
     <React.Fragment>
-      <Box bg="#000000" display="inline-block" position="fixed" left={0} height="full">
+      <Box bg="#000000" display='inline-flex' flexDirection='column' position="fixed" left={0} height="full">
       <Menu>
         <Image src={Logo} />
         <Box h="2%"></Box>
