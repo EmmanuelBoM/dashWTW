@@ -15,8 +15,9 @@ import Menu from '../../components/Menu/menu.component'
 import {
   BrowserRouter,
   Routes,
-  Route,
+  Route
 } from "react-router-dom";
+import MenuComponent from "../../components/Menu/menu.component";
 
 export const App = () => (
   <React.Fragment>
@@ -24,15 +25,13 @@ export const App = () => (
       <Routes>
         <Route path="/" element={<LogIn />}/>
         <Route path="login" element={<LogIn />} />
-      </Routes>
-
-    <Menu window='ams'/>
-      <Routes>
-        <Route path="landing" element={<MapsOverview />}/>
-        <Route path="mappers" element={<MappersOverview/>} />
-        <Route path="mapper" element={<MapperDetails />}/>
-        <Route path="the-grand-mayan" element={<MapDetails />} />
-        <Route path="*" element={<Error404/>} />
+        <Route element={<MenuComponent window='ams' />}>
+          <Route path="landing" element={<MapsOverview />}/>
+          <Route path="mappers" element={<MappersOverview/>} />
+          <Route path="mapper" element={<MapperDetails />}/>
+          <Route path="the-grand-mayan" element={<MapDetails />} />
+          <Route path="*" element={<Error404/>} />
+        </Route>
       </Routes>
     </BrowserRouter>
   </React.Fragment>

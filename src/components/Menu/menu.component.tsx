@@ -22,7 +22,7 @@ import {
 } from "@chakra-ui/react"
 
 // Importing react-router-dom function that allows navigation
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Outlet } from "react-router-dom";
 
 // MENU COMPONENT-------------------------------------------
 function MenuComponent(props: IPropTypes): JSX.Element {
@@ -61,7 +61,8 @@ function MenuComponent(props: IPropTypes): JSX.Element {
   let navigate = useNavigate()
    
   return (
-    <Box bg="#000000" display="inline-block" position="fixed" left={0} height="full">
+    <React.Fragment>
+      <Box bg="#000000" display="inline-block" position="fixed" left={0} height="full">
       <Menu>
         <Image src={Logo} />
         <Box h="2%"></Box>
@@ -108,16 +109,18 @@ function MenuComponent(props: IPropTypes): JSX.Element {
             navigate(`/login`);
           }}
         >
-          <VStack>
-            <Image src={LogOutIMG} paddingLeft="0px" />
-            <Text paddingLeft="0px" color="white">
-              Log Out
-            </Text>
-          </VStack>
-        </MenuItem>
-        <Box h="25%"></Box>
-      </Menu>
-    </Box>
+            <VStack>
+              <Image src={LogOutIMG} paddingLeft="0px" />
+              <Text paddingLeft="0px" color="white">
+                Log Out
+              </Text>
+            </VStack>
+          </MenuItem>
+          <Box h="25%"></Box>
+        </Menu>
+      </Box>
+      <Outlet/>
+    </React.Fragment>
   );
 }
 
