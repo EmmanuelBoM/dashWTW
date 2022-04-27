@@ -18,15 +18,12 @@ import { Search2Icon } from "@chakra-ui/icons";
 //Imports stylesheet
 import './MappersOverview.modules.css'
 
-
 //Imports custom Components
 import MapperCart from "../../components/mapperCart";
-import  MenuComponent  from '../../components/Menu/menu.component';
 import FilternSort from "../../components/FilternSort";
 import { setTextRange } from "typescript";
 
 //Variables used
-let window:string = "mappers"
 let username:string = "Arturo Gaona"
 let mappers = [
     {
@@ -150,7 +147,6 @@ let mappers = [
         profileImg: "https://randomuser.me/api/portraits/women/60.jpg"
     }
 ]
-
 
 export const MappersOverview = () => {
   

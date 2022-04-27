@@ -26,7 +26,6 @@ import {
 import { useNavigate } from "react-router-dom";
 
 // Importing custom components
-import MenuComponent from "../../components/Menu/menu.component";
 import MapProgressbar from "../../components/MapProgressbar";
 
 // Importing images
@@ -59,7 +58,6 @@ function MapDetails(props: IPropTypes): JSX.Element {
 
 	return (
     <Container maxWidth="container.xxl" bgColor="#F8F9FD">
-      <MenuComponent window={"ams"} />
       <Flex
         h="full"
         p="7% 20% 5% 15%"

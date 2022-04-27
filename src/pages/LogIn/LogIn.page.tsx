@@ -6,6 +6,9 @@ import { Container, Flex, Image } from "@chakra-ui/react";
 // Importing SignIn Form custom component
 import { SignInForm } from "../../components";
 
+// Importing WTW logo
+import WTWLogo from '../../assets/WTW-logo.jpg'
+
 // LOG IN VIEW ---------------------------
 export const LogIn = () => (
   <Container maxWidth="container.xxl" bg="black">
@@ -19,9 +22,9 @@ export const LogIn = () => (
         marginLeft="0vw"
         marginTop="5vw"
         marginRight="6vw"
-        boxSize="42%"
+        boxSize="44%"
         objectFit="cover"
-        src="https://yt3.ggpht.com/ytc/AKedOLTqfmzzNJXFj_68GOpz6aZDrXKWDXlp_SCpc5Vr=s900-c-k-c0x00ffffff-no-rj"
+        src={WTWLogo}
         alt="Wheel The World Logo"
       />
       <SignInForm />

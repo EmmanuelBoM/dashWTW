@@ -15,23 +15,15 @@ import {
 // Importing react-router-dom component
 import { useNavigate } from "react-router-dom";
 
-// Importing the menu
-import MenuComponent from "../../components/Menu/menu.component";
-
-
 // ERROR404 VIEW-----------------------------------
 function Error404(props: IPropTypes): JSX.Element {
 
 	// Function that allows navigation using react-router-dom
 	let navigate = useNavigate()
 
-  // Var that stores the current focus inside the menu
-  let currentView:string = "ams"
-
 	return(
 		<Container maxWidth="container.xxl" 
 					     bg='#f8f9d'>
-			<MenuComponent window={currentView}/>
       <Flex h="full" 
             p='7% 20% 5% 15%' 
             marginLeft="9vw" 

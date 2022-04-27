@@ -14,13 +14,14 @@ import {
   GridItem,
 } from "@chakra-ui/react";
 
-import { FaGoogle } from "react-icons/fa"; // Importing React Icons to simulate the auth-with-Google button
+import Google from 'wtw-icons/_icons/Google'; // Importing wtw icons to simulate the auth-with-Google button
 
 // Importing PropTypes
 import { IPropTypes } from './signInForm.types';
 
 // Importing react-router-dom function that allows navigation
 import { useNavigate } from "react-router-dom";
+
 
 // SIGN IN FORM COMPONENT----------------------------------------
 function SignInForm(props: IPropTypes): JSX.Element {
@@ -49,7 +50,7 @@ function SignInForm(props: IPropTypes): JSX.Element {
 						     paddingBottom={5}>Welcome back!
 				</Heading>
 				<Button variant='with-shadow' 
-                leftIcon={<FaGoogle />} 
+                leftIcon={<Google width='1em'/>} 
                 isLoading={false} 
                 loadingText='CONNECTING TO GOOGLE'>SIGN IN WITH GOOGLE
 				</Button>

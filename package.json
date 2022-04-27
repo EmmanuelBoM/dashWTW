@@ -34,7 +34,8 @@
     "react-table": "^7.7.0",
     "react-with-styles": "^5.0.0",
     "typescript": "^4.6.3",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "wtw-icons": "^1.41.2"
   },
   "scripts": {
     "start": "react-scripts start",

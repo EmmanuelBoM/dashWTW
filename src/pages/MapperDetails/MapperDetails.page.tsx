@@ -21,13 +21,11 @@ import {
 
 //Imports custom Componentes
 import MapsTable from "../../components/MapsTable";
-import MenuComponent from "../../components/Menu/menu.component";
 import FilterMapsComp from "../../components/FilterMapsComp";
 
 //Imports icons 
 import { Search2Icon } from "@chakra-ui/icons";
 import { RiArrowGoBackLine } from "react-icons/ri";
-
 
 //Imports useNavigate hook from React Router
 import { useNavigate } from "react-router-dom";
@@ -39,7 +37,6 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
 	let navigate = useNavigate();
 	return (
     <Container maxWidth="container.xxl" bgColor="#F8F9FD">
-      <MenuComponent window={"mappers"} />
       <Flex
         h="full"
         p="7% 20% 5% 15%"
