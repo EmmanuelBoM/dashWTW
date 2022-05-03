@@ -159,7 +159,7 @@ export const MapsOverview = () => (
             <VStack w="8vw">
               <Box display='inline-flex'>
                 <Text> 
-                  <b>Submitted </b>
+                  <b>Completed </b>
                 </Text>  
                 <Text paddingLeft='5px'>Maps</Text>
               </Box>
@@ -179,7 +179,7 @@ export const MapsOverview = () => (
             <VStack w="8vw">
               <Box display='inline-flex'>
                 <Text> 
-                  <b>Submitted </b>
+                  <b>In Progress </b>
                 </Text>  
                 <Text paddingLeft='5px'>Maps</Text>
               </Box>

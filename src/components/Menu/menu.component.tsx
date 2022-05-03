@@ -62,19 +62,21 @@ function MenuComponent(props: IPropTypes): JSX.Element {
    
   return (
     <React.Fragment>
-      <Box bg="#000000" display='inline-flex' flexDirection='column' position="fixed" left={0} height="full">
+      <Box bg="#000000" display='inline-flex' flexDirection='column' position="fixed" left={0} height="full" width="9vw">
       <Menu>
         <Image src={Logo} />
         <Box h="2%"></Box>
         <MenuItem
-          display="inline-block"
+          display="inline-flex"
+          flexDirection='column'
+          marginBottom='5vh'
           _focus={{ bg: "black.main" }}
           _hover={{ transform: "scale(0.98)", bg: "black.main" }}
           onClick={() => {
-            navigate(`/landing`);
+            navigate(`/maps`);
           }}
         >
-          <Image src={ChangeImageAMS(props.window)} paddingLeft={9} />
+          <Image src={ChangeImageAMS(props.window)} paddingBottom={2} />
           <Box>
             <Text align="center" color={ChangeColorAMS(props.window)}>
               AMS
@@ -88,6 +90,7 @@ function MenuComponent(props: IPropTypes): JSX.Element {
         <MenuItem
           display="inline-block"
           _focus={{ bg: "black.main" }}
+          marginBottom='5vh'
           _hover={{ transform: "scale(0.98)", bg: "black.main" }}
           onClick={() => {
             navigate(`/mappers`);
@@ -102,7 +105,9 @@ function MenuComponent(props: IPropTypes): JSX.Element {
         </MenuItem>
         <Box h="25%"></Box>
         <MenuItem
-          display="inline-block"
+          display="inline-flex"
+          flexDirection='column'
+          marginTop='20vh'
           _focus={{ bg: "black.main" }}
           _hover={{ transform: "scale(0.98)", bg: "black.main" }}
           onClick={() => {
@@ -112,7 +117,7 @@ function MenuComponent(props: IPropTypes): JSX.Element {
             <VStack>
               <Image src={LogOutIMG} paddingLeft="0px" />
               <Text paddingLeft="0px" color="white">
-                Log Out
+                Sign Out
               </Text>
             </VStack>
           </MenuItem>

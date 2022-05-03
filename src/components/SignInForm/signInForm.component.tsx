@@ -47,7 +47,7 @@ function SignInForm(props: IPropTypes): JSX.Element {
               p={0} 
               color='white'>
 				<Heading size="xl" 
-						     paddingBottom={5}>Welcome back!
+						paddingBottom={5}>Welcome back!
 				</Heading>
 				<Button variant='with-shadow' 
                 leftIcon={<Google width='1em'/>} 
@@ -121,7 +121,7 @@ function SignInForm(props: IPropTypes): JSX.Element {
                   borderRadius="lg" 
                   borderColor='transparent' 
                   variant={styleLoginButton} 
-                  onClick={()=>{navigate(`/landing`)}}>Sign In</Button>
+                  onClick={()=>{navigate(`/maps`)}}>Sign In</Button>
 				</GridItem>
 
 				<GridItem colSpan={1} 

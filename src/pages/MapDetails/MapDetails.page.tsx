@@ -29,8 +29,8 @@ import { useNavigate } from "react-router-dom";
 import MapProgressbar from "../../components/MapProgressbar";
 
 // Importing images
-import hotelLogo from "../../assets/hotelLogo.png"
-import locationIcon from "../../assets/locationIcon.png"
+import Hotel from 'wtw-icons/_icons/Hotel'; // Importing wtw icons
+import Location from 'wtw-icons/_icons/Location'; // Importing wtw icons
 
 // Importing icons from react-icons
 import { RiArrowGoBackLine } from "react-icons/ri";
@@ -105,7 +105,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
                 outline: "0",
               }}
               onClick={() => {
-                navigate(`/landing`);
+                navigate(`/maps`);
               }}
             ></Button>
           </HStack>
@@ -149,7 +149,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
               borderRadius="lg"
               bgColor="#FFF"
             >
-              <Image boxSize="50px" src={hotelLogo} alt="Dan Abramov" />
+              <Hotel width='3em'/>
               <VStack alignItems="left" paddingLeft="0.5rem">
                 <Text color="blue.main" fontWeight="700" marginBottom="-0.5rem">
                   Acommodation Type
@@ -168,7 +168,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
               borderRadius="lg"
               bgColor="#FFF"
             >
-              <Image boxSize="50px" src={locationIcon} alt="Dan Abramov" />
+              <Location width='4.5em'/>
               <VStack alignItems="left" paddingLeft="0.5rem">
                 <Text color="blue.main" fontWeight="700" marginBottom="-0.5rem">
                   Address
