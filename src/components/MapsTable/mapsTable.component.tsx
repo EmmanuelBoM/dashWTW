@@ -19,68 +19,79 @@ function MapsTable(props: IPropTypes): JSX.Element {
 			placeName: 'The Grand Mayan',
 			city: 'Puerto Vallarta, MX',
 			progress: 10,
+			isNumeric: false,
 		  },
 		  {
 			placeName: 'Holiday Inn',
 			city: 'Pachuca, MX',
 			progress: 80,
+			isNumeric: false,
 		  },
 		  {
 			placeName: 'Hotel Lancelot',
 			city: 'Rome, IT',
 			progress: 45,
+			isNumeric: false,
 		  },
 		  {
 			placeName: 'The Grand Mayan',
 			city: 'Puerto Vallarta, MX',
 			progress: 100,
+			isNumeric: false,
 		  },
 		  {
 			placeName: 'Holiday Inn',
 			city: 'Pachuca, MX',
 			progress: 80,
+			isNumeric: false,
 		  },
 		  {
 			placeName: 'Hotel Lancelot',
 			city: 'Rome, IT',
 			progress: 45,
+			isNumeric: false,
 		  },
 		  {
 			placeName: 'The Grand Mayan',
 			city: 'Puerto Vallarta, MX',
 			progress: 25,
+			isNumeric: false,
 		  },
 		  {
 			placeName: 'Holiday Inn',
 			city: 'Pachuca, MX',
 			progress: 80,
+			isNumeric: false,
 		  },
 		  {
 			placeName: 'Hotel Lancelot',
 			city: 'Rome, IT',
 			progress: 45,
+			isNumeric: false,
 		  },
 		  {
 			placeName: 'The Grand Mayan',
 			city: 'Puerto Vallarta, MX',
 			progress: 25,
+			isNumeric: false,
 		  },
 		  {
 			placeName: 'Holiday Inn',
 			city: 'Pachuca, MX',
 			progress: 80,
+			isNumeric: false,
 		  },
 		  {
 			placeName: 'Hotel Lancelot',
 			city: 'Rome, IT',
 			progress: 45,
+			isNumeric: false,
 		  },
 		],
 		[]
 	  )
-
-
-	const columns = React.useMemo<Column[]>(
+	  
+	const columns: Column<IData>[] = React.useMemo(
     () => [
       {
         Header: "Place name",
