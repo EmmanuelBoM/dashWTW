@@ -45,7 +45,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
       >
         <VStack spacing={20} >
           <HStack w="70vw" justifyContent="space-between">
-            <HStack w="30%" justifyContent="space-between">
+            <HStack w="50%" spacing={4}>
               <Image
                 borderRadius="full"
                 boxSize="100px"

@@ -34,7 +34,7 @@ function MapProgressBar(props: IPropTypes): JSX.Element {
       justifyContent="left"
     >
       <Box
-        w={`${props.progress}%`}
+        w={props.progress < 25 ? 25 : `${props.progress}%` }
         borderRadius="full"
         background={bgColor}
         h={props.showProgress ? "2.5rem" : "1.5rem"}
