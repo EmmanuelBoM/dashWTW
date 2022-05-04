@@ -32,6 +32,18 @@ import MapsTable from '../../components/MapsTable/mapsTable.component';
 // Imports of icons from wtw icons
 import Entrance from 'wtw-icons/_icons/Entrance'
 import Restaurant from 'wtw-icons/_icons/Restaurant'
+import BuildingEntrance from 'wtw-icons/_icons/Buildingentrance'
+import Lobby from 'wtw-icons/_icons/Lobby'
+import FoodService from 'wtw-icons/_icons/FoodService'
+import SwimmingPool from 'wtw-icons/_icons/SwimmingPool'
+import QueenBed from 'wtw-icons/_icons/QueenBed'
+import GeneralAttribute from 'wtw-icons/_icons/GeneralAttribute'
+import Bathroom from 'wtw-icons/_icons/Bathroom'
+import Elevator from 'wtw-icons/_icons/Elevator'
+import Gym from 'wtw-icons/_icons/Gym'
+import Beachfront from 'wtw-icons/_icons/Beachfront'
+import Parking from 'wtw-icons/_icons/Parking'
+import Other from 'wtw-icons/_icons/Other'
 
 // Imports of Map Items from React Simple Maps
 import {
@@ -56,9 +68,26 @@ let username:string = 'Arturo Gaona'
 let submittedMaps = 16
 let inProgressMaps = 11
 
+// Arrays of existing areas into the AMS
+let areasAMS:any[] = [["Building Entrance", <BuildingEntrance width="1em" height="1em"/> ],
+                      ["Lobby Reception", <Lobby width="1em" height="1em"/>],
+                      ["Room One", <QueenBed width="1em" height="1em"/>],
+                      ["Room Two", <QueenBed width="1em" height="1em"/>],
+                      ["Room Three", <QueenBed width="1em" height="1em"/>],
+                      ["General Accessibility", <GeneralAttribute width="1em" height="1em"/>],
+                      ["Food Service Area", <FoodService width="1em" height="1em"/>],
+                      ["Swimming Pool", <SwimmingPool width="1em" height="1em"/>],
+                      ["Fitness Center", <Gym width="1em" height="1em"/>],
+                      ["Beachfront", <Beachfront width="1em" height="1em"/>],
+                      ["Parking Area", <Parking/>],
+                      ["Common Area Toilet", <Bathroom width="1em" height="1em"/>],
+                      ["Other Areas", <Other width="1em" height="1em"/>],
+                      ["Elevator", <Elevator width="1em" height="1em"/>]]                        
+
 // Arrays of least mapped areas and least answered questions
 let leastAnsweredQuestions:string[] = ["Which type is the room?", "What is the maximum occupancy (adults/children) of this room?"]
-let leastMappedAreas:string[] = ["Building Entrance", "Food Service Area"]
+let leastMappedAreas:string[] = ["Building Entrance", "Food Service Area", "Beachfront"]
+let iconsTextLeastMappedAreas:any[] = areasAMS.filter( (area) => { for(let i = 0; i < leastMappedAreas.length; i++) if (leastMappedAreas[i] === area[0]) return true})
 let leastMappedAreasIcons:string[] = ["FaDoorOpen", "FaUtensils"]
 
 // AvgTimeMapCompletion
@@ -177,7 +206,7 @@ export const MapsOverview = () => (
               </Box>
             </VStack>
             <VStack w="8vw">
-              <Box display='inline-flex'>
+              <Box display='inline-flex' width="max-content">
                 <Text> 
                   <b>In Progress </b>
                 </Text>  
@@ -413,13 +442,13 @@ export const MapsOverview = () => (
               height="100%"
               justify='space-around'
             >
-              {leastMappedAreas.map((area: string) => (
+              {iconsTextLeastMappedAreas.map((area: any) => (
                 <Box color="black.800" display='inline-flex' justifyContent='space-around'>
                   <span>
-                    <Restaurant width="1em" height='1em'/>
+                    {area[1]}
                   </span>
                   <Text marginLeft='0.7em'>
-                    {area}
+                    {area[0]}
                   </Text>
                 </Box>
               ))}
