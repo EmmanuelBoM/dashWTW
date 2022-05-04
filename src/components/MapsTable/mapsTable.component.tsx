@@ -130,7 +130,7 @@ function MapsTable(props: IPropTypes): JSX.Element {
 			<Thead >
 				{headerGroups.map((headerGroup) => (
 				<Tr {...headerGroup.getHeaderGroupProps()}>
-					{headerGroup.headers.map((column) => (
+					{headerGroup.headers.map((column: any) => (
 					<Th
 						{...column.getHeaderProps(column.getSortByToggleProps())}
 						isNumeric={column.isNumeric}
@@ -159,7 +159,7 @@ function MapsTable(props: IPropTypes): JSX.Element {
 				prepareRow(row)
 				return (
 					<Tr {...row.getRowProps()} fontSize="sm">
-					{row.cells.map((cell) => (
+					{row.cells.map((cell: any) => (
 						<Td {...cell.getCellProps()} isNumeric={cell.column.isNumeric}>
 						{cell.render('Cell')}
 						</Td>
