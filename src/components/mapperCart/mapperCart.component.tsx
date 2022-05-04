@@ -76,6 +76,7 @@ function MapperCart(props: IPropTypes): JSX.Element {
 
 
       <VStack>
+        
         <Button
           id='btn-contact-mapper'
           marginTop={3.5}
@@ -85,11 +86,16 @@ function MapperCart(props: IPropTypes): JSX.Element {
           borderRadius="full"
           className='card-contact'
           px={6}
+        
           size="md"
           bg="transparent"
         >
+          <a href="mailto:test@gmail.com">
           Contact
+          </a>
         </Button>
+        
+        
       </VStack>
     </VStack>
     </Link>
