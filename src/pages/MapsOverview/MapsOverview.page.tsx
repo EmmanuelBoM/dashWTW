@@ -56,6 +56,24 @@ let username:string = 'Arturo Gaona'
 let submittedMaps = 16
 let inProgressMaps = 11
 
+// Arrays of existing areas into the AMS
+let areasAMS:string[] = ["Building Entrance",
+                        "Lobby Reception",
+                        "Room One",
+                        "Room Two",
+                        "Room Three",
+                        "General Accessibility",
+                        "Food Service Area",
+                        "Swimming Pool",
+                        "Fitness Center",
+                        "Beachfront",
+                        "Parking Area",
+                        "Common Area Toilet",
+                        "Other Areas",
+                        "Elevator"]
+
+                        
+
 // Arrays of least mapped areas and least answered questions
 let leastAnsweredQuestions:string[] = ["Which type is the room?", "What is the maximum occupancy (adults/children) of this room?"]
 let leastMappedAreas:string[] = ["Building Entrance", "Food Service Area"]
@@ -177,7 +195,7 @@ export const MapsOverview = () => (
               </Box>
             </VStack>
             <VStack w="8vw">
-              <Box display='inline-flex'>
+              <Box display='inline-flex' width="max-content">
                 <Text> 
                   <b>In Progress </b>
                 </Text>  
