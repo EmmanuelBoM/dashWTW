@@ -31,11 +31,11 @@ function MapperCart(props: IPropTypes): JSX.Element {
 			  cursor="pointer"	
 			  _hover={{ backgroundColor: '#3E5A8C', color:'#fff !important' }}
 		>
-			<VStack alignItems="center" p={0} spacing={3} className="mapper-info">
+			<VStack alignItems="center" p={0} spacing={3} className="mapper-info" textAlign="center">
 				<AspectRatio  w={20} height={20}>
-						<Image marginTop="12%" borderRadius="full" src={props.mapper.profileImg} alt="Mapper Profile Image" />
+						<Image marginTop="12%" borderRadius="full" src={"https://randomuser.me/api/portraits/women/2.jpg"} alt="Mapper Profile Image" />
 				</AspectRatio>
-        <Text fontWeight="500" fontSize="xl" color="black.700" id="mapper-name" >{props.mapper.mapperName}</Text>
+        <Text fontWeight="500" fontSize="xl" color="black.700" id="mapper-name" >{`${props.mapper.name.name} ${props.mapper.name.lname} `}</Text>
 			</VStack>
 
 
@@ -53,7 +53,7 @@ function MapperCart(props: IPropTypes): JSX.Element {
               Done
             </Text>
             <Text fontWeight="800" fontSize="lg">
-              {props.mapper.mapsDone}
+              {3}
             </Text>
           </VStack>
           <VStack
@@ -68,7 +68,7 @@ function MapperCart(props: IPropTypes): JSX.Element {
               In progress
             </Text>
             <Text fontWeight="800" fontSize="lg">
-              {props.mapper.mapsInProgress}
+              {2}
             </Text>
           </VStack>
         </HStack>
@@ -86,11 +86,10 @@ function MapperCart(props: IPropTypes): JSX.Element {
           borderRadius="full"
           className='card-contact'
           px={6}
-        
           size="md"
           bg="transparent"
         >
-          <a href="mailto:test@gmail.com">
+          <a href={`mailto:${props.mapper.contact}`}>
           Contact
           </a>
         </Button>
