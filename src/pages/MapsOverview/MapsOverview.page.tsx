@@ -269,7 +269,7 @@ export const MapsOverview = () => {
                     <InputGroup w="80%">
                       <InputLeftElement
                         pointerEvents="none"
-                        children={<Search2Icon color="gray.300" />}
+                        children={<Search2Icon zIndex="auto" color="gray.300" />}
                       />
                       <Input
                         placeholder="Search by: Name"
