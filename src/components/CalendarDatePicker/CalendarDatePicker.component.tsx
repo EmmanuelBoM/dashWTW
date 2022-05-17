@@ -7,7 +7,7 @@ import {
 } from "react-dates";
 
 // Importing moment library to parse dates
-import moment from "moment";
+import moment, { Moment } from "moment";
 
 // Initialising react-dates library and importing the stylesheet that personalises look and feel
 import "react-dates/initialize";
@@ -18,14 +18,14 @@ import "./react_dates_overrides.css";
 import { Grid, GridItem, Center } from "@chakra-ui/react";
 
 // CALENDAR DATE PICKER COMPONENT-------------------------------------------
-function CalendarDatePicker() {
+function CalendarDatePicker(props:any) {
 
   // Hooks for changing date selection on screen
-  const [ startDate, setStartDate ] = useState<any>(null);
-  const [ endDate, setEndDate ] = useState<any>(null);
+  const [ startDate, setStartDate ] = useState<any>(moment().startOf("week"));
+  const [ endDate, setEndDate ] = useState<any>(moment());
   const [ focusedInput, setFocusedInput ] = useState<any>(null);
 
-  const [ thisWeekController, setThisWeekController ] = useState<string|undefined>(undefined);
+  const [ thisWeekController, setThisWeekController ] = useState<string|undefined>('clicked');
   const [ lastWeekController, setLastWeekController ] = useState<string|undefined>(undefined);
 
   const [ thisMonthController, setThisMonthController ] = useState<string|undefined>(undefined);
@@ -43,6 +43,8 @@ function CalendarDatePicker() {
     if(event.target.name === 'This week') {
       setStartDate(moment().startOf("week"))
       setEndDate(moment())
+      props.setCalendarStartDate(moment().startOf("week").format("YYYY-MM-DD"))
+      props.setCalendarEndDate(moment().format("YYYY-MM-DD"))
       setThisWeekController('clicked')
       setLastWeekController(undefined)
       setThisMonthController(undefined)
@@ -56,6 +58,8 @@ function CalendarDatePicker() {
     else if(event.target.name === 'Last week') {
       setStartDate(moment().subtract(1, "weeks").startOf("week"))
       setEndDate(moment().subtract(1, "weeks").endOf("week"))
+      props.setCalendarStartDate(moment().subtract(1, "weeks").startOf("week").format("YYYY-MM-DD"))
+      props.setCalendarEndDate(moment().subtract(1, "weeks").endOf("week").format("YYYY-MM-DD"))
       setThisWeekController(undefined)
       setLastWeekController('clicked')
       setThisMonthController(undefined)
@@ -69,6 +73,8 @@ function CalendarDatePicker() {
     else if(event.target.name === 'This month') {
       setStartDate(moment().startOf("month"))
       setEndDate(moment())
+      props.setCalendarStartDate(moment().startOf("month").format("YYYY-MM-DD"))
+      props.setCalendarEndDate(moment().format("YYYY-MM-DD"))
       setThisWeekController(undefined)
       setLastWeekController(undefined)
       setThisMonthController('clicked')
@@ -82,6 +88,8 @@ function CalendarDatePicker() {
     else if(event.target.name === 'Last month') {
       setStartDate(moment().subtract(1, "months").startOf("month"))
       setEndDate(moment().subtract(1, "months").endOf("month"))
+      props.setCalendarStartDate(moment().subtract(1, "months").startOf("month").format("YYYY-MM-DD"))
+      props.setCalendarEndDate(moment().subtract(1, "months").endOf("month").format("YYYY-MM-DD"))
       setThisWeekController(undefined)
       setLastWeekController(undefined)
       setThisMonthController(undefined)
@@ -95,6 +103,8 @@ function CalendarDatePicker() {
     else if(event.target.name === 'This trimester') {
       setStartDate(moment().subtract(2, "months").startOf("month"))
       setEndDate(moment())
+      props.setCalendarStartDate(moment().subtract(2, "months").startOf("month").format("YYYY-MM-DD"))
+      props.setCalendarEndDate(moment().format("YYYY-MM-DD"))
       setThisWeekController(undefined)
       setLastWeekController(undefined)
       setThisMonthController(undefined)
@@ -108,6 +118,8 @@ function CalendarDatePicker() {
     else if(event.target.name === 'Last trimester') {
       setStartDate(moment().subtract(6, "months").startOf("month"))
       setEndDate(moment().subtract(3, "months").endOf("month"))
+      props.setCalendarStartDate(moment().subtract(6, "months").startOf("month").format("YYYY-MM-DD"))
+      props.setCalendarEndDate(moment().subtract(3, "months").endOf("month").format("YYYY-MM-DD"))
       setThisWeekController(undefined)
       setLastWeekController(undefined)
       setThisMonthController(undefined)
@@ -121,6 +133,8 @@ function CalendarDatePicker() {
     else if(event.target.name === 'This year') {
       setStartDate(moment().startOf("year"))
       setEndDate(moment())
+      props.setCalendarStartDate(moment().startOf("year").format("YYYY-MM-DD"))
+      props.setCalendarEndDate(moment().format("YYYY-MM-DD"))
       setThisWeekController(undefined)
       setLastWeekController(undefined)
       setThisMonthController(undefined)
@@ -134,6 +148,8 @@ function CalendarDatePicker() {
     else if(event.target.name === 'Last year') {
       setStartDate(moment().subtract(1, "years").startOf("year"))
       setEndDate(moment().subtract(1, "years").endOf("year"))
+      props.setCalendarStartDate(moment().subtract(1, "years").startOf("year").format("YYYY-MM-DD"))
+      props.setCalendarEndDate(moment().subtract(1, "years").endOf("year").format("YYYY-MM-DD"))
       setThisWeekController(undefined)
       setLastWeekController(undefined)
       setThisMonthController(undefined)
@@ -282,7 +298,17 @@ function CalendarDatePicker() {
         endDateId="endDate"
         onDatesChange={({ startDate, endDate }) => {
           setStartDate(startDate);
-          setEndDate(endDate);}}
+          setEndDate(endDate);
+          props.setCalendarStartDate(moment(startDate).format("YYYY-MM-DD"))
+          props.setCalendarEndDate(moment(endDate).format("YYYY-MM-DD"))
+          setThisWeekController(undefined)
+          setLastWeekController(undefined)
+          setThisMonthController(undefined)
+          setLastMonthController(undefined)
+          setThisTrimesterController(undefined)
+          setLastTrimesterController(undefined)
+          setThisYearController(undefined)
+          setLastYearController(undefined)}}
         focusedInput={focusedInput}
         onFocusChange={setFocusedInput}
         isOutsideRange={day => !isInclusivelyBeforeDay(day, moment())}
