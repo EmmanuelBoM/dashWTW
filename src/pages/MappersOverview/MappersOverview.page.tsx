@@ -30,128 +30,6 @@ import Error404 from "../Error404"
 
 //Variables used
 let username:string = "Arturo Gaona"
-/*let mapperss = [
-    {
-        mapperName: "Tom Cruise",
-        mapperCity: "Viña del mar",
-        mapperCountry: "CL",
-        lastSignInDate: "May 26, 2019",
-        lastSignInHour: "6:30 PM",
-        mapsDone: 4, 
-        mapsInProgress: 2,
-        profileImg: "https://randomuser.me/api/portraits/men/88.jpg"
-    },
-    {
-        mapperName: "Devon Lane",
-        mapperCity: "London",
-        mapperCountry: "UK",
-        lastSignInDate: "May 26, 2019",
-        lastSignInHour: "6:30 PM",
-        mapsDone: 3, 
-        mapsInProgress: 2,
-        profileImg: "https://randomuser.me/api/portraits/women/3.jpg"
-    },
-    {
-        mapperName: "Bessie Cooper",
-        mapperCity: "Bogota",
-        mapperCountry: "COL",
-        lastSignInDate: "May 26, 2019",
-        lastSignInHour: "6:30 PM",
-        mapsDone: 1, 
-        mapsInProgress: 1,
-        profileImg: "https://randomuser.me/api/portraits/women/60.jpg"
-    },
-    {
-        mapperName: "Tom Cruise",
-        mapperCity: "Viña del mar",
-        mapperCountry: "CL",
-        lastSignInDate: "May 26, 2019",
-        lastSignInHour: "6:30 PM",
-        mapsDone: 4, 
-        mapsInProgress: 2,
-        profileImg: "https://randomuser.me/api/portraits/men/88.jpg"
-    },
-    {
-        mapperName: "Devon Lane",
-        mapperCity: "London",
-        mapperCountry: "UK",
-        lastSignInDate: "May 26, 2019",
-        lastSignInHour: "6:30 PM",
-        mapsDone: 3, 
-        mapsInProgress: 2,
-        profileImg: "https://randomuser.me/api/portraits/women/3.jpg"
-    },
-    {
-        mapperName: "Bessie Cooper",
-        mapperCity: "Bogota",
-        mapperCountry: "COL",
-        lastSignInDate: "May 26, 2019",
-        lastSignInHour: "6:30 PM",
-        mapsDone: 1, 
-        mapsInProgress: 1,
-        profileImg: "https://randomuser.me/api/portraits/women/60.jpg"
-    },
-    {
-        mapperName: "Tom Cruise",
-        mapperCity: "Viña del mar",
-        mapperCountry: "CL",
-        lastSignInDate: "May 26, 2019",
-        lastSignInHour: "6:30 PM",
-        mapsDone: 4, 
-        mapsInProgress: 2,
-        profileImg: "https://randomuser.me/api/portraits/men/88.jpg"
-    },
-    {
-        mapperName: "Devon Lane",
-        mapperCity: "London",
-        mapperCountry: "UK",
-        lastSignInDate: "May 26, 2019",
-        lastSignInHour: "6:30 PM",
-        mapsDone: 3, 
-        mapsInProgress: 2,
-        profileImg: "https://randomuser.me/api/portraits/women/3.jpg"
-    },
-    {
-        mapperName: "Bessie Cooper",
-        mapperCity: "Bogota",
-        mapperCountry: "COL",
-        lastSignInDate: "May 26, 2019",
-        lastSignInHour: "6:30 PM",
-        mapsDone: 1, 
-        mapsInProgress: 1,
-        profileImg: "https://randomuser.me/api/portraits/women/60.jpg"
-    },
-    {
-        mapperName: "Tom Cruise",
-        mapperCity: "Viña del mar",
-        mapperCountry: "CL",
-        lastSignInDate: "May 26, 2019",
-        lastSignInHour: "6:30 PM",
-        mapsDone: 4, 
-        mapsInProgress: 2,
-        profileImg: "https://randomuser.me/api/portraits/men/88.jpg"
-    },
-    {
-        mapperName: "Devon Lane",
-        mapperCity: "London",
-        mapperCountry: "UK",
-        lastSignInDate: "May 26, 2019",
-        lastSignInHour: "6:30 PM",
-        mapsDone: 3, 
-        mapsInProgress: 2,
-        profileImg: "https://randomuser.me/api/portraits/women/3.jpg"
-    },
-    {
-        mapperName: "Bessie Cooper",
-        mapperCity: "Bogota",
-        mapperCountry: "COL",
-        lastSignInDate: "May 26, 2019",
-        lastSignInHour: "6:30 PM",
-        mapsDone: 1, 
-        mapsInProgress: 1,
-        profileImg: "https://randomuser.me/api/portraits/women/60.jpg"
-    }
-]*/
 
 export const MappersOverview = () => {
   
@@ -171,7 +49,7 @@ export const MappersOverview = () => {
           setError(error)
           setStatus('error')
         })
-    }, [])
+  }, [])
   
   if (status === "loading") {
     return(

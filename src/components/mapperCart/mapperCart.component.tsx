@@ -18,7 +18,7 @@ function MapperCart(props: IPropTypes): JSX.Element {
 	
 	return (
   
-    <Link to="/mapper">
+    <Link to={`/mappers/${props.mapper.name.id}`} >
         <VStack
         id="card-mapper"
 			  borderRadius="2xl"
@@ -33,7 +33,7 @@ function MapperCart(props: IPropTypes): JSX.Element {
 		>
 			<VStack alignItems="center" p={0} spacing={3} className="mapper-info" textAlign="center">
 				<AspectRatio  w={20} height={20}>
-						<Image marginTop="12%" borderRadius="full" src={"https://randomuser.me/api/portraits/women/2.jpg"} alt="Mapper Profile Image" />
+						<Image marginTop="12%" borderRadius="full" src={props.mapper.name.photo === null ? `https://aui.atlassian.com/aui/8.8/docs/images/avatar-person.svg` : props.mapper.name.photo } alt="Mapper Profile Image" />
 				</AspectRatio>
         <Text fontWeight="500" fontSize="xl" color="black.700" id="mapper-name" >{`${props.mapper.name.name} ${props.mapper.name.lname} `}</Text>
 			</VStack>
@@ -53,7 +53,7 @@ function MapperCart(props: IPropTypes): JSX.Element {
               Done
             </Text>
             <Text fontWeight="800" fontSize="lg">
-              {3}
+              {props.mapper.maps.done}
             </Text>
           </VStack>
           <VStack
@@ -68,7 +68,7 @@ function MapperCart(props: IPropTypes): JSX.Element {
               In progress
             </Text>
             <Text fontWeight="800" fontSize="lg">
-              {2}
+              {props.mapper.maps.progress}
             </Text>
           </VStack>
         </HStack>
