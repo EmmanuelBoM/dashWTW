@@ -1,5 +1,6 @@
 export interface IPropTypes {
-    
+    data: any,
+    columns:any
 }
 
 export interface IData {
