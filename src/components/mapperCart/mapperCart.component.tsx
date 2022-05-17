@@ -18,7 +18,7 @@ function MapperCart(props: IPropTypes): JSX.Element {
 	
 	return (
   
-    <Link to="/mapper">
+    <Link to={`/mappers/${props.mapper.id}`} >
         <VStack
         id="card-mapper"
 			  borderRadius="2xl"

@@ -28,7 +28,7 @@ export const App = () => (
         <Route element={<MenuComponent window='ams' />}>
           <Route path="maps" element={<MapsOverview />}/>
           <Route path="mappers" element={<MappersOverview/>} />
-          <Route path="mapper" element={<MapperDetails />}/>
+          <Route path="mappers/:mapperId" element={<MapperDetails />}/>
           <Route path="the-grand-mayan" element={<MapDetails />} />
           <Route path="*" element={<Error404/>} />
         </Route>
