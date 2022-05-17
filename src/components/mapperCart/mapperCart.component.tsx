@@ -14,7 +14,7 @@ import { IPropTypes } from './mapperCart.types';
 import { Link } from 'react-router-dom';
 import "./mapperCart.modules.css"
 
-function MapperCart(props: IPropTypes): JSX.Element {
+function MapperCart(props: IPropTypes): JSX.Element { 
 	
 	return (
   
@@ -88,6 +88,7 @@ function MapperCart(props: IPropTypes): JSX.Element {
           px={6}
           size="md"
           bg="transparent"
+          onClick={(e:any) => (e.preventDefault())}
         >
           <a href={`mailto:${props.mapper.contact}`}>
           Contact
