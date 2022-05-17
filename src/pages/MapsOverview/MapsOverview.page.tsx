@@ -1,8 +1,12 @@
 import React from "react";
+import { useState, useEffect } from "react";
 
 // Imports from d3-fetch y d3-scale
 import { csv } from "d3-fetch";
 import { scaleLinear } from "d3-scale";
+
+// Importing moment library to parse dates
+import moment from "moment";
 
 // Imports from Chakra UI
 import {
@@ -155,304 +159,282 @@ const optionsLineChart = {
   legend: { position: "bottom" },
 };
 
-export const MapsOverview = () => (
-  <Container maxWidth="container.xxl" bgColor="#F8F9FD">
-    <Flex
-      h="full"
-      p="7% 20% 5% 15%"
-      marginLeft="3vw"
-      direction={{ base: "column", md: "row" }}
-    >
-      <VStack spacing={10}>
-        <HStack w="70vw" justifyContent="space-between" marginBottom={10}>
+export const MapsOverview = () => {
 
-          <VStack alignItems="flex-start">
-            <Box>
-              <Heading fontSize="1.5em" color="blue.600">
-                Welcome, {username}
-              </Heading>
-            </Box>
-            <Heading size="xl">AMS Maps Overview</Heading>
-          </VStack>
+  const [ calendarStartDate, setCalendarStartDate ] = useState<any>(moment().startOf("week").format("YYYY-MM-DD"))
+  const [ calendarEndDate, setCalendarEndDate ] = useState<any>(moment().format("YYYY-MM-DD"))
 
-          <VStack alignItems="flex-start" w="33vw">
-            <Text color="black.600">View statistics by:</Text>
-            <CalendarDatePicker />
-          </VStack>
-        </HStack>
+  return(
+    <Container maxWidth="container.xxl" bgColor="#F8F9FD">
+      <Flex
+        h="full"
+        p="7% 20% 5% 15%"
+        marginLeft="3vw"
+        direction={{ base: "column", md: "row" }}
+      >
+        <VStack spacing={10}>
+          <HStack w="70vw" justifyContent="space-between" marginBottom={10}>
 
-        <VStack spacing={6} w="full">
-          {/* /Summary Card */}
-          <Box
-            p={5}
-            shadow="md"
-            w="full"
-            borderWidth="1px"
-            borderColor="black.200"
-            borderRadius="lg"
-            bgColor="#FFF"
-            
-          >
-            <Heading fontSize="xl">Weekly Summary</Heading>
-            <HStack justifyContent="space-evenly" marginTop={6}>
-              <VStack w="8vw">
-                <Box display='inline-flex'>
-                  <Text> 
-                    <b>Completed </b>
-                  </Text>  
-                  <Text paddingLeft='5px'>Maps</Text>
-                </Box>
-                <Box
-                  borderWidth="5px"
-                  borderRadius="lg"
-                  borderColor="blue.main"
-                  w="7vw"
-                  h="7vw"
-                  textAlign="center"
-                >
-                  <Text fontSize="2em" fontWeight="bold" marginTop="25%">
-                    {submittedMaps}
-                  </Text>
-                </Box>
-              </VStack>
-              <VStack w="8vw">
-                <Box display='inline-flex' width="max-content">
-                  <Text> 
-                    <b>In Progress </b>
-                  </Text>  
-                  <Text paddingLeft='5px'>Maps</Text>
-                </Box>
-                <Box
-                  borderWidth="5px"
-                  borderRadius="lg"
-                  borderColor="black.main"
-                  w="7vw"
-                  h="7vw"
-                  textAlign="center"
-                >
-                  <Text fontSize="2em" fontWeight="bold" marginTop="25%">
-                    {inProgressMaps}
-                  </Text>
-                </Box>
-              </VStack>
-            </HStack>
-          </Box>
+            <VStack alignItems="flex-start">
+              <Box>
+                <Heading fontSize="1.5em" color="blue.600">
+                  Welcome, {username}
+                </Heading>
+              </Box>
+              <Heading size="xl">AMS Maps Overview</Heading>
+            </VStack>
 
-          {/* /All Maps Table Card */}
-          <VStack
-              p={5}
-              shadow="md"
-              borderWidth="1px"
-              w="100%"
-              borderRadius="lg"
-              borderColor="black.200"
-              spacing={8}
-              bgColor="#FFF"
-            >
-              <HStack justifyContent="space-between" w="100%">
-                <VStack>
-                  <Heading fontSize="xl">All Maps</Heading>
-                  <Text color="black.400" marginBottom="1.5vw">
-                    This Year
-                  </Text>
-                </VStack>
-                <HStack>
-                  <InputGroup w="80%">
-                    <InputLeftElement
-                      pointerEvents="none"
-                      children={<Search2Icon color="gray.300" />}
-                    />
-                    <Input
-                      placeholder="Search by: Name"
-                      borderColor="lightgray.main"
-                      borderRadius="lg"
-                    ></Input>
-                  </InputGroup>
-                  <FilterMapsComp></FilterMapsComp>
-                </HStack>
-              </HStack>
-
-              <MapsTable></MapsTable>
-          </VStack>
-        </VStack>
-        
-        
-        <VStack spacing={6} w="full">
-          
-          <HStack w="full">
-            <Grid
-              column={3}
-              columnGap={3}
-              rowGap={3}
-              w="full"
-              h="3vw"
-              marginTop="3vw"
-              color="black.main"
-            >
-              <GridItem colSpan={2} bg="blue.main" h="4px" marginTop="0.7vw">
-                <HStack
-                  width="full"
-                  height="0.9em"
-                  borderWidth="1px"
-                  borderColor="transparent"
-                  borderBottomColor="white"
-                ></HStack>
-              </GridItem>
-              <GridItem colSpan={1} textAlign="center" paddingTop={0}>
-                <Heading fontSize="xl">All Time Statistics</Heading>
-              </GridItem>
-              <GridItem
-                colStart={4}
-                colEnd={6}
-                bg="blue.main"
-                h="4px"
-                marginTop="0.7vw"
-              >
-                <HStack
-                  width="full"
-                  height="0.9em"
-                  borderWidth="1px"
-                  borderColor="transparent"
-                  borderBottomColor="white"
-                ></HStack>
-              </GridItem>
-            </Grid>
+            <VStack alignItems="flex-start" w="33vw">
+              <Text color="black.600">View statistics by:</Text>
+              <CalendarDatePicker setCalendarStartDate={setCalendarStartDate} setCalendarEndDate={setCalendarEndDate} />
+            </VStack>
           </HStack>
 
-          {/* /Worldwide Insights Card */}
-          <VStack
-            p={5}
-            shadow="md"
-            borderWidth="1px"
-            w="full"
-            borderRadius="lg"
-            borderColor="black.200"
-            bgColor="#FFF"
-            alignItems="start"
-            spacing={4}
-          >
-            <VStack>
-              <Heading fontSize="xl">Worldwide Insights</Heading>
-              <Text color="black.400" marginBottom="1.5vw">
-                Zoom and Pan | This Week
-              </Text>
-            </VStack>
-            
-            
-            <HStack justifyContent="space-evenly">
-              <Wrap borderRadius="lg" w="40vw" h="auto" textAlign="center">
-                <ComposableMap
-                  projectionConfig={{ rotate: [-10, 0, 0], scale: 147 }}
-                >
-                  <ZoomableGroup zoom={1}>
-                    <Sphere
-                      id="1"
-                      fill="transparent"
-                      stroke="#E4E5E6"
-                      strokeWidth={0.5}
-                    />
-                    <Graticule stroke="#E4E5E6" strokeWidth={0.5} />
-                    <Geographies geography={geoUrl}>
-                      {({ geographies }) =>
-                        geographies.map((geo, idx: number) => {
-                          const d = data.find((s) => true);
-                          console.log(colorScale(1));
-                          return (
-                            <Geography
-                              key={geo.rsmKey}
-                              geography={geo}
-                              fill={"#FF7562"}
-                            />
-                          );
-                        })
-                      }
-                    </Geographies>
-                  </ZoomableGroup>
-                </ComposableMap>
-              </Wrap>
-              <Box h="auto" textAlign="center">
-                <Chart
-                  chartType="BarChart"
-                  width="100%"
-                  height="100%"
-                  data={data}
-                  options={options}
-                />
-              </Box>
-            </HStack>
-            
-            <VStack w="full">
-              <Divider
-                w="85%"
-                border="2px solid"
-                borderColor="lightgray.main"
-                borderRadius="full"
-                orientation="horizontal"
-                bgColor="lightgray.main"
-              />
-            </VStack>
-            
-
-            <VStack w="full">
-              <Heading fontSize="xl">Worldwide Presence</Heading>
-              <HStack w="full" justifyContent="space-around">
-                <VStack spacing={-2}>
-                  <HStack spacing={4}>
-                    <Countries width="3em" color="#2f6fe4"></Countries>
-                    <Text color="blue.main" fontWeight="600" fontSize="xl" textAlign="center">Number of <br /> Countries</Text>
-                  </HStack>
-                  <Text fontWeight="600" fontSize="3xl">28</Text>
-                </VStack>
-                <VStack spacing={-2}>
-                  <HStack spacing={4}>
-                    <Destinations width="3em" color="#2f6fe4"></Destinations>
-                    <Text color="blue.main" fontWeight="600" fontSize="xl" textAlign="center">Number of <br /> Destinations</Text>
-                  </HStack>
-                  <Text fontWeight="600" fontSize="3xl">123</Text>
-                </VStack>
-              </HStack>
-            </VStack>
-            
-
-          </VStack>
-
-          <HStack
-            spacing={4}
-            textAlign="center"
-            marginBottom="6vw"
-            alignItems="start"
-            height="15%"
-            width="100%"
-            justifyContent="space-evenly"
-          >
+          <VStack spacing={6} w="full">
+            {/* /Summary Card */}
             <Box
               p={5}
               shadow="md"
+              w="full"
               borderWidth="1px"
-              w="22vw"
+              borderColor="black.200"
+              borderRadius="lg"
+              bgColor="#FFF"
+              
+            >
+              <Heading fontSize="xl">Weekly Summary</Heading>
+              <HStack justifyContent="space-evenly" marginTop={6}>
+                <VStack w="8vw">
+                  <Box display='inline-flex'>
+                    <Text> 
+                      <b>Completed </b>
+                    </Text>  
+                    <Text paddingLeft='5px'>Maps</Text>
+                  </Box>
+                  <Box
+                    borderWidth="5px"
+                    borderRadius="lg"
+                    borderColor="blue.main"
+                    w="7vw"
+                    h="7vw"
+                    textAlign="center"
+                  >
+                    <Text fontSize="2em" fontWeight="bold" marginTop="25%">
+                      {submittedMaps}
+                    </Text>
+                  </Box>
+                </VStack>
+                <VStack w="8vw">
+                  <Box display='inline-flex' width="max-content">
+                    <Text> 
+                      <b>In Progress </b>
+                    </Text>  
+                    <Text paddingLeft='5px'>Maps</Text>
+                  </Box>
+                  <Box
+                    borderWidth="5px"
+                    borderRadius="lg"
+                    borderColor="black.main"
+                    w="7vw"
+                    h="7vw"
+                    textAlign="center"
+                  >
+                    <Text fontSize="2em" fontWeight="bold" marginTop="25%">
+                      {inProgressMaps}
+                    </Text>
+                  </Box>
+                </VStack>
+              </HStack>
+            </Box>
+
+            {/* /All Maps Table Card */}
+            <VStack
+                p={5}
+                shadow="md"
+                borderWidth="1px"
+                w="100%"
+                borderRadius="lg"
+                borderColor="black.200"
+                spacing={8}
+                bgColor="#FFF"
+              >
+                <HStack justifyContent="space-between" w="100%">
+                  <VStack>
+                    <Heading fontSize="xl">All Maps</Heading>
+                    <Text color="black.400" marginBottom="1.5vw">
+                      This Year
+                    </Text>
+                  </VStack>
+                  <HStack>
+                    <InputGroup w="80%">
+                      <InputLeftElement
+                        pointerEvents="none"
+                        children={<Search2Icon color="gray.300" />}
+                      />
+                      <Input
+                        placeholder="Search by: Name"
+                        borderColor="lightgray.main"
+                        borderRadius="lg"
+                      ></Input>
+                    </InputGroup>
+                    <FilterMapsComp></FilterMapsComp>
+                  </HStack>
+                </HStack>
+
+                <MapsTable></MapsTable>
+            </VStack>
+          </VStack>
+          
+          
+          <VStack spacing={6} w="full">
+            
+            <HStack w="full">
+              <Grid
+                column={3}
+                columnGap={3}
+                rowGap={3}
+                w="full"
+                h="3vw"
+                marginTop="3vw"
+                color="black.main"
+              >
+                <GridItem colSpan={2} bg="blue.main" h="4px" marginTop="0.7vw">
+                  <HStack
+                    width="full"
+                    height="0.9em"
+                    borderWidth="1px"
+                    borderColor="transparent"
+                    borderBottomColor="white"
+                  ></HStack>
+                </GridItem>
+                <GridItem colSpan={1} textAlign="center" paddingTop={0}>
+                  <Heading fontSize="xl">All Time Statistics</Heading>
+                </GridItem>
+                <GridItem
+                  colStart={4}
+                  colEnd={6}
+                  bg="blue.main"
+                  h="4px"
+                  marginTop="0.7vw"
+                >
+                  <HStack
+                    width="full"
+                    height="0.9em"
+                    borderWidth="1px"
+                    borderColor="transparent"
+                    borderBottomColor="white"
+                  ></HStack>
+                </GridItem>
+              </Grid>
+            </HStack>
+
+            {/* /Worldwide Insights Card */}
+            <VStack
+              p={5}
+              shadow="md"
+              borderWidth="1px"
+              w="full"
               borderRadius="lg"
               borderColor="black.200"
               bgColor="#FFF"
-              height="100%"
+              alignItems="start"
+              spacing={4}
             >
-              <Heading fontSize="xl" color="blue.main" fontWeight="bold">
-                Average number of photos per map
-              </Heading>
-              <Box display='flex' height='100%' flexDirection='column' justifyContent='center'>
-                <Text
-                  fontSize="2em"
-                  color="black.800"
-                  fontWeight="bold"
-                >
-                  {avgNumberPhotos}
+              <VStack>
+                <Heading fontSize="xl">Worldwide Insights</Heading>
+                <Text color="black.400" marginBottom="1.5vw">
+                  Zoom and Pan | This Week
                 </Text>
-                <Text color="black.800" marginBottom="1.5vw">
-                  Photos
-                </Text>
-              </Box>
-            </Box>
+              </VStack>
+              
+              
+              <HStack justifyContent="space-evenly">
+                <Wrap borderRadius="lg" w="40vw" h="auto" textAlign="center">
+                  <ComposableMap
+                    projectionConfig={{ rotate: [-10, 0, 0], scale: 147 }}
+                  >
+                    <ZoomableGroup zoom={1}>
+                      <Sphere
+                        id="1"
+                        fill="transparent"
+                        stroke="#E4E5E6"
+                        strokeWidth={0.5}
+                      />
+                      <Graticule stroke="#E4E5E6" strokeWidth={0.5} />
+                      <Geographies geography={geoUrl}>
+                        {({ geographies }) =>
+                          geographies.map((geo, idx: number) => {
+                            const d = data.find((s) => true);
+                            console.log(colorScale(1));
+                            return (
+                              <Geography
+                                key={geo.rsmKey}
+                                geography={geo}
+                                fill={"#FF7562"}
+                              />
+                            );
+                          })
+                        }
+                      </Geographies>
+                    </ZoomableGroup>
+                  </ComposableMap>
+                </Wrap>
+                <Box h="auto" textAlign="center">
+                  <Chart
+                    chartType="BarChart"
+                    width="100%"
+                    height="100%"
+                    data={data}
+                    options={options}
+                  />
+                </Box>
+              </HStack>
+              
+              <VStack w="full">
+                <Divider
+                  w="85%"
+                  border="2px solid"
+                  borderColor="lightgray.main"
+                  borderRadius="full"
+                  orientation="horizontal"
+                  bgColor="lightgray.main"
+                />
+              </VStack>
+              
 
-            <Stack divider={<StackDivider borderColor="black.200" />}
+              <VStack w="full">
+                <Heading fontSize="xl">Worldwide Presence</Heading>
+                <HStack w="full" justifyContent="space-around">
+                  <VStack spacing={-2}>
+                    <HStack spacing={4}>
+                      <Countries width="3em" color="#2f6fe4"></Countries>
+                      <Text color="blue.main" fontWeight="600" fontSize="xl" textAlign="center">Number of <br /> Countries</Text>
+                    </HStack>
+                    <Text fontWeight="600" fontSize="3xl">28</Text>
+                  </VStack>
+                  <VStack spacing={-2}>
+                    <HStack spacing={4}>
+                      <Destinations width="3em" color="#2f6fe4"></Destinations>
+                      <Text color="blue.main" fontWeight="600" fontSize="xl" textAlign="center">Number of <br /> Destinations</Text>
+                    </HStack>
+                    <Text fontWeight="600" fontSize="3xl">123</Text>
+                  </VStack>
+                </HStack>
+              </VStack>
+              
+
+            </VStack>
+
+            <HStack
+              spacing={4}
+              textAlign="center"
+              marginBottom="6vw"
+              alignItems="start"
+              height="15%"
+              width="100%"
+              justifyContent="space-evenly"
+            >
+              <Box
                 p={5}
                 shadow="md"
                 borderWidth="1px"
@@ -461,89 +443,115 @@ export const MapsOverview = () => (
                 borderColor="black.200"
                 bgColor="#FFF"
                 height="100%"
-                justify='space-around'>
-              <Heading fontSize="xl" color="blue.main" fontWeight="bold">
-                Least Mapped Areas
-              </Heading>
-              <VStack
-                divider={<StackDivider borderColor="black.200" />}
-                p={2}
-                w="100%"
-                height="100%"
-                justify='space-around'
               >
-                {iconsTextLeastMappedAreas.map((area: any) => (
-                  <Box color="black.800" display='inline-flex' justifyContent='space-around'>
-                    <span>
-                      {area[1]}
-                    </span>
-                    <Text marginLeft='0.7em'>
-                      {area[0]}
-                    </Text>
-                  </Box>
-                ))}
-              </VStack>
-            </Stack>
+                <Heading fontSize="xl" color="blue.main" fontWeight="bold">
+                  Average number of photos per map
+                </Heading>
+                <Box display='flex' height='100%' flexDirection='column' justifyContent='center'>
+                  <Text
+                    fontSize="2em"
+                    color="black.800"
+                    fontWeight="bold"
+                  >
+                    {avgNumberPhotos}
+                  </Text>
+                  <Text color="black.800" marginBottom="1.5vw">
+                    Photos
+                  </Text>
+                </Box>
+              </Box>
+
+              <Stack divider={<StackDivider borderColor="black.200" />}
+                  p={5}
+                  shadow="md"
+                  borderWidth="1px"
+                  w="22vw"
+                  borderRadius="lg"
+                  borderColor="black.200"
+                  bgColor="#FFF"
+                  height="100%"
+                  justify='space-around'>
+                <Heading fontSize="xl" color="blue.main" fontWeight="bold">
+                  Least Mapped Areas
+                </Heading>
+                <VStack
+                  divider={<StackDivider borderColor="black.200" />}
+                  p={2}
+                  w="100%"
+                  height="100%"
+                  justify='space-around'
+                >
+                  {iconsTextLeastMappedAreas.map((area: any) => (
+                    <Box color="black.800" display='inline-flex' justifyContent='space-around'>
+                      <span>
+                        {area[1]}
+                      </span>
+                      <Text marginLeft='0.7em'>
+                        {area[0]}
+                      </Text>
+                    </Box>
+                  ))}
+                </VStack>
+              </Stack>
+
+              <Box
+                p={5}
+                shadow="md"
+                borderWidth="1px"
+                w="22vw"
+                borderRadius="lg"
+                borderColor="black.200"
+                bgColor="#FFF"
+                height="100%"
+              >
+                <Heading fontSize="xl" color="blue.main" fontWeight="bold">
+                  Average completion time per map
+                </Heading>
+                <Box display='flex' height='100%' flexDirection='column' justifyContent='center'>
+                  <Text
+                    fontSize="2em"
+                    color="black.800"
+                    fontWeight="bold"
+                  >
+                    {avgCompletionTimePerMap}
+                  </Text>
+                  <Text color="black.800" marginBottom="1.5vw">
+                    Days
+                  </Text>
+                </Box>
+              </Box>
+            </HStack>
 
             <Box
-              p={5}
-              shadow="md"
-              borderWidth="1px"
-              w="22vw"
-              borderRadius="lg"
-              borderColor="black.200"
-              bgColor="#FFF"
-              height="100%"
-            >
-              <Heading fontSize="xl" color="blue.main" fontWeight="bold">
-                Average completion time per map
-              </Heading>
-              <Box display='flex' height='100%' flexDirection='column' justifyContent='center'>
-                <Text
-                  fontSize="2em"
-                  color="black.800"
-                  fontWeight="bold"
-                >
-                  {avgCompletionTimePerMap}
+                p={5}
+                shadow="md"
+                borderWidth="1px"
+                w="100%"
+                borderRadius="lg"
+                borderColor="black.200"
+                bgColor="#FFF"
+              >
+                <Heading fontSize="xl">History: Completed AMS Maps</Heading>
+                <Text color="black.400" marginBottom="1.5vw">
+                  This Year
                 </Text>
-                <Text color="black.800" marginBottom="1.5vw">
-                  Days
-                </Text>
-              </Box>
+                <HStack justifyContent="space-evenly">
+                  <Box w="full" h="25vw" textAlign="center">
+                    <Chart
+                      chartType="LineChart"
+                      width="100%"
+                      height="100%"
+                      data={dataLineChart}
+                      options={optionsLineChart}
+                    />
+                  </Box>
+                </HStack>
             </Box>
-          </HStack>
-
-          <Box
-              p={5}
-              shadow="md"
-              borderWidth="1px"
-              w="100%"
-              borderRadius="lg"
-              borderColor="black.200"
-              bgColor="#FFF"
-            >
-              <Heading fontSize="xl">History: Completed AMS Maps</Heading>
-              <Text color="black.400" marginBottom="1.5vw">
-                This Year
-              </Text>
-              <HStack justifyContent="space-evenly">
-                <Box w="full" h="25vw" textAlign="center">
-                  <Chart
-                    chartType="LineChart"
-                    width="100%"
-                    height="100%"
-                    data={dataLineChart}
-                    options={optionsLineChart}
-                  />
-                </Box>
-              </HStack>
-          </Box>
+          </VStack>
         </VStack>
-        
-
-      </VStack>
-    </Flex>
-  </Container>
-);
+      </Flex>
+    </Container>
+  )
+};
 
 export default MapsOverview;
