@@ -1,5 +1,9 @@
+// Importing i18n-iso-countries library to obtain countries' ISO code
+import * as i18nIsoCountries from 'i18n-iso-countries';
+
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
+import ReactTooltip from "react-tooltip";
 
 // Imports from d3-fetch y d3-scale
 import { csv } from "d3-fetch";
@@ -10,6 +14,7 @@ import axios from "axios"
 
 // Importing moment library to parse dates
 import moment from "moment";
+
 
 // Imports from Chakra UI
 import {
@@ -36,6 +41,7 @@ import { Search2Icon } from "@chakra-ui/icons";
 import CalendarDatePicker from '../../components/CalendarDatePicker/CalendarDatePicker.component';
 import MapsTable from '../../components/MapsTable/mapsTable.component';
 import Error404 from "../Error404"
+import SummaryOnDatePicking from "../../components/SummaryOnDatePicking";
 
 // Imports of icons from wtw icons
 import Entrance from 'wtw-icons/_icons/Entrance'
@@ -70,6 +76,8 @@ import FilterMapsComp from "../../components/FilterMapsComp";
 // Importing WTW Icons
 import Countries from 'wtw-icons/_icons/Countries'; 
 import Destinations from 'wtw-icons/_icons/Destinations'; 
+
+i18nIsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
 // VARS-------------------------------------------------------------
 
@@ -153,10 +161,12 @@ export const MapsOverview = () => {
 	const [ error, setError ] = useState<any>(null);
   const [ mapsOverviewData, setMapsOverviewData ] = useState<any>(null);
   const [ iconsTextLeastMappedAreas,setIconsTextLeastMappedAreas ] = useState<any>([]);
+  const [ tooltipContent, setTooltipContent ] = useState<string>('')
+  const [ dataMap, setDataMap ] = useState<any>([])
 
   useEffect(()=>{
     setStatus('loading')
-    axios.get(`http://localhost:9000/maps/overview`) // Devuelve data de mapsOverview
+    axios.get(`http://localhost:9000/maps/overview/${calendarStartDate}/${calendarEndDate}`) // Devuelve data de mapsOverview
         .then((result)=>{
           setMapsOverviewData(result.data)
           setStatus('resolved')
@@ -165,6 +175,9 @@ export const MapsOverview = () => {
             }
           )
           setIconsTextLeastMappedAreas(areasAMS.filter( (area) => { for(let i = 0; i < result.data.allTimeStatistics.leastMappedAreas.length; i++) if (result.data.allTimeStatistics.leastMappedAreas[i] === area[0]) return true}))
+          result.data.allTimeStatistics.worldwideInsights.map((item:any) => {
+            dataMap.push([i18nIsoCountries.getAlpha3Code(item.country_name, "en"), item.cantidad])
+          })
         })
         .catch((error)=>{
           setError(error)
@@ -213,60 +226,7 @@ export const MapsOverview = () => {
 
             <VStack spacing={6} w="full">
               {/* /Summary Card */}
-              <Box
-                p={5}
-                shadow="md"
-                w="full"
-                borderWidth="1px"
-                borderColor="black.200"
-                borderRadius="lg"
-                bgColor="#FFF"
-                
-              >
-                <Heading fontSize="xl">Weekly Summary</Heading>
-                <HStack justifyContent="space-evenly" marginTop={6}>
-                  <VStack w="8vw">
-                    <Box display='inline-flex'>
-                      <Text> 
-                        <b>Completed </b>
-                      </Text>  
-                      <Text paddingLeft='5px'>Maps</Text>
-                    </Box>
-                    <Box
-                      borderWidth="5px"
-                      borderRadius="lg"
-                      borderColor="blue.main"
-                      w="7vw"
-                      h="7vw"
-                      textAlign="center"
-                    >
-                      <Text fontSize="2em" fontWeight="bold" marginTop="25%">
-                        {mapsOverviewData.summary.completedMaps}
-                      </Text>
-                    </Box>
-                  </VStack>
-                  <VStack w="8vw">
-                    <Box display='inline-flex' width="max-content">
-                      <Text> 
-                        <b>In Progress </b>
-                      </Text>  
-                      <Text paddingLeft='5px'>Maps</Text>
-                    </Box>
-                    <Box
-                      borderWidth="5px"
-                      borderRadius="lg"
-                      borderColor="black.main"
-                      w="7vw"
-                      h="7vw"
-                      textAlign="center"
-                    >
-                      <Text fontSize="2em" fontWeight="bold" marginTop="25%">
-                        {mapsOverviewData.summary.mapsInProgress}
-                      </Text>
-                    </Box>
-                  </VStack>
-                </HStack>
-              </Box>
+              <SummaryOnDatePicking calendarStartDate={calendarStartDate} calendarEndDate={calendarEndDate} />
 
               {/* /All Maps Table Card */}
               <VStack
@@ -302,7 +262,7 @@ export const MapsOverview = () => {
                     </HStack>
                   </HStack>
 
-                  <MapsTable></MapsTable>
+                  {/*<MapsTable></MapsTable>*/}
               </VStack>
             </VStack>
             
@@ -370,9 +330,11 @@ export const MapsOverview = () => {
                 
                 
                 <HStack justifyContent="space-evenly">
+                  <ReactTooltip>{tooltipContent}</ReactTooltip>
                   <Wrap borderRadius="lg" w="40vw" h="auto" textAlign="center">
                     <ComposableMap
                       projectionConfig={{ rotate: [-10, 0, 0], scale: 147 }}
+                      data-tip={tooltipContent}
                     >
                       <ZoomableGroup zoom={1}>
                         <Sphere
@@ -385,17 +347,24 @@ export const MapsOverview = () => {
                         <Geographies geography={geoUrl}>
                           {({ geographies }) =>
                             geographies.map((geo, idx: number) => {
-                              const d = data.find((s) => true);
+                              const d = dataMap.find((s:any) => s[0] === geo.properties.ISO_A3);
                               console.log(colorScale(1));
                               return (
                                 <Geography
                                   key={geo.rsmKey}
                                   geography={geo}
-                                  fill={"#FF7562"}
+                                  onMouseEnter={() => {
+                                    const { NAME } = geo.properties;
+                                    setTooltipContent(`${NAME}`);
+                                  }}
+                                  onMouseLeave={() => {
+                                    setTooltipContent("");
+                                  }}
+                                  fill={d ? "#ffa500" : "#F5F4F6"}
                                 />
-                              );
-                            })
-                          }
+                                );
+                              })
+                            }
                         </Geographies>
                       </ZoomableGroup>
                     </ComposableMap>
