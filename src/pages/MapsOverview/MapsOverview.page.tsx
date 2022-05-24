@@ -354,13 +354,14 @@ export const MapsOverview = () => {
                                   key={geo.rsmKey}
                                   geography={geo}
                                   onMouseEnter={() => {
-                                    const { NAME } = geo.properties;
-                                    setTooltipContent(`${NAME}`);
+                                    const { NAME, ISO_A3 } = geo.properties;
+                                    console.log(geo.properties)
+                                    setTooltipContent(`${NAME} ${dataMap.find((item:any) => {ISO_A3 === item[0]})}`)
                                   }}
                                   onMouseLeave={() => {
                                     setTooltipContent("");
                                   }}
-                                  fill={d ? "#ffa500" : "#F5F4F6"}
+                                  fill={d ? "#FF7562" : "#F5F4F6"}
                                 />
                                 );
                               })
