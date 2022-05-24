@@ -356,7 +356,8 @@ export const MapsOverview = () => {
                                   onMouseEnter={() => {
                                     const { NAME, ISO_A3 } = geo.properties;
                                     console.log(geo.properties)
-                                    setTooltipContent(`${NAME} ${dataMap.find((item:any) => {ISO_A3 === item[0]})}`)
+                                    let countryHovered = dataMap.find((item:any[]) => ISO_A3 === item[0])
+                                    setTooltipContent(`${NAME} - ${countryHovered[1]} maps`)
                                   }}
                                   onMouseLeave={() => {
                                     setTooltipContent("");
