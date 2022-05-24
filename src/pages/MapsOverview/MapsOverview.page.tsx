@@ -42,6 +42,7 @@ import CalendarDatePicker from '../../components/CalendarDatePicker/CalendarDate
 import MapsTable from '../../components/MapsTable/mapsTable.component';
 import Error404 from "../Error404"
 import SummaryOnDatePicking from "../../components/SummaryOnDatePicking";
+import MapProgressbar from "../../components/MapProgressbar";
 
 // Imports of icons from wtw icons
 import Entrance from 'wtw-icons/_icons/Entrance'
@@ -76,6 +77,16 @@ import FilterMapsComp from "../../components/FilterMapsComp";
 // Importing WTW Icons
 import Countries from 'wtw-icons/_icons/Countries'; 
 import Destinations from 'wtw-icons/_icons/Destinations'; 
+
+//Imports interface for table info
+import {IData} from '../../components/MapsTable/mapsTable.types'
+
+//Imports react router components
+import { Link } from 'react-router-dom';
+
+import {  Column } from 'react-table'
+import MapsTablePicker from '../../components/MapsTablePicker';
+
 
 i18nIsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
@@ -163,7 +174,9 @@ export const MapsOverview = () => {
   const [ iconsTextLeastMappedAreas,setIconsTextLeastMappedAreas ] = useState<any>([]);
   const [ tooltipContent, setTooltipContent ] = useState<string>('')
   const [ dataMap, setDataMap ] = useState<any>([])
+  const [ maps, setMaps ] = useState<IData[]>([]);
 
+  
   useEffect(()=>{
     setStatus('loading')
     axios.get(`http://localhost:9000/maps/overview/${calendarStartDate}/${calendarEndDate}`) // Devuelve data de mapsOverview
@@ -177,6 +190,16 @@ export const MapsOverview = () => {
           setIconsTextLeastMappedAreas(areasAMS.filter( (area) => { for(let i = 0; i < result.data.allTimeStatistics.leastMappedAreas.length; i++) if (result.data.allTimeStatistics.leastMappedAreas[i] === area[0]) return true}))
           result.data.allTimeStatistics.worldwideInsights.map((item:any) => {
             dataMap.push([i18nIsoCountries.getAlpha3Code(item.country_name, "en"), item.cantidad])
+          })
+
+          axios.get(`http://localhost:9000/maps/table/${calendarStartDate}/${calendarEndDate}`) // Devuelve lista de mappers
+          .then((result)=>{
+            setMaps(result.data)
+            setStatus('resolved')
+          })
+          .catch((error)=>{
+            setError(error)
+            setStatus('error')
           })
         })
         .catch((error)=>{
@@ -262,7 +285,7 @@ export const MapsOverview = () => {
                     </HStack>
                   </HStack>
 
-                  {/*<MapsTable></MapsTable>*/}
+                  <MapsTablePicker calendarStartDate={calendarStartDate} calendarEndDate={calendarEndDate}></MapsTablePicker>
               </VStack>
             </VStack>
             
