@@ -4,6 +4,7 @@ export interface IPropTypes {
 }
 
 export interface IData {
+    id:number,
     placeName: string, 
     city: string, 
     progress: number,

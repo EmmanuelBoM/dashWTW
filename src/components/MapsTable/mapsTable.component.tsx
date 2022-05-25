@@ -20,7 +20,7 @@ function MapsTable(props: IPropTypes): JSX.Element {
 			getTableBodyProps, 
 			headerGroups, 
 			rows, 
-			prepareRow } = useTable({ columns, data }, useSortBy, useFlexLayout)
+			prepareRow } = useTable({ columns, data, initialState: {hiddenColumns:["id"]}}, useSortBy, useFlexLayout)
 	
 	return (
 		<Table {...getTableProps()} size="md" w="full" display="grid" >

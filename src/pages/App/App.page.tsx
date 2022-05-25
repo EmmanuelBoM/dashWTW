@@ -29,7 +29,7 @@ export const App = () => (
           <Route path="maps" element={<MapsOverview />}/>
           <Route path="mappers" element={<MappersOverview/>} />
           <Route path="mappers/:mapperId" element={<MapperDetails />}/>
-          <Route path="the-grand-mayan" element={<MapDetails />} />
+          <Route path="maps/:acommodationId" element={<MapDetails />} />
           <Route path="*" element={<Error404/>} />
         </Route>
       </Routes>
