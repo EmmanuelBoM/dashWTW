@@ -14,13 +14,21 @@
     "@types/node": "^12.20.47",
     "@types/react": "^16.14.24",
     "@types/react-dom": "^16.9.14",
+<<<<<<< HEAD
     "chakra": "0.0.3",
     "chakra-ui": "^0.3.9",
+=======
+    "axios": "^0.27.2",
+>>>>>>> 124fa8fcd0085568fa0f03eacfd653d47c848a16
     "classnames": "^2.3.1",
     "d3-fetch": "^3.0.1",
     "d3-scale": "^4.0.2",
     "framer-motion": "^3.10.6",
+<<<<<<< HEAD
     "install": "^0.13.0",
+=======
+    "i18n-iso-countries": "^7.4.0",
+>>>>>>> 124fa8fcd0085568fa0f03eacfd653d47c848a16
     "moment": "^2.29.2",
     "node": "^17.7.2",
     "npm": "^8.8.0",
@@ -36,6 +44,7 @@
     "react-scripts": "5.0.0",
     "react-simple-maps": "^2.3.0",
     "react-table": "^7.7.0",
+    "react-tooltip": "^4.2.21",
     "react-with-styles": "^5.0.0",
     "sequelize": "^6.19.0",
     "sqlite3": "^5.0.6",

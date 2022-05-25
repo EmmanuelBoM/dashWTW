@@ -41,7 +41,7 @@ function Error404(props: IPropTypes): JSX.Element {
                 borderColor='transparent' 
                 variant='login-button-clicked' 
                 fontWeight='700' 
-                onClick={()=>{navigate(`/landing`)}}>Go back to the Dashboard
+                onClick={()=>{navigate(`/maps`)}}>Go back to the Dashboard
         </Button>
       </Flex>
 		</Container>

@@ -11,7 +11,7 @@ import WTWLogo from '../../assets/WTW-logo.jpg'
 
 // LOG IN VIEW ---------------------------
 export const LogIn = () => (
-  <Container maxWidth="container.xxl" bg="black">
+  <Container maxWidth="container.xxl" height="full" bg="black">
     <Flex
       w="full"
       textAlign="center"

@@ -12,114 +12,22 @@ import { Link } from 'react-router-dom';
 import {IData} from './mapsTable.types'
 
 function MapsTable(props: IPropTypes): JSX.Element {
+	const data = props.data;
+	const columns = props.columns
 	
-	const data = React.useMemo<IData[]>(
-		() => [
-		  {
-			placeName: 'The Grand Mayan',
-			city: 'Puerto Vallarta, MX',
-			progress: 10,
-		  },
-		  {
-			placeName: 'Holiday Inn',
-			city: 'Pachuca, MX',
-			progress: 80,
-		  },
-		  {
-			placeName: 'Hotel Lancelot',
-			city: 'Rome, IT',
-			progress: 45,
-		  },
-		  {
-			placeName: 'The Grand Mayan',
-			city: 'Puerto Vallarta, MX',
-			progress: 100,
-		  },
-		  {
-			placeName: 'Holiday Inn',
-			city: 'Pachuca, MX',
-			progress: 80,
-		  },
-		  {
-			placeName: 'Hotel Lancelot',
-			city: 'Rome, IT',
-			progress: 45,
-		  },
-		  {
-			placeName: 'The Grand Mayan',
-			city: 'Puerto Vallarta, MX',
-			progress: 25,
-		  },
-		  {
-			placeName: 'Holiday Inn',
-			city: 'Pachuca, MX',
-			progress: 80,
-		  },
-		  {
-			placeName: 'Hotel Lancelot',
-			city: 'Rome, IT',
-			progress: 45,
-		  },
-		  {
-			placeName: 'The Grand Mayan',
-			city: 'Puerto Vallarta, MX',
-			progress: 25,
-		  },
-		  {
-			placeName: 'Holiday Inn',
-			city: 'Pachuca, MX',
-			progress: 80,
-		  },
-		  {
-			placeName: 'Hotel Lancelot',
-			city: 'Rome, IT',
-			progress: 45,
-		  },
-		],
-		[]
-	  )
-
-
-	const columns = React.useMemo<Column[]>(
-    () => [
-      {
-        Header: "Place name",
-        accessor: "placeName",
-		Cell: ({ cell: { value } }) => (
-			<Link to="/the-grand-mayan">{value}</Link>
-		  ),
-      },
-      {
-        Header: "City",
-        accessor: "city",
-      },
-      {
-        Header: "Mapping progress",
-        accessor: "progress",
-        isNumeric: true,
-        Cell: ({ cell: { value } }) => (
-          <MapProgressbar
-            progress={value}
-            showProgress={false}
-          ></MapProgressbar>
-        ),
-      },
-    ],
-    []
-  );
 
 	const { getTableProps, 
 			getTableBodyProps, 
 			headerGroups, 
 			rows, 
-			prepareRow } = useTable({ columns, data }, useSortBy, useFlexLayout)
+			prepareRow } = useTable({ columns, data, initialState: {hiddenColumns:["id"]}}, useSortBy, useFlexLayout)
 	
 	return (
 		<Table {...getTableProps()} size="md" w="full" display="grid" >
 			<Thead >
 				{headerGroups.map((headerGroup) => (
 				<Tr {...headerGroup.getHeaderGroupProps()}>
-					{headerGroup.headers.map((column) => (
+					{headerGroup.headers.map((column: any) => (
 					<Th
 						{...column.getHeaderProps(column.getSortByToggleProps())}
 						isNumeric={column.isNumeric}
@@ -148,7 +56,7 @@ function MapsTable(props: IPropTypes): JSX.Element {
 				prepareRow(row)
 				return (
 					<Tr {...row.getRowProps()} fontSize="sm">
-					{row.cells.map((cell) => (
+					{row.cells.map((cell: any) => (
 						<Td {...cell.getCellProps()} isNumeric={cell.column.isNumeric}>
 						{cell.render('Cell')}
 						</Td>

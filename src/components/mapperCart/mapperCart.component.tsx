@@ -6,52 +6,39 @@ import {
 	AspectRatio,
 	Image,
 	Divider,
+  Heading,
 	Button, ButtonGroup, color,
 
 } from "@chakra-ui/react";
 import { IPropTypes } from './mapperCart.types';
 import { Link } from 'react-router-dom';
+import "./mapperCart.modules.css"
 
-function MapperCart(props: IPropTypes): JSX.Element {
+function MapperCart(props: IPropTypes): JSX.Element { 
 	
 	return (
   
-    <Link to="/mapper">
+    <Link to={`/mappers/${props.mapper.name.id}`} >
         <VStack
-			borderRadius="2xl"
-      bg="black.100"
-			p={3}
-			w="17rem"
-			marginBottom="1.5rem !important"
-			spacing={2}	
-			boxShadow="4px 11px 28px rgba(0, 0, 0, 0.08);"
-			cursor="pointer"	
-			_hover={{ backgroundColor: '#3E5A8C',color:'white' }}
-
+        id="card-mapper"
+			  borderRadius="2xl"
+        bg="black.100"
+			  p={3}
+			  w="17rem"
+			  marginBottom="1.5rem !important"
+			  spacing={4}	
+			  boxShadow="4px 11px 28px rgba(0, 0, 0, 0.08);"
+			  cursor="pointer"	
+			  _hover={{ backgroundColor: '#3E5A8C', color:'#fff !important' }}
 		>
-			<VStack alignItems="center" p={0} >
+			<VStack alignItems="center" p={0} spacing={3} className="mapper-info" textAlign="center">
 				<AspectRatio  w={20} height={20}>
-						<Image marginTop="12%" borderRadius="full" src={props.mapper.profileImg} alt="Mapper Profile Image" />
+						<Image marginTop="12%" borderRadius="full" src={props.mapper.name.photo === null ? `https://aui.atlassian.com/aui/8.8/docs/images/avatar-person.svg` : props.mapper.name.photo } alt="Mapper Profile Image" />
 				</AspectRatio>
+        <Text fontWeight="500" fontSize="xl" color="black.700" id="mapper-name" >{`${props.mapper.name.name} ${props.mapper.name.lname} `}</Text>
 			</VStack>
 
 
-      <VStack spacing={0}>
-        <Text fontWeight="600">{props.mapper.mapperName}</Text>
-        <Text
-          color="black.400"
-          fontSize="sm"
-        >{`${props.mapper.mapperCity}, ${props.mapper.mapperCountry}`}</Text>
-      </VStack>
-      <VStack spacing={0}>
-        <Text fontWeight="bold" fontSize="sm">
-          Last Sign In
-        </Text>
-        <Text fontSize="smaller">{props.mapper.lastSignInDate}</Text>
-        <Text color="black.400" fontSize="smaller">
-          {props.mapper.lastSignInHour}
-        </Text>
-      </VStack>
 
       <VStack border="1px solid #DFE0EB" borderRadius="lg" w="15rem" p={3}>
         <VStack>
@@ -65,8 +52,8 @@ function MapperCart(props: IPropTypes): JSX.Element {
             <Text color="black.400" fontSize="sm">
               Done
             </Text>
-            <Text fontWeight="bold" size="md">
-              {props.mapper.mapsDone}
+            <Text fontWeight="800" fontSize="lg">
+              {props.mapper.maps.done}
             </Text>
           </VStack>
           <VStack
@@ -80,8 +67,8 @@ function MapperCart(props: IPropTypes): JSX.Element {
             <Text color="black.400" fontSize="sm">
               In progress
             </Text>
-            <Text fontWeight="bold" size="md">
-              {props.mapper.mapsInProgress}
+            <Text fontWeight="800" fontSize="lg">
+              {props.mapper.maps.progress}
             </Text>
           </VStack>
         </HStack>
@@ -89,18 +76,26 @@ function MapperCart(props: IPropTypes): JSX.Element {
 
 
       <VStack>
+        
         <Button
+          id='btn-contact-mapper'
           marginTop={3.5}
           border=" 1px solid #DFE0EB"
           color="#2F6FE4"
           fontWeight="700"
           borderRadius="full"
+          className='card-contact'
           px={6}
           size="md"
           bg="transparent"
+          onClick={(e:any) => (e.preventDefault())}
         >
+          <a href={`mailto:${props.mapper.contact}`}>
           Contact
+          </a>
         </Button>
+        
+        
       </VStack>
     </VStack>
     </Link>

@@ -85,7 +85,9 @@ function FilternSort(): JSX.Element {
         </MenuList>
       </Menu>
 
-      <Menu closeOnSelect={false}>
+      {// Country & City Filters no longer possible to implement 
+      //  due to lack of these attributes on the database.
+      /**<Menu closeOnSelect={false}>
         <MenuButton
           as={Button}
           leftIcon={<i className="fa-solid fa-filter sort-icon"></i>}
@@ -107,7 +109,8 @@ function FilternSort(): JSX.Element {
             {perCity(paises, name[1])}
           </MenuOptionGroup>
         </MenuList>
-      </Menu>
+      </Menu> */}
+      
     </HStack>
   );
 }

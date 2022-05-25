@@ -1,10 +1,10 @@
 export interface IPropTypes {
-    data: any,
-    columns:any
+    calendarStartDate: any
+    calendarEndDate: any
 }
 
 export interface IData {
-    id:number,
+    id: number,
     placeName: string, 
     city: string, 
     progress: number,
