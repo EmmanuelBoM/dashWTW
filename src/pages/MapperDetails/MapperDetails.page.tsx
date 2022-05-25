@@ -52,11 +52,16 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
 	const columns: Column<IData>[] = React.useMemo(
     () => [
       {
+        Header: "ID",
+        accessor: "id",
+        isVisible: false
+      },
+      {
         Header: "Place name",
         accessor: "placeName",
-		Cell: ({ cell: { value } }) => (
-			<Link to="/the-grand-mayan">{value}</Link>
-		  ),
+		    Cell: ( props) => (
+		    	<Link to={`/maps/${props.row.original.id}`}>{props.cell.value}</Link>
+		    ),
       },
       {
         Header: "City",
@@ -262,7 +267,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                           Date and Hour
                         </Text>
                         <Text fontSize="3xl" fontWeight="800">
-                        {details.replies.lastReply}
+                          Pending
                         </Text>
                       </VStack>
                       <Divider
@@ -322,7 +327,6 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                   </VStack>
                 </HStack>
               </VStack>
-            
             </VStack>
           </Flex>
         </Container>
