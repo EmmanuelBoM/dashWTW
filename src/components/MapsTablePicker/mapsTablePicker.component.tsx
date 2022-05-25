@@ -26,7 +26,7 @@ function MapsTable(props: IPropTypes): JSX.Element {
 		() => [
 			{
 			Header: "ID",
-			accessor: "placeID",
+			accessor: "id",
 			isVisible:false
 			},
 
@@ -34,7 +34,7 @@ function MapsTable(props: IPropTypes): JSX.Element {
 			Header: "Place name",
 			accessor: "placeName",
 			Cell: (props) => (
-				<Link to={`/maps/${props.row.original.city}`}>{props.cell.value}</Link>
+				<Link to={`/maps/${props.row.original.id}`}>{props.cell.value}</Link>
 			  ),
 		  },
 		  {
@@ -74,7 +74,7 @@ function MapsTable(props: IPropTypes): JSX.Element {
 			getTableBodyProps, 
 			headerGroups, 
 			rows, 
-			prepareRow } = useTable({ columns, data, initialState: {hiddenColumns:["placeID"]} }, useSortBy, useFlexLayout,)
+			prepareRow } = useTable({ columns, data, initialState: {hiddenColumns:["id"]} }, useSortBy, useFlexLayout,)
 	
 	if (status === "loading") {
 		return(
