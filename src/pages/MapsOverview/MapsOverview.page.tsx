@@ -5,8 +5,7 @@ import React from "react";
 import { useState, useEffect, memo } from "react";
 import ReactTooltip from "react-tooltip";
 
-// Imports from d3-fetch y d3-scale
-import { csv } from "d3-fetch";
+// Imports from d3-scale
 import { scaleLinear } from "d3-scale";
 
 // Imports axios
@@ -113,16 +112,12 @@ let areasAMS:any[] = [["Building Entrance", <BuildingEntrance width="1em" height
 
 // Data of map
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
-const colours:any = ["#ffedea", "#ff5233"]
-const colorScale = scaleLinear()
-  .domain([0.29, 0.68])
-  .range(colours);
 
 // Data of bar chart
 const data = [
   [
     "Element",
-    "Published Listings",
+    "Maps",
     { role: "style" },
     {
       sourceColumn: 0,
@@ -369,21 +364,26 @@ export const MapsOverview = () => {
                         <Graticule stroke="#E4E5E6" strokeWidth={0.5} />
                         <Geographies geography={geoUrl}>
                           {({ geographies }) =>
-                            geographies.map((geo, idx: number) => {
-                              const d = dataMap.find((s:any) => s[0] === geo.properties.ISO_A3);
-                              console.log(colorScale(1));
+                            geographies.map((geo:any) => {
+                              const d:any[] = dataMap.find((s:any[]) => s[0] === geo.properties.ISO_A3);
+                              const colours:any[] = ["#ffedea", "#ff5233"]
+                              const colorScale = scaleLinear()
+                                .domain([0, 337])
+                                .range(colours)
+                              let colourToBeUsed:string = colorScale(d? d[1]: 0).toString()
                               return (
                                 <Geography
                                   key={geo.rsmKey}
                                   geography={geo}
                                   onMouseEnter={() => {
-                                    const { NAME } = geo.properties;
-                                    setTooltipContent(`${NAME}`);
+                                    const { NAME, ISO_A3 } = geo.properties;
+                                    let countryHovered = dataMap.find((item:any[]) => ISO_A3 === item[0])
+                                    setTooltipContent(`${NAME} - ${countryHovered[1]} maps`)
                                   }}
                                   onMouseLeave={() => {
                                     setTooltipContent("");
                                   }}
-                                  fill={d ? "#ffa500" : "#F5F4F6"}
+                                  fill={d ? colourToBeUsed : "#F5F4F6"}
                                 />
                                 );
                               })
@@ -392,7 +392,7 @@ export const MapsOverview = () => {
                       </ZoomableGroup>
                     </ComposableMap>
                   </Wrap>
-                  <Box h="auto" textAlign="center">
+                  <Box h="auto" textAlign="center" w="auto">
                     <Chart
                       chartType="BarChart"
                       width="100%"
