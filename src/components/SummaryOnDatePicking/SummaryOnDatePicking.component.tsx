@@ -13,6 +13,7 @@ import {
   HStack
 } from "@chakra-ui/react"
 
+
 import Error404 from '../../pages/Error404/Error404.page';
 
 export const SummaryOnDatePicking = (props:any) => {
@@ -59,7 +60,7 @@ export const SummaryOnDatePicking = (props:any) => {
         bgColor="#FFF"
         
         >
-        <Heading fontSize="xl">Weekly Summary</Heading>
+        <Heading fontSize="xl">{props.datePickerSelection} Summary</Heading>
         <HStack justifyContent="space-evenly" marginTop={6}>
             <VStack w="8vw">
             <Box display='inline-flex'>

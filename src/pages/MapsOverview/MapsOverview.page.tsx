@@ -1,8 +1,7 @@
 // Importing i18n-iso-countries library to obtain countries' ISO code
 import * as i18nIsoCountries from 'i18n-iso-countries';
 
-import React from "react";
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect } from "react";
 import ReactTooltip from "react-tooltip";
 
 // Imports from d3-scale
@@ -13,7 +12,6 @@ import axios from "axios"
 
 // Importing moment library to parse dates
 import moment from "moment";
-
 
 // Imports from Chakra UI
 import {
@@ -140,16 +138,24 @@ const options = {
 
 // Data of line chart
 const dataLineChart = [
-  ["Week", "Maps"],
-  ["1 '22", 45],
-  ["2 '22", 20],
-  ["3 '22", 70],
-  ["4 '22", 50],
-  ["5 '22", 20],
-  ["6 '22", 35],
-  ["7 '22", 60],
-  ["8 '22", 50],
+  ["Month", "Maps"],
 ];
+
+// enum of Typescript
+enum MonthsOfTheYear {
+  "Jan" = 1,
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec"
+}
 
 // Options of line chart
 const optionsLineChart = {
@@ -162,6 +168,7 @@ export const MapsOverview = () => {
 
   const [ calendarStartDate, setCalendarStartDate ] = useState<any>(moment().startOf("week").format("YYYY-MM-DD"))
   const [ calendarEndDate, setCalendarEndDate ] = useState<any>(moment().format("YYYY-MM-DD"))
+  const [ datePickerSelection, setDatePickerSelection ] = useState<string>("This Week")
 
   const [ status, setStatus ] = useState<string>('loading');
 	const [ error, setError ] = useState<any>(null);
@@ -186,15 +193,10 @@ export const MapsOverview = () => {
           result.data.allTimeStatistics.worldwideInsights.map((item:any) => {
             dataMap.push([i18nIsoCountries.getAlpha3Code(item.country_name, "en"), item.cantidad])
           })
-
-          axios.get(`http://localhost:9000/maps/table/${calendarStartDate}/${calendarEndDate}`) // Devuelve lista de mappers
-          .then((result)=>{
-            setMaps(result.data)
-            setStatus('resolved')
-          })
-          .catch((error)=>{
-            setError(error)
-            setStatus('error')
+          
+          result.data.allTimeStatistics.completedAMSMaps.map((item:any) => {
+            let axisTag:string = `${MonthsOfTheYear[item.mes]} ${item.año}`
+            dataLineChart.push([axisTag, item.cant])
           })
         })
         .catch((error)=>{
@@ -238,13 +240,17 @@ export const MapsOverview = () => {
 
               <VStack alignItems="flex-start" w="33vw">
                 <Text color="black.600">View statistics by:</Text>
-                <CalendarDatePicker setCalendarStartDate={setCalendarStartDate} setCalendarEndDate={setCalendarEndDate} />
+                <CalendarDatePicker 
+                  setCalendarStartDate={setCalendarStartDate} 
+                  setCalendarEndDate={setCalendarEndDate}
+                  setDatePickerSelection={setDatePickerSelection}
+                   />
               </VStack>
             </HStack>
 
             <VStack spacing={6} w="full">
               {/* /Summary Card */}
-              <SummaryOnDatePicking calendarStartDate={calendarStartDate} calendarEndDate={calendarEndDate} />
+              <SummaryOnDatePicking calendarStartDate={calendarStartDate} calendarEndDate={calendarEndDate} datePickerSelection={datePickerSelection}/>
 
               {/* /All Maps Table Card */}
               <VStack
@@ -261,7 +267,7 @@ export const MapsOverview = () => {
                     <VStack>
                       <Heading fontSize="xl">All Maps</Heading>
                       <Text color="black.400" marginBottom="1.5vw">
-                        This Year
+                        {datePickerSelection}
                       </Text>
                     </VStack>
                     <HStack>
