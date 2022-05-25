@@ -40,7 +40,7 @@ function CalendarDatePicker(props:any) {
   // Function that handles date changes when clicking the default selectors
   function handleDateChanges (event:any):void {
     event.preventDefault();
-    if(event.target.name === 'This week') {
+    if(event.target.name === 'This Week') {
       setStartDate(moment().startOf("week"))
       setEndDate(moment())
       props.setCalendarStartDate(moment().startOf("week").format("YYYY-MM-DD"))
@@ -53,9 +53,10 @@ function CalendarDatePicker(props:any) {
       setLastTrimesterController(undefined)
       setThisYearController(undefined)
       setLastYearController(undefined)
+      props.setDatePickerSelection(event.target.name)
     }
 
-    else if(event.target.name === 'Last week') {
+    else if(event.target.name === 'Last Week') {
       setStartDate(moment().subtract(1, "weeks").startOf("week"))
       setEndDate(moment().subtract(1, "weeks").endOf("week"))
       props.setCalendarStartDate(moment().subtract(1, "weeks").startOf("week").format("YYYY-MM-DD"))
@@ -68,9 +69,10 @@ function CalendarDatePicker(props:any) {
       setLastTrimesterController(undefined)
       setThisYearController(undefined)
       setLastYearController(undefined)
+      props.setDatePickerSelection(event.target.name)
     }
 
-    else if(event.target.name === 'This month') {
+    else if(event.target.name === 'This Month') {
       setStartDate(moment().startOf("month"))
       setEndDate(moment())
       props.setCalendarStartDate(moment().startOf("month").format("YYYY-MM-DD"))
@@ -83,9 +85,10 @@ function CalendarDatePicker(props:any) {
       setLastTrimesterController(undefined)
       setThisYearController(undefined)
       setLastYearController(undefined)
+      props.setDatePickerSelection(event.target.name)
     }
 
-    else if(event.target.name === 'Last month') {
+    else if(event.target.name === 'Last Month') {
       setStartDate(moment().subtract(1, "months").startOf("month"))
       setEndDate(moment().subtract(1, "months").endOf("month"))
       props.setCalendarStartDate(moment().subtract(1, "months").startOf("month").format("YYYY-MM-DD"))
@@ -98,9 +101,10 @@ function CalendarDatePicker(props:any) {
       setLastTrimesterController(undefined)
       setThisYearController(undefined)
       setLastYearController(undefined)
+      props.setDatePickerSelection(event.target.name)
     }
 
-    else if(event.target.name === 'This trimester') {
+    else if(event.target.name === 'This Trimester') {
       setStartDate(moment().subtract(2, "months").startOf("month"))
       setEndDate(moment())
       props.setCalendarStartDate(moment().subtract(2, "months").startOf("month").format("YYYY-MM-DD"))
@@ -113,9 +117,10 @@ function CalendarDatePicker(props:any) {
       setLastTrimesterController(undefined)
       setThisYearController(undefined)
       setLastYearController(undefined)
+      props.setDatePickerSelection(event.target.name)
     }
 
-    else if(event.target.name === 'Last trimester') {
+    else if(event.target.name === 'Last Trimester') {
       setStartDate(moment().subtract(6, "months").startOf("month"))
       setEndDate(moment().subtract(3, "months").endOf("month"))
       props.setCalendarStartDate(moment().subtract(6, "months").startOf("month").format("YYYY-MM-DD"))
@@ -128,9 +133,10 @@ function CalendarDatePicker(props:any) {
       setLastTrimesterController('clicked')
       setThisYearController(undefined)
       setLastYearController(undefined)
+      props.setDatePickerSelection(event.target.name)
     }
 
-    else if(event.target.name === 'This year') {
+    else if(event.target.name === 'This Year') {
       setStartDate(moment().startOf("year"))
       setEndDate(moment())
       props.setCalendarStartDate(moment().startOf("year").format("YYYY-MM-DD"))
@@ -143,9 +149,10 @@ function CalendarDatePicker(props:any) {
       setLastTrimesterController(undefined)
       setThisYearController('clicked')
       setLastYearController(undefined)
+      props.setDatePickerSelection(event.target.name)
     }
 
-    else if(event.target.name === 'Last year') {
+    else if(event.target.name === 'Last Year') {
       setStartDate(moment().subtract(1, "years").startOf("year"))
       setEndDate(moment().subtract(1, "years").endOf("year"))
       props.setCalendarStartDate(moment().subtract(1, "years").startOf("year").format("YYYY-MM-DD"))
@@ -158,6 +165,7 @@ function CalendarDatePicker(props:any) {
       setLastTrimesterController(undefined)
       setThisYearController(undefined)
       setLastYearController('clicked')
+      props.setDatePickerSelection(event.target.name)
     }
   }
 
@@ -187,7 +195,7 @@ function CalendarDatePicker(props:any) {
             <button
               className="buttonsDatePresets"
               id={thisWeekController}
-              name="This week"
+              name="This Week"
               onClick={handleDateChanges}
             >
               This week
@@ -200,7 +208,7 @@ function CalendarDatePicker(props:any) {
             <button
               className="buttonsDatePresets"
               id={thisMonthController}
-              name="This month"
+              name="This Month"
               onClick={handleDateChanges}
             >
               This month
@@ -213,7 +221,7 @@ function CalendarDatePicker(props:any) {
             <button
               className="buttonsDatePresets"
               id={thisTrimesterController}
-              name="This trimester"
+              name="This Trimester"
               onClick={handleDateChanges}
             >
               This trimester
@@ -226,7 +234,7 @@ function CalendarDatePicker(props:any) {
             <button
               className="buttonsDatePresets"
               id={thisYearController}
-              name="This year"
+              name="This Year"
               onClick={handleDateChanges}
             >
               This year
@@ -239,7 +247,7 @@ function CalendarDatePicker(props:any) {
             <button
               className="buttonsDatePresets"
               id={lastWeekController}
-              name="Last week"
+              name="Last Week"
               onClick={handleDateChanges}
             >
               Last week
@@ -252,7 +260,7 @@ function CalendarDatePicker(props:any) {
             <button
               className="buttonsDatePresets"
               id={lastMonthController}
-              name="Last month"
+              name="Last Month"
               onClick={handleDateChanges}
             >
               Last month
@@ -265,7 +273,7 @@ function CalendarDatePicker(props:any) {
             <button
               className="buttonsDatePresets"
               id={lastTrimesterController}
-              name="Last trimester"
+              name="Last Trimester"
               onClick={handleDateChanges}
             >
               Last trimester
@@ -278,7 +286,7 @@ function CalendarDatePicker(props:any) {
             <button
               className="buttonsDatePresets"
               id={lastYearController}
-              name="Last year"
+              name="Last Year"
               onClick={handleDateChanges}
             >
               Last year
@@ -308,7 +316,8 @@ function CalendarDatePicker(props:any) {
           setThisTrimesterController(undefined)
           setLastTrimesterController(undefined)
           setThisYearController(undefined)
-          setLastYearController(undefined)}}
+          setLastYearController(undefined)
+          props.setDatePickerSelection("Custom Date")}}
         focusedInput={focusedInput}
         onFocusChange={setFocusedInput}
         isOutsideRange={day => !isInclusivelyBeforeDay(day, moment())}
