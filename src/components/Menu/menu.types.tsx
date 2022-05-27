@@ -1,3 +1,3 @@
 export interface IPropTypes {
-    window:string
+    selectedWindow:string
 }
