@@ -22,7 +22,9 @@ import {
   InputLeftElement,
   Button
 } from "@chakra-ui/react"
-import {  Column } from 'react-table'
+
+import { useTable, useSortBy, useFlexLayout, Column, useGlobalFilter } from 'react-table'
+
 //Imports custom Componentes
 import MapsTable from "../../components/MapsTable";
 import FilterMapsComp from "../../components/FilterMapsComp";
@@ -37,18 +39,17 @@ import Error404 from "../Error404";
 import {IData} from '../../components/MapsTable/mapsTable.types'
 import MapProgressbar from "../../components/MapProgressbar";
 
-//Variables used
-let mapperName:string = "Tom Cruise"
 
 function MapperDetails(props: IPropTypes): JSX.Element  {
 	let navigate = useNavigate();
   const [ status, setStatus ] = useState<string>('loading');
   const [ error, setError ] = useState<any>(null);
-  const [ contributions, setContributions ] = useState<IData[]>([]);
+  const [ data, setData ] = useState<IData[]>([]);
   const [ details, setDetails ] = useState<any>(null);
   let params = useParams();
   let dataArr: any = [];
 	  
+
 	const columns: Column<IData>[] = React.useMemo(
     () => [
       {
@@ -80,7 +81,17 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
       },
     ],
     []
-  	);
+  );
+  
+  const { getTableProps, 
+          getTableBodyProps, 
+          headerGroups, 
+          state,
+          setGlobalFilter,
+          rows, 
+          prepareRow }:any = useTable({ columns, data, initialState: {hiddenColumns:["id"]}}, useFlexLayout, useGlobalFilter, useSortBy)
+  
+  const { globalFilter } = state
 
   useEffect(()=>{
     setStatus('loading')
@@ -91,7 +102,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
         setStatus('resolved')
         axios.get(`http://localhost:9000/mappers/contributions/${params.mapperId}`) // Devuelve lista de mappers
           .then((result)=>{
-            setContributions(result.data)
+            setData(result.data)
             setStatus('resolved')
           })
           .catch((error)=>{
@@ -232,12 +243,20 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                         <Text color="blue.main" fontWeight="700">
                           Average completion time
                         </Text>
-                        <Text fontSize="3xl" fontWeight="800">
-                          {details.contributions.averageTime}
-                        </Text>
-                        <Text fontWeight="700" fontSize="sm">
-                          Days
-                        </Text>
+                        {details.contributions.averageTime!=null ?
+                        <>
+                          <Text fontSize="3xl" fontWeight="800">
+                            {details.contributions.averageTime}
+                          </Text>
+                          <Text fontWeight="700" fontSize="sm">
+                            Days
+                          </Text>
+                        </>
+                         :<Text fontSize="3xl" fontWeight="800">
+                         Pending
+                       </Text>}
+
+                        
                       </VStack>
                     </HStack>
                     
@@ -315,15 +334,23 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                             children={<Search2Icon color="gray.300" />}
                           />
                           <Input
+                            value={globalFilter || ''}
                             placeholder="Search by: Name"
                             borderColor="lightgray.main"
                             borderRadius="lg"
+                            onChange={e=> setGlobalFilter(e.target.value)}
                           ></Input>
                         </InputGroup>
                         <FilterMapsComp></FilterMapsComp>
                       </HStack>
                     </HStack>
-                    <MapsTable data={contributions} columns={columns}></MapsTable>
+                    <MapsTable  
+                      getTableProps={getTableProps}
+                      getTableBodyProps={getTableBodyProps}
+                      headerGroups={headerGroups}
+                      setGlobalFilter={setGlobalFilter}
+                      rows={rows}
+                      prepareRow={prepareRow} globalFilter={undefined} state={undefined}></MapsTable>
                   </VStack>
                 </HStack>
               </VStack>
