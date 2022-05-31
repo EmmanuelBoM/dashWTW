@@ -12,8 +12,8 @@ import {
 	Checkbox,
 	MenuItemOption
 } from "@chakra-ui/react";
-import axios from "axios";
-import Error404 from "../../pages/Error404";
+
+import { IPropTypes } from "./filternSort.types";
 
 
 let paises:string[]=[
@@ -55,36 +55,32 @@ let perCity=(x:string[],name:string)=>(
 	</Menu>
 )
 
-function FilternSort(): JSX.Element {
-  const [ status, setStatus ] = useState<string>('loading');
-  const [ error, setError ] = useState<any>(null);
-  const [countries, setCountries] = useState({})
+function FilternSort(props:IPropTypes): JSX.Element {
 
-  useEffect(()=>{
-    axios.get(`http://localhost:9000/mappers/countries`) // Devuelve lista de mappers
-      .then((result)=>{
-        setCountries(result.data)
-        setStatus('resolved')
-      })
-      .catch((error)=>{
-        setError(error)
-        setStatus('error')
-      })
-  },[])
-
-  if (status === "loading") {
-    return(
-      <h1>Loading...</h1>
-    )
+  function manageFilterSelection(e:any) {
+    let innerHTML:string = e.target.innerHTML
+    if (innerHTML.includes("Asc.")) {
+      if (innerHTML.includes("Completed")) {
+        props.setFilterCompletionSelection("cmaps")
+        props.setFilterOrderSelection("asc")
+      }
+      else {
+        props.setFilterCompletionSelection("ipmaps")
+        props.setFilterOrderSelection("asc")
+      }
+    }
+    else if (innerHTML.includes("Desc.")) {
+      if (innerHTML.includes("Completed")) {
+        props.setFilterCompletionSelection("cmaps")
+        props.setFilterOrderSelection("desc")
+      }
+      else {
+        props.setFilterCompletionSelection("ipmaps")
+        props.setFilterOrderSelection("desc")
+      }
+    }
   }
-
-  if (status === "error") {
-    return (
-      <Error404/>
-    )
-  }
-
-  else {
+  
 	return (
     <HStack justifyContent="space-between">
       <Menu closeOnSelect={false}>
@@ -102,16 +98,15 @@ function FilternSort(): JSX.Element {
 
         <MenuList>
           <MenuOptionGroup
-            defaultValue="1"
+            defaultValue="CMAPS-ASC"
             title="Sort by"
             color="#2F6FE4"
             type="radio"
           >
-            <MenuItemOption value="1">Default</MenuItemOption>
-            <MenuItemOption value="2">Completed maps (Asc.)</MenuItemOption>
-            <MenuItemOption value="3">Completed maps (Desc.)</MenuItemOption>
-            <MenuItemOption value="4">Maps in progress (Asc.)</MenuItemOption>
-            <MenuItemOption value="5">Maps in progress (Desc.)</MenuItemOption>
+            <MenuItemOption onClick={manageFilterSelection} value="CMAPS-ASC" >Completed maps (Asc.)</MenuItemOption>
+            <MenuItemOption onClick={manageFilterSelection} value="CMAPS-DES" >Completed maps (Desc.)</MenuItemOption>
+            <MenuItemOption onClick={manageFilterSelection} value="IMAPS-ASC" >Maps in progress (Asc.)</MenuItemOption>
+            <MenuItemOption onClick={manageFilterSelection} value="IMAPS-DES" >Maps in progress (Desc.)</MenuItemOption>
           </MenuOptionGroup>
         </MenuList>
       </Menu>

@@ -95,7 +95,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
 
   useEffect(()=>{
     setStatus('loading')
-    
+    props.setSelectedWindow('mappers')
     axios.get(`http://localhost:9000/mappers/details/${params.mapperId}`) // Devuelve lista de mappers
       .then((result)=>{
         setDetails(result.data)

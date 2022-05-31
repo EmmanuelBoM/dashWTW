@@ -76,12 +76,12 @@ function MenuComponent(props: IPropTypes): JSX.Element {
             navigate(`/maps`);
           }}
         >
-          <Image src={ChangeImageAMS(props.window)} paddingBottom={2} />
+          <Image src={ChangeImageAMS(props.selectedWindow)} paddingBottom={2} />
           <Box>
-            <Text align="center" color={ChangeColorAMS(props.window)}>
+            <Text align="center" color={ChangeColorAMS(props.selectedWindow)}>
               AMS
             </Text>
-            <Text align="center" color={ChangeColorAMS(props.window)}>
+            <Text align="center" color={ChangeColorAMS(props.selectedWindow)}>
               Maps
             </Text>
           </Box>
@@ -97,8 +97,8 @@ function MenuComponent(props: IPropTypes): JSX.Element {
           }}
         >
           <VStack>
-            <Image src={ChangeImageMAP(props.window)} paddingLeft="0px" />
-            <Text paddingLeft="0px" color={ChangeColorMAP(props.window)}>
+            <Image src={ChangeImageMAP(props.selectedWindow)} paddingLeft="0px" />
+            <Text paddingLeft="0px" color={ChangeColorMAP(props.selectedWindow)}>
               Mappers
             </Text>
           </VStack>
