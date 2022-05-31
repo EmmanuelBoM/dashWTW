@@ -20,8 +20,6 @@ import {
   Text,
   Image,
   Divider,
-  CircularProgress, 
-  CircularProgressLabel,
   Switch,
   Button,
   Stack
@@ -44,13 +42,7 @@ import WheelChairLoading from '../../assets//wheelchairLoading.svg';
 import AreasProgressCardsCollection from "../../components/AreasProgressCardsCollection/AreasProgressCardsCollection.component";
 
 // Vars that contain the main info of the view
-let hotelName:string = "The Grand Mayan"
 let category:string = "Place To Stay"
-let mapperName:string = "Tom Cruise"
-
-// These vars contain the mapped areas and their progress, respectively
-let areasMapped:string[] = ["Building Entrance", "Food Service Area", "Lobby/Reception"]
-let percentagePerMappedArea:number[] = [100, 70, 50]
 
 // These vars contain the statuses of completion of all maps
 let progressCompletionMaps:string[] = ["In progress", "Completed", "Not started"]
@@ -86,6 +78,12 @@ function MapDetails(props: IPropTypes): JSX.Element {
   const [ status, setStatus ] = useState<string>('');
   const [ error, setError ] = useState<any>(null);
   const [ placeToStay, setPlaceToStay ] = useState<any>('');
+  const [ toggleCompleted, setToggleCompleted ] = useState<boolean>(true);
+
+  function changeToggle(e:any) {
+    console.log(e)
+    setToggleCompleted(!toggleCompleted)
+  }
   
   useEffect(() => {
     setStatus('loading')
@@ -323,10 +321,10 @@ function MapDetails(props: IPropTypes): JSX.Element {
                     Last Update
                   </Text>
                   <Text fontSize="3xl" fontWeight="800">
-                    {`${placeToStay.progress.lastUpdate[8]}${placeToStay.progress.lastUpdate[9]}`}
+                    {`${placeToStay.progress.lastUpdate?placeToStay.progress.lastUpdate[8]:null}${placeToStay.progress.lastUpdate?placeToStay.progress.lastUpdate[9]:null}`}
                   </Text>
                   <Text fontWeight="700" fontSize="sm">
-                    {`${MonthsOfTheYear[parseInt(placeToStay.progress.lastUpdate.slice(5,7))]} ${placeToStay.progress.lastUpdate.slice(0,4)}`}
+                    {placeToStay.progress.lastUpdate?`${MonthsOfTheYear[parseInt(placeToStay.progress.lastUpdate.slice(5,7))]} ${placeToStay.progress.lastUpdate.slice(0,4)}`:null}
                   </Text>
                 </VStack>
               </HStack>
@@ -370,9 +368,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
                 </GridItem>
               </Grid>
             </HStack>
-            <Grid templateColumns="repeat(3, 1fr)" gap={4} w="full">
-              <AreasProgressCardsCollection accomodationId={accomodationId}/>
-            </Grid>
+            <AreasProgressCardsCollection accomodationId={accomodationId} toggleCompleted={toggleCompleted}/>
             <HStack alignItems="left" width="100%">
               <Text
                 textAlign="left"
@@ -382,7 +378,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
               >
                 Show non completed areas
               </Text>
-              <Switch size="lg" />
+              <Switch size="lg" defaultChecked={toggleCompleted} onChange={changeToggle} />
             </HStack>
           </VStack>
         </Flex>
