@@ -11,6 +11,7 @@ import {
 	Checkbox,
 	MenuItemOption
 } from "@chakra-ui/react";
+import { IPropTypes } from "./filternSort.types";
 
 
 let paises:string[]=[
@@ -52,7 +53,32 @@ let perCity=(x:string[],name:string)=>(
 	</Menu>
 )
 
-function FilternSort(): JSX.Element {
+function FilternSort(props:IPropTypes): JSX.Element {
+
+  function manageFilterSelection(e:any) {
+    let innerHTML:string = e.target.innerHTML
+    if (innerHTML.includes("Asc.")) {
+      if (innerHTML.includes("Completed")) {
+        props.setFilterCompletionSelection("cmaps")
+        props.setFilterOrderSelection("asc")
+      }
+      else {
+        props.setFilterCompletionSelection("ipmaps")
+        props.setFilterOrderSelection("asc")
+      }
+    }
+    else if (innerHTML.includes("Desc.")) {
+      if (innerHTML.includes("Completed")) {
+        props.setFilterCompletionSelection("cmaps")
+        props.setFilterOrderSelection("desc")
+      }
+      else {
+        props.setFilterCompletionSelection("ipmaps")
+        props.setFilterOrderSelection("desc")
+      }
+    }
+  }
+
 	return (
     <HStack justifyContent="space-between">
       <Menu closeOnSelect={false}>
@@ -70,17 +96,15 @@ function FilternSort(): JSX.Element {
 
         <MenuList>
           <MenuOptionGroup
-            defaultValue="0"
+            defaultValue="CMAPS-ASC"
             title="Sort by"
             color="#2F6FE4"
             type="radio"
           >
-            <MenuItemOption value="1">Latest Sign In</MenuItemOption>
-            <MenuItemOption value="2">Oldest Sign In</MenuItemOption>
-            <MenuItemOption value="3">Completed maps (Asc.)</MenuItemOption>
-            <MenuItemOption value="4">Completed maps (Desc.)</MenuItemOption>
-            <MenuItemOption value="5">Maps in progress (Asc.)</MenuItemOption>
-            <MenuItemOption value="6">Maps in progress (Desc.)</MenuItemOption>
+            <MenuItemOption onClick={manageFilterSelection} value="CMAPS-ASC" >Completed maps (Asc.)</MenuItemOption>
+            <MenuItemOption onClick={manageFilterSelection} value="CMAPS-DES" >Completed maps (Desc.)</MenuItemOption>
+            <MenuItemOption onClick={manageFilterSelection} value="IMAPS-ASC" >Maps in progress (Asc.)</MenuItemOption>
+            <MenuItemOption onClick={manageFilterSelection} value="IMAPS-DES" >Maps in progress (Desc.)</MenuItemOption>
           </MenuOptionGroup>
         </MenuList>
       </Menu>
