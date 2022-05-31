@@ -12,20 +12,16 @@ import { Link } from 'react-router-dom';
 import {IData} from './mapsTable.types'
 
 function MapsTable(props: IPropTypes): JSX.Element {
-	const data = props.data;
-	const columns = props.columns
-	
-
-	const { getTableProps, 
-			getTableBodyProps, 
-			headerGroups, 
-			rows, 
-			prepareRow } = useTable({ columns, data, initialState: {hiddenColumns:["id"]}}, useSortBy, useFlexLayout)
+	const getTableProps= props.getTableProps 
+	const getTableBodyProps= props.getTableBodyProps
+	const headerGroups= props.headerGroups
+	const rows= props.rows
+	const prepareRow= props.prepareRow
 	
 	return (
 		<Table {...getTableProps()} size="md" w="full" display="grid" >
 			<Thead >
-				{headerGroups.map((headerGroup) => (
+				{headerGroups.map((headerGroup:any) => (
 				<Tr {...headerGroup.getHeaderGroupProps()}>
 					{headerGroup.headers.map((column: any) => (
 					<Th
@@ -52,7 +48,7 @@ function MapsTable(props: IPropTypes): JSX.Element {
 				))}
 			</Thead>
 			<Tbody {...getTableBodyProps()} >
-				{rows.map((row) => {
+				{rows.map((row:any) => {
 				prepareRow(row)
 				return (
 					<Tr {...row.getRowProps()} fontSize="sm">
