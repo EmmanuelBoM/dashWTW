@@ -14,7 +14,7 @@ import {IData} from './mapsTablePicker.types'
 // Imports axios
 import axios from "axios"
 import Error404 from '../../pages/Error404';
-
+import ErrorMessage from '../ErrorMessage';
 
 function MapsTable(props: IPropTypes): JSX.Element {
 	const [ status, setStatus ] = useState<string>('loading');
@@ -84,9 +84,15 @@ function MapsTable(props: IPropTypes): JSX.Element {
 
 	if (status === "error") {
 	return (
-			<Error404/>
+			<ErrorMessage error="Woops! Something went wrong" type="general"/>
 		)
 	}
+
+	if (Object.entries(maps[0]).length === 0 ) {
+		return (
+			<ErrorMessage error="No maps found :(" type="data"/>
+			)
+		}
 
 	else {
 		return (

@@ -1,6 +1,12 @@
 export interface IPropTypes {
-    data: any,
-    columns:any
+    getTableProps:any,
+    getTableBodyProps:any,
+    headerGroups:any,
+    globalFilter:any,
+    state:any,
+    setGlobalFilter:any,
+    rows:any,
+    prepareRow:any
 }
 
 export interface IData {

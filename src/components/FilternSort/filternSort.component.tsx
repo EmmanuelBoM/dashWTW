@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useState, useEffect } from "react";
 import {
 	Button,	
 	HStack,
@@ -11,6 +12,7 @@ import {
 	Checkbox,
 	MenuItemOption
 } from "@chakra-ui/react";
+
 import { IPropTypes } from "./filternSort.types";
 
 
@@ -78,7 +80,7 @@ function FilternSort(props:IPropTypes): JSX.Element {
       }
     }
   }
-
+  
 	return (
     <HStack justifyContent="space-between">
       <Menu closeOnSelect={false}>
@@ -137,6 +139,7 @@ function FilternSort(props:IPropTypes): JSX.Element {
       
     </HStack>
   );
+}
 }
 
 export default FilternSort;
