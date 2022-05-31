@@ -1,5 +1,5 @@
 import * as React from "react" 
-
+import { useState, useEffect } from "react";
 // Importing ChakraUI components
 import {
 	Button,	
@@ -11,30 +11,13 @@ import {
 	MenuItemOption,
 	CheckboxGroup,
 	Checkbox,
-	VStack
+	VStack,
+	Text
 } from "@chakra-ui/react";
 
-// Vars containing strings of countries and cities
-let paises:string[]=[
-	"Albania​",
-	"Alemania​​",
-	"Andorra​",
-	"Argentina​​​",
-	"Austria",
-	"Azerbaiyán",
-	"Bielorrusia",
-	"Bélgica"
-];
-
-let ciudades:string[]=[
-	"Ámsterdam",
-	"Manchester",
-	"Copenhague",
-	"Nueva York",
-	"Montreal",
-	"Praga",
-	"Tel Aviv"
-];
+import Error404 from "../../pages/Error404";
+import axios from "axios";
+import "./filterMapsComp.modules.css"
 
 let name:string[]= ["City","Country"];
 
@@ -49,12 +32,12 @@ let perCity=(x:string[],name:string)=>(
 					variant='ghost'>
 			{name}
 		</MenuButton>
-		<MenuList>
+		<MenuList height="15rem" overflowY="scroll">
 			<VStack paddingLeft={5} 
 			        alignItems="flex-start">
 				<CheckboxGroup >
 					{x.length !== 0 ? x.map((data,i)=> 
-					<Checkbox value= {i.toString()} > {x[i]} </Checkbox>):<MenuItemOption > webos </MenuItemOption>}
+					<Checkbox value= {i.toString()} onChange={()=>{alert(x[i]+name)}}> {x[i]} </Checkbox>):<MenuItemOption > webos </MenuItemOption>}
 				</CheckboxGroup>
 			</VStack>
 		</MenuList>
@@ -62,6 +45,25 @@ let perCity=(x:string[],name:string)=>(
 )
 
 function MapsFilter(): JSX.Element {
+	const [ status, setStatus ] = useState<string>('loading');
+  	const [ error, setError ] = useState<any>(null);
+  	const [countries, setCountries] = useState<string[]>([]);
+	const [cities, setCities] = useState<string[]>([]);
+
+	useEffect(()=>{
+		axios.get(`http://localhost:9000/mappers/countries`) // Devuelve lista de mappers
+		  .then((result)=>{
+			setCountries(result.data.countries)
+			setCities(result.data.cities)
+			setStatus('resolved')
+		  })
+		  .catch((error)=>{
+			setError(error)
+			setStatus('error')
+		  })
+	  },[])
+	  
+	
 	return (
     <Menu closeOnSelect={false}>
       <MenuButton
@@ -73,7 +75,8 @@ function MapsFilter(): JSX.Element {
       >
         Filter
       </MenuButton>
-      <MenuList p={4}>
+	  
+	  {status==="error"?<Text>{error}</Text>:<MenuList p={4}>
         <MenuOptionGroup
           defaultValue="1"
           title="Filter by"
@@ -87,13 +90,15 @@ function MapsFilter(): JSX.Element {
 
         <MenuDivider />
 
-        <MenuOptionGroup defaultValue="0" type="radio">
-          {perCity(ciudades, name[0])}
-          {perCity(paises, name[1])}
+        <MenuOptionGroup defaultValue="0" type="radio" >
+          {perCity(cities, name[0])}
+          {perCity(countries, name[1])}
         </MenuOptionGroup>
-      </MenuList>
+      </MenuList>}
+      
     </Menu>
   );
 }
+
 
 export default MapsFilter;
