@@ -33,7 +33,7 @@ export function App() {
             <Route path="maps" element={<MapsOverview setSelectedWindow={setSelectedWindow}/>}/>
             <Route path="mappers" element={<MappersOverview setSelectedWindow={setSelectedWindow}/>} />
             <Route path="mappers/:mapperId" element={<MapperDetails setSelectedWindow={setSelectedWindow}/>}/>
-            <Route path="maps/:acommodationId" element={<MapDetails setSelectedWindow={setSelectedWindow}/>} />
+            <Route path="maps/:accomodationId" element={<MapDetails setSelectedWindow={setSelectedWindow}/>} />
             <Route path="*" element={<Error404/>} />
           </Route>
         </Routes>
