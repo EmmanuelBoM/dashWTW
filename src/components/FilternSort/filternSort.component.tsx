@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useState, useEffect } from "react";
 import {
 	Button,	
 	HStack,
@@ -11,6 +12,8 @@ import {
 	Checkbox,
 	MenuItemOption
 } from "@chakra-ui/react";
+import axios from "axios";
+import Error404 from "../../pages/Error404";
 
 
 let paises:string[]=[
@@ -53,6 +56,35 @@ let perCity=(x:string[],name:string)=>(
 )
 
 function FilternSort(): JSX.Element {
+  const [ status, setStatus ] = useState<string>('loading');
+  const [ error, setError ] = useState<any>(null);
+  const [countries, setCountries] = useState({})
+
+  useEffect(()=>{
+    axios.get(`http://localhost:9000/mappers/countries`) // Devuelve lista de mappers
+      .then((result)=>{
+        setCountries(result.data)
+        setStatus('resolved')
+      })
+      .catch((error)=>{
+        setError(error)
+        setStatus('error')
+      })
+  },[])
+
+  if (status === "loading") {
+    return(
+      <h1>Loading...</h1>
+    )
+  }
+
+  if (status === "error") {
+    return (
+      <Error404/>
+    )
+  }
+
+  else {
 	return (
     <HStack justifyContent="space-between">
       <Menu closeOnSelect={false}>
@@ -70,17 +102,16 @@ function FilternSort(): JSX.Element {
 
         <MenuList>
           <MenuOptionGroup
-            defaultValue="0"
+            defaultValue="1"
             title="Sort by"
             color="#2F6FE4"
             type="radio"
           >
-            <MenuItemOption value="1">Latest Sign In</MenuItemOption>
-            <MenuItemOption value="2">Oldest Sign In</MenuItemOption>
-            <MenuItemOption value="3">Completed maps (Asc.)</MenuItemOption>
-            <MenuItemOption value="4">Completed maps (Desc.)</MenuItemOption>
-            <MenuItemOption value="5">Maps in progress (Asc.)</MenuItemOption>
-            <MenuItemOption value="6">Maps in progress (Desc.)</MenuItemOption>
+            <MenuItemOption value="1">Default</MenuItemOption>
+            <MenuItemOption value="2">Completed maps (Asc.)</MenuItemOption>
+            <MenuItemOption value="3">Completed maps (Desc.)</MenuItemOption>
+            <MenuItemOption value="4">Maps in progress (Asc.)</MenuItemOption>
+            <MenuItemOption value="5">Maps in progress (Desc.)</MenuItemOption>
           </MenuOptionGroup>
         </MenuList>
       </Menu>
@@ -113,6 +144,7 @@ function FilternSort(): JSX.Element {
       
     </HStack>
   );
+}
 }
 
 export default FilternSort;
