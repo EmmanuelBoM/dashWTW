@@ -51,6 +51,7 @@
     left: -3vw;
     background-color: transparent;
     border-color: transparent;
+    z-index: 5;
 }
 
 .CalendarDay__default {
