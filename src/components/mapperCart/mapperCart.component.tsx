@@ -94,8 +94,6 @@ function MapperCart(props: IPropTypes): JSX.Element {
           Contact
           </a>
         </Button>
-        
-        
       </VStack>
     </VStack>
     </Link>
