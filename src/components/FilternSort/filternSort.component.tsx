@@ -140,6 +140,5 @@ function FilternSort(props:IPropTypes): JSX.Element {
     </HStack>
   );
 }
-}
 
 export default FilternSort;
