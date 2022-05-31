@@ -30,7 +30,8 @@ import {
   InputGroup,
   InputLeftElement,
   Input,
-  Stack
+  Stack,
+  propNames
 } from "@chakra-ui/react"
 import { Search2Icon } from "@chakra-ui/icons";
 
@@ -83,6 +84,7 @@ import { Link } from 'react-router-dom';
 
 import {  Column } from 'react-table'
 import MapsTablePicker from '../../components/MapsTablePicker';
+import { IPropTypes } from './MapsOverview.types';
 
 
 i18nIsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json"));
@@ -164,7 +166,7 @@ const optionsLineChart = {
   legend: { position: "bottom" },
 };
 
-export const MapsOverview = () => {
+export const MapsOverview = (props:IPropTypes) => {
 
   const [ calendarStartDate, setCalendarStartDate ] = useState<any>(moment().startOf("week").format("YYYY-MM-DD"))
   const [ calendarEndDate, setCalendarEndDate ] = useState<any>(moment().format("YYYY-MM-DD"))
@@ -181,6 +183,7 @@ export const MapsOverview = () => {
   
   useEffect(()=>{
     setStatus('loading')
+    props.setSelectedWindow('ams')
     axios.get(`http://localhost:9000/maps/overview/${calendarStartDate}/${calendarEndDate}`) // Devuelve data de mapsOverview
         .then((result)=>{
           setMapsOverviewData(result.data)

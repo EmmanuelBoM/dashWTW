@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useEffect } from "react"
 
 // Importing PropTypes
 import { IPropTypes } from './MapDetails.types';
@@ -55,6 +56,10 @@ function MapDetails(props: IPropTypes): JSX.Element {
 
 	// Function that allows navigation (react-router-dom)
 	let navigate = useNavigate()
+
+  useEffect(() => {
+    props.setSelectedWindow('ams')
+  }, [])
 
 	return (
     <Container maxWidth="container.xxl" bgColor="#F8F9FD">

@@ -28,10 +28,12 @@ import FilternSort from "../../components/FilternSort";
 import { setTextRange } from "typescript";
 import Error404 from "../Error404"
 
+import { IPropTypes } from "./MappersOverview.types";
+
 //Variables used
 let username:string = "Arturo Gaona"
 
-export const MappersOverview = () => {
+export const MappersOverview = (props:IPropTypes) => {
   
   const[contenido,setContenido]= useLocalStorage('text','');
   const [ status, setStatus ] = useState<string>('loading');
@@ -40,6 +42,7 @@ export const MappersOverview = () => {
 
   useEffect(()=>{
     setStatus('loading')
+    props.setSelectedWindow('mappers')
     axios.get(`http://localhost:9000/mappers/overview`) // Devuelve lista de mappers
         .then((result)=>{
           setMappers(result.data)
