@@ -393,7 +393,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                             onChange={(e:any)=> setGlobalFilter(e.target.value)}
                           ></Input>
                         </InputGroup>
-                        <FilterMapsComp citiesFilter={citiesFilter} setCitiesFilter={setCitiesFilter} countriesFilter={countriesFilter} setCountriesFilter={setCountriesFilter}></FilterMapsComp>
+                        {/* <FilterMapsComp countriesFilter={countriesFilter} setCountriesFilter={setCountriesFilter}></FilterMapsComp> */}
                       </HStack>
                     </HStack>
                     <MapsTable  
