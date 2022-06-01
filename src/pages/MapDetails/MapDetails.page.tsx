@@ -50,7 +50,7 @@ let colorsProgressCompletionMaps:string[] = ["#FFB800", "green", "red"]
 
 // enum of Typescript for storing the months of the year
 enum MonthsOfTheYear {
-  "Jan" = 0,
+  "Jan" = 1,
   "Feb",
   "Mar",
   "Apr",
@@ -107,7 +107,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
           justifyContent="space-around"
           alignItems="center"
       >
-          <img src={WheelChairLoading} height='auto' width='70vh' alt='Loading...'/>
+        <img src={WheelChairLoading} height='auto' width='70vh' alt='Loading...'/>
       </Stack>
     )
   }
@@ -187,6 +187,8 @@ function MapDetails(props: IPropTypes): JSX.Element {
                 borderColor="black.200"
                 borderRadius="lg"
                 bgColor="#FFF"
+                _hover={{ cursor: "pointer" }}
+                onClick={() => {navigate(`/mappers/${placeToStay.mapper.idMapper}`)}}
               >
                 <Box>
                   <Image 
@@ -321,10 +323,10 @@ function MapDetails(props: IPropTypes): JSX.Element {
                     Last Update
                   </Text>
                   <Text fontSize="3xl" fontWeight="800">
-                    {`${placeToStay.progress.lastUpdate?placeToStay.progress.lastUpdate[8]:null}${placeToStay.progress.lastUpdate?placeToStay.progress.lastUpdate[9]:null}`}
+                    {`${placeToStay.progress.lastUpdate?placeToStay.progress.lastUpdate[8]:""}${placeToStay.progress.lastUpdate?placeToStay.progress.lastUpdate[9]:""}`}
                   </Text>
                   <Text fontWeight="700" fontSize="sm">
-                    {placeToStay.progress.lastUpdate?`${MonthsOfTheYear[parseInt(placeToStay.progress.lastUpdate.slice(5,7))]} ${placeToStay.progress.lastUpdate.slice(0,4)}`:null}
+                    {placeToStay.progress.lastUpdate?`${MonthsOfTheYear[parseInt(placeToStay.progress.lastUpdate.slice(5,7))]} ${placeToStay.progress.lastUpdate.slice(0,4)}`:""}
                   </Text>
                 </VStack>
               </HStack>
