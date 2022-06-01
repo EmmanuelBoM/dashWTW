@@ -95,20 +95,20 @@ i18nIsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 let username:string = 'Arturo Gaona'
 
 // Arrays of existing areas into the AMS
-let areasAMS:any[] = [["Building Entrance", <BuildingEntrance width="1em" height="1em"/> ],
-                      ["Lobby Reception", <Lobby width="1em" height="1em"/>],
-                      ["Room One", <QueenBed width="1em" height="1em"/>],
-                      ["Room Two", <QueenBed width="1em" height="1em"/>],
-                      ["Room Three", <QueenBed width="1em" height="1em"/>],
-                      ["General Accessibility", <GeneralAttribute width="1em" height="1em"/>],
-                      ["Food Service Area", <FoodService width="1em" height="1em"/>],
-                      ["Swimming Pool", <SwimmingPool width="1em" height="1em"/>],
-                      ["Fitness Center", <Gym width="1em" height="1em"/>],
-                      ["Beachfront", <Beachfront width="1em" height="1em"/>],
-                      ["Parking Area", <Parking/>],
-                      ["Common Area Toilet", <Bathroom width="1em" height="1em"/>],
-                      ["Other Areas", <Other width="1em" height="1em"/>],
-                      ["Elevator", <Elevator width="1em" height="1em"/>]]                        
+let areasAMS:any[] = [["Building Entrance", <BuildingEntrance width="1em" height="1em"/>, "buildingentrance"],
+                      ["Lobby Reception", <Lobby width="1em" height="1em"/>, "lobbyreception"],
+                      ["Room One", <QueenBed width="1em" height="1em"/>, "roomone"],
+                      ["Room Two", <QueenBed width="1em" height="1em"/>, "roomtwo"],
+                      ["Room Three", <QueenBed width="1em" height="1em"/>, "roomthree"],
+                      ["General Accessibility", <GeneralAttribute width="1em" height="1em"/>, "generalaccessibility"],
+                      ["Food Service Area", <FoodService width="1em" height="1em"/>, "foodservicearea"],
+                      ["Swimming Pool", <SwimmingPool width="1em" height="1em"/>, "swimmingpool"],
+                      ["Fitness Center", <Gym width="1em" height="1em"/>, "fitnesscenter"],
+                      ["Beachfront", <Beachfront width="1em" height="1em"/>, "beachfront"],
+                      ["Parking Area", <Parking/>, "parkingarea"],
+                      ["Common Area Toilet", <Bathroom width="1em" height="1em"/>, "commonareatoilet"],
+                      ["Other Areas", <Other width="1em" height="1em"/>, "otherareas"],
+                      ["Elevator", <Elevator width="1em" height="1em"/>, "elevator"]]                        
 
 // Data of map
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
@@ -193,6 +193,10 @@ export const MapsOverview = (props:IPropTypes) => {
             }
           )
           setIconsTextLeastMappedAreas(areasAMS.filter( (area) => { for(let i = 0; i < result.data.allTimeStatistics.leastMappedAreas.length; i++) if (result.data.allTimeStatistics.leastMappedAreas[i] === area[0]) return true}))
+          // setIconsTextLeastMappedAreas(areasAMS.filter( (area) => { for(let i = 0; i < result.data.allTimeStatistics.leastMappedAreas.length; i++) if (area[0].includes(result.data.allTimeStatistics.leastMappedAreas[i].toLowerCase())) return true}))
+          result.data.allTimeStatistics.worldwideInsights.map((item:any) => {
+            dataMap.push([i18nIsoCountries.getAlpha3Code(item.country_name, "en"), item.cantidad])
+          })
           result.data.allTimeStatistics.worldwideInsights.map((item:any) => {
             dataMap.push([i18nIsoCountries.getAlpha3Code(item.country_name, "en"), item.cantidad])
           })

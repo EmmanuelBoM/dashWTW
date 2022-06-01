@@ -79,6 +79,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
   const [ error, setError ] = useState<any>(null);
   const [ placeToStay, setPlaceToStay ] = useState<any>('');
   const [ toggleCompleted, setToggleCompleted ] = useState<boolean>(true);
+  const [ totalPercentage, setTotalPercentage ] = useState<number>(0);
 
   function changeToggle(e:any) {
     console.log(e)
@@ -271,7 +272,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
                     Percentage Completed
                   </Text>
                   <MapProgressbar
-                    progress={placeToStay.progress.completedpercentage}
+                    progress={totalPercentage}
                     showProgress={true}
                   ></MapProgressbar>
                 </VStack>
@@ -370,7 +371,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
                 </GridItem>
               </Grid>
             </HStack>
-            <AreasProgressCardsCollection accomodationId={accomodationId} toggleCompleted={toggleCompleted}/>
+            <AreasProgressCardsCollection accomodationId={accomodationId} toggleCompleted={toggleCompleted} setTotalPercentage={setTotalPercentage} totalPercentage={totalPercentage}/>
             <HStack alignItems="left" width="100%">
               <Text
                 textAlign="left"
