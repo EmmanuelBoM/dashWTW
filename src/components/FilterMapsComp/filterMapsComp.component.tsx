@@ -14,37 +14,53 @@ import {
 	VStack,
 	Text
 } from "@chakra-ui/react";
-
-import Error404 from "../../pages/Error404";
 import axios from "axios";
 import "./filterMapsComp.modules.css"
+import { IPropTypes } from './filterMapsComp.types';
 
 let name:string[]= ["City","Country"];
 
-let perCity=(x:string[],name:string)=>(
-	<Menu closeOnSelect={false} >
-		<MenuButton fontWeight="s" 
-		            textAlign="start" 
-					paddingLeft={10} 
-					w="full" 
-					as={Button} 
-					colorScheme='black' 
-					variant='ghost'>
-			{name}
-		</MenuButton>
-		<MenuList height="15rem" overflowY="scroll">
-			<VStack paddingLeft={5} 
-			        alignItems="flex-start">
-				<CheckboxGroup >
-					{x.length !== 0 ? x.map((data,i)=> 
-					<Checkbox value= {i.toString()} onChange={()=>{alert(x[i]+name)}}> {x[i]} </Checkbox>):<MenuItemOption > webos </MenuItemOption>}
-				</CheckboxGroup>
-			</VStack>
-		</MenuList>
-	</Menu>
-)
+function perCity(x:string[],name:string, setCitiesFilter:any, setCountriesFilter:any, citiesFilter:string, countriesFilter:string): JSX.Element{
+	
+	const handleChange = (event:any, type:string)=>{
+		
+		
+		if(type=="City"){
+			setCitiesFilter(event.toString())
+		}
+		if(type=="Country"){
+			setCountriesFilter(event.toString())
+		}
 
-function MapsFilter(): JSX.Element {
+
+		
+	}
+
+	return(
+		<Menu closeOnSelect={false} >
+			<MenuButton fontWeight="s" 
+						textAlign="start" 
+						paddingLeft={10} 
+						w="full" 
+						as={Button} 
+						colorScheme='black' 
+						variant='ghost'>
+				{name}
+			</MenuButton>
+			<MenuList height="15rem" overflowY="scroll">
+				<VStack paddingLeft={5} 
+						alignItems="flex-start">
+					<CheckboxGroup onChange={(e)=>{handleChange(e, name)}}>
+						{x.length !== 0 ? x.map((data,i)=> 
+						<Checkbox value= {x[i]} > {x[i]} </Checkbox>):<MenuItemOption > webos </MenuItemOption>}
+					</CheckboxGroup>
+				</VStack>
+			</MenuList>
+		</Menu>
+	)
+}
+
+function MapsFilter(props: IPropTypes): JSX.Element {
 	const [ status, setStatus ] = useState<string>('loading');
   	const [ error, setError ] = useState<any>(null);
   	const [countries, setCountries] = useState<string[]>([]);
@@ -91,8 +107,8 @@ function MapsFilter(): JSX.Element {
         <MenuDivider />
 
         <MenuOptionGroup defaultValue="0" type="radio" >
-          {perCity(cities, name[0])}
-          {perCity(countries, name[1])}
+          {perCity(cities, name[0], props.setCitiesFilter, props.setCountriesFilter, props.citiesFilter, props.countriesFilter)}
+          {perCity(countries, name[1], props.setCitiesFilter, props.setCountriesFilter, props.citiesFilter, props.countriesFilter)}
         </MenuOptionGroup>
       </MenuList>}
       

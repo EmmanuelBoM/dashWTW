@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {
 	VStack,
 	HStack,
@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 import "./mapperCart.modules.css"
 
 function MapperCart(props: IPropTypes): JSX.Element { 
-
+  const mailRef:any = useRef();
   return (
     <Link to={`/mappers/${props.mapper.name.id}`} >
         <VStack
@@ -78,10 +78,14 @@ function MapperCart(props: IPropTypes): JSX.Element {
           px={6}
           size="md"
           bg="transparent"
-          onClick={(e:any) => (e.preventDefault())}
+          onClick={(e) => {
+            // OPTION 1: stop propagation of the child event to the father
+            e.stopPropagation();
+          }}
+          ref={mailRef}
         >
-          <a href={`mailto:${props.mapper.contact}`}>
-          Contact
+          <a id='link-contact-mapper' href={`mailto:${props.mapper.contact}`}>
+            Contact
           </a>
         </Button>
       </VStack>
