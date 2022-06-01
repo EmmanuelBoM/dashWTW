@@ -25,6 +25,9 @@ import {
 
 import { useTable, useSortBy, useFlexLayout, Column, useGlobalFilter } from 'react-table'
 
+// Importing moment library to parse dates
+import moment, { Moment } from "moment";
+
 //Imports custom Componentes
 import MapsTable from "../../components/MapsTable";
 import FilterMapsComp from "../../components/FilterMapsComp";
@@ -40,7 +43,6 @@ import {IData} from '../../components/MapsTable/mapsTable.types'
 import MapProgressbar from "../../components/MapProgressbar";
 import ErrorMessage from "../../components/ErrorMessage";
 
-
 function MapperDetails(props: IPropTypes): JSX.Element  {
 	let navigate = useNavigate();
   const [ status, setStatus ] = useState<string>('loading');
@@ -48,6 +50,9 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
   const [ data, setData ] = useState<IData[]>([]);
   const [ details, setDetails ] = useState<any>(null);
   let params = useParams();
+  const [countriesFilter, setCountriesFilter] = useState<string>('');
+  const [citiesFilter, setCitiesFilter] = useState<string>('');
+  
   let dataArr: any = [];
 	  
 
@@ -203,7 +208,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                     <HStack justifyContent="space-around" w="full">
                       <VStack textAlign="center" w="full">
                         <Text color="blue.main" fontWeight="700">
-                          Total Contributions
+                          Done Contributions
                         </Text>
                         <Text fontSize="3xl" fontWeight="800">
                           {details.contributions.total}
@@ -292,9 +297,11 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                         <Text color="blue.main" fontWeight="400" fontSize="md">
                           Date and Hour
                         </Text>
-                        <Text fontSize="3xl" fontWeight="800">
-                          Pending
+                        <Text fontSize="3xl" fontWeight="800" >
+                          {details.replies.lastReply.day}
                         </Text>
+                        <Text fontSize="md" fontWeight="600" >{`${moment.months(details.replies.lastReply.month - 1)}, ${details.replies.lastReply.year}`}</Text>
+                        <Text fontSize="md" fontWeight="600" color="gray.400">{details.replies.lastReply.hour}</Text>
                       </VStack>
                       <Divider
                         w="80%"
@@ -332,7 +339,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                     spacing={8}
                   >
                     <HStack justifyContent="space-between" w="100%">
-                      <Heading fontSize="xl">Contributions in progress</Heading>
+                      <Heading fontSize="xl">All Contributions</Heading>
 
                       <HStack>
                         <InputGroup w="80%">
@@ -342,13 +349,13 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                           />
                           <Input
                             value={globalFilter || ''}
-                            placeholder="Search by: Name"
-                            borderColor="lightgray.main"
+                            placeholder="Search"
+                            borderColor="gray.400"
                             borderRadius="lg"
-                            onChange={(e:any) => setGlobalFilter(e.target.value)}
+                            onChange={(e:any)=> setGlobalFilter(e.target.value)}
                           ></Input>
                         </InputGroup>
-                        <FilterMapsComp></FilterMapsComp>
+                        <FilterMapsComp citiesFilter={citiesFilter} setCitiesFilter={setCitiesFilter} countriesFilter={countriesFilter} setCountriesFilter={setCountriesFilter}></FilterMapsComp>
                       </HStack>
                     </HStack>
                     <MapsTable  
