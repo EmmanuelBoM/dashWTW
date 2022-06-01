@@ -20,7 +20,8 @@ import {
   InputGroup,
   Input, 
   InputLeftElement,
-  Button
+  Button,
+  Box
 } from "@chakra-ui/react"
 
 import { useTable, useSortBy, useFlexLayout, Column, useGlobalFilter } from 'react-table'
@@ -43,6 +44,37 @@ import {IData} from '../../components/MapsTable/mapsTable.types'
 import MapProgressbar from "../../components/MapProgressbar";
 import ErrorMessage from "../../components/ErrorMessage";
 
+// Imports of icons from wtw icons
+import BuildingEntrance from 'wtw-icons/_icons/Buildingentrance'
+import Lobby from 'wtw-icons/_icons/Lobby'
+import FoodService from 'wtw-icons/_icons/FoodService'
+import SwimmingPool from 'wtw-icons/_icons/SwimmingPool'
+import QueenBed from 'wtw-icons/_icons/QueenBed'
+import GeneralAttribute from 'wtw-icons/_icons/GeneralAttribute'
+import Bathroom from 'wtw-icons/_icons/Bathroom'
+import Elevator from 'wtw-icons/_icons/Elevator'
+import Gym from 'wtw-icons/_icons/Gym'
+import Beachfront from 'wtw-icons/_icons/Beachfront'
+import Parking from 'wtw-icons/_icons/Parking'
+import Other from 'wtw-icons/_icons/Other'
+
+// Arrays of existing areas into the AMS
+let areasAMS:any[] = [["Building Entrance", <BuildingEntrance width="1.6em" height="1.6em"/>, "buildingentrance"],
+                      ["Lobby Reception", <Lobby width="1.6em" height="1.6em"/>, "lobbyreception"],
+                      ["Rooms", <QueenBed width="1.6em" height="1.6em"/>, "rooms"],
+                      ["Room One", <QueenBed width="1.6em" height="1.6em"/>, "roomone"],
+                      ["Room Two", <QueenBed width="1.6em" height="1.6em"/>, "roomtwo"],
+                      ["Room Three", <QueenBed width="1.6em" height="1.6em"/>, "roomthree"],
+                      ["General Accessibility", <GeneralAttribute width="1.6em" height="1.6em"/>, "generalaccessibility"],
+                      ["Food Service Area", <FoodService width="1.6em" height="1.6em"/>, "foodservicearea"],
+                      ["Swimming Pool", <SwimmingPool width="1.6em" height="1.6em"/>, "swimmingpool"],
+                      ["Fitness Center", <Gym width="1.6em" height="1.6em"/>, "fitnesscenter"],
+                      ["Beachfront", <Beachfront width="1.6em" height="1.6em"/>, "beachfront"],
+                      ["Parking Area", <Parking width="1.6em" height="1.6em"/>, "parkingarea"],
+                      ["Common Area Toilet", <Bathroom width="1.6em" height="1.6em"/>, "commonareatoilet"],
+                      ["Other Areas", <Other width="1.6em" height="1.6em"/>, "otherareas"],
+                      ["Elevator", <Elevator width="1.6em" height="1.6em"/>, "elevator"]]  
+
 function MapperDetails(props: IPropTypes): JSX.Element  {
 	let navigate = useNavigate();
   const [ status, setStatus ] = useState<string>('loading');
@@ -52,6 +84,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
   let params = useParams();
   const [countriesFilter, setCountriesFilter] = useState<string>('');
   const [citiesFilter, setCitiesFilter] = useState<string>('');
+  const [ lastMappedArea, setLastMappedArea ] = useState<any>('');
   
   let dataArr: any = [];
 	  
@@ -105,6 +138,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
     axios.get(`http://localhost:9000/mappers/details/${params.mapperId}`) // Devuelve lista de mappers
       .then((result)=>{
         setDetails(result.data)
+        setLastMappedArea(areasAMS.filter( (area) => { if (result.data.replies.lastCompletedArea.Area === area[2]) return true }))
         setStatus('resolved')
         axios.get(`http://localhost:9000/mappers/contributions/${params.mapperId}`) // Devuelve lista de mappers
           .then((result)=>{
@@ -315,10 +349,14 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                         <Text color="blue.main" fontWeight="700" fontSize="lg">
                           Last completed area
                         </Text>
-                        
-                        <Text fontSize="2xl" fontWeight="700">
-                          {details.replies.lastCompletedArea.Area}
-                        </Text>
+                        <Box color="black.800" display='inline-flex' justifyContent='space-around' alignItems='baseline' width='max-content'>
+                          <span>
+                            {lastMappedArea[0][1]}
+                          </span>
+                          <Text fontSize="2xl" fontWeight="700" marginLeft='0.5em'>
+                            {lastMappedArea[0][0]}
+                          </Text>
+                        </Box>
                         <Text fontSize="md">{details.replies.lastCompletedArea.location.name}</Text>
                       </VStack>
                     </VStack>
