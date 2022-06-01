@@ -82,8 +82,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
   const [ data, setData ] = useState<IData[]>([]);
   const [ details, setDetails ] = useState<any>(null);
   let params = useParams();
-  const [countriesFilter, setCountriesFilter] = useState<string>('');
-  const [citiesFilter, setCitiesFilter] = useState<string>('');
+  const [filterData, setFilterData] = useState<any>({cities:[], countries:[]});
   const [ lastMappedArea, setLastMappedArea ] = useState<any>('');
   
   let dataArr: any = [];
@@ -140,15 +139,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
         setDetails(result.data)
         setLastMappedArea(areasAMS.filter( (area) => { if (result.data.replies.lastCompletedArea.Area === area[2]) return true }))
         setStatus('resolved')
-        axios.get(`http://localhost:9000/mappers/contributions/${params.mapperId}`) // Devuelve lista de mappers
-          .then((result)=>{
-            setData(result.data)
-            setStatus('resolved')
-          })
-          .catch((error)=>{
-            setError(error)
-            setStatus('error')
-          })
+        
       })
       .catch((error)=>{
         setError(error)
@@ -393,7 +384,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                             onChange={(e:any)=> setGlobalFilter(e.target.value)}
                           ></Input>
                         </InputGroup>
-                        {/* <FilterMapsComp countriesFilter={countriesFilter} setCountriesFilter={setCountriesFilter}></FilterMapsComp> */}
+                        <FilterMapsComp filterData={filterData} setFilterData={setFilterData} setMaps={setData} setStatus={setStatus} setError={setError} tableType="contributions"  calendarEndDate={""} calendarStartDate={""} mapperId={params.mapperId}></FilterMapsComp>
                       </HStack>
                     </HStack>
                     <MapsTable  

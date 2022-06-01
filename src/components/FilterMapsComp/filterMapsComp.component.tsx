@@ -78,21 +78,42 @@ function MapsFilter(props: IPropTypes): JSX.Element {
 	  }, [props.filterData])
 	
 	const fetchMapData = (calendarEndDate:any, calendarStartDate:any) =>{
-		axios({
-			method: 'post',
-			url: `http://localhost:9000/maps/table/${calendarStartDate}/${calendarEndDate}`,
-			data: props.filterData,
-			headers: {
-				'Content-type': 'application/json; charset=UTF-8',
-			}
-		})
-		.then((result)=>{
-			props.setMaps(result.data)
-			setStatus('resolved')
-		})
-		.catch(error =>{
-			setError(error)
-		})
+		if(props.tableType==="picker"){
+			axios({
+				method: 'post',
+				url: `http://localhost:9000/maps/table/${calendarStartDate}/${calendarEndDate}`,
+				data: props.filterData,
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8',
+				}
+			})
+			.then((result)=>{
+				props.setMaps(result.data)
+				setStatus('resolved')
+			})
+			.catch(error =>{
+				setError(error)
+			})
+		}
+		if(props.tableType==="contributions"){
+			axios({
+				method: 'post',
+				url: `http://localhost:9000/mappers/contributions/${props.mapperId}`,
+				data: props.filterData,
+				headers: {
+				  'Content-type': 'application/json; charset=UTF-8',
+				}
+			  })
+			  .then((result)=>{
+				props.setMaps(result.data)
+				setStatus('resolved')
+			  })
+			  .catch((error)=>{
+				setError(error)
+				setStatus('error')
+			  })
+		}
+		
 	}
 	
 	return (
