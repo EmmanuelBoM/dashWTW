@@ -18,12 +18,8 @@ import axios from "axios";
 import "./filterMapsComp.modules.css"
 import { IPropTypes } from './filterMapsComp.types';
 
-//Library used to convert filters to string params
-var qs = require('qs');
-
 let name:string[]= ["City","Country"];
 
-	
 function perCity(x:string[],name:string, setCitiesFilter:any, setCountriesFilter:any, citiesFilter:string, countriesFilter:string): JSX.Element{
 	
 	const handleChange = (event:any, type:string)=>{
