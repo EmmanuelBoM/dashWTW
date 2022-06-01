@@ -62,7 +62,7 @@ export const AreasProgressCardsCollection = (props:any) => {
 
     useEffect(()=>{
         setStatus('loading')
-        axios.get(`http://localhost:9000/maps/detail/${props.accomodationId}`) 
+        axios.get(`https://apidash2.herokuapp.com/maps/detail/${props.accomodationId}`) 
             .then((result)=>{
                 setAreas(areasAMS.filter( (area) => { 
                     for(let i = 0; i < result.data.progressAreas.length; i++) { 

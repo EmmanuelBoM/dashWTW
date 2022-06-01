@@ -64,7 +64,7 @@ function MapsFilter(props: IPropTypes): JSX.Element {
 	const [cities, setCities] = useState<string[]>([]);
 
 	useEffect(()=>{
-		axios.get(`http://localhost:9000/mappers/countries`) // Devuelve lista de mappers
+		axios.get(`https://apidash2.herokuapp.com/mappers/countries`) // Devuelve lista de mappers
 		  .then((result)=>{
 			setCountries(result.data.countries)
 			setCities(result.data.cities)
@@ -81,7 +81,7 @@ function MapsFilter(props: IPropTypes): JSX.Element {
 		if(props.tableType==="picker"){
 			axios({
 				method: 'post',
-				url: `http://localhost:9000/maps/table/${calendarStartDate}/${calendarEndDate}`,
+				url: `https://apidash2.herokuapp.com/maps/table/${calendarStartDate}/${calendarEndDate}`,
 				data: props.filterData,
 				headers: {
 					'Content-type': 'application/json; charset=UTF-8',
@@ -98,7 +98,7 @@ function MapsFilter(props: IPropTypes): JSX.Element {
 		if(props.tableType==="contributions"){
 			axios({
 				method: 'post',
-				url: `http://localhost:9000/mappers/contributions/${props.mapperId}`,
+				url: `https://apidash2.herokuapp.com/mappers/contributions/${props.mapperId}`,
 				data: props.filterData,
 				headers: {
 				  'Content-type': 'application/json; charset=UTF-8',

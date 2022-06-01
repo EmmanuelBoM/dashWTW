@@ -89,7 +89,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
   useEffect(() => {
     setStatus('loading')
     props.setSelectedWindow('ams')
-    axios.get(`http://localhost:9000/maps/detail/${accomodationId}`) 
+    axios.get(`https://apidash2.herokuapp.com/maps/detail/${accomodationId}`) 
       .then((result)=>{
         setPlaceToStay(result.data)
         setStatus('resolved')
