@@ -1,6 +1,9 @@
 export interface IPropTypes {
-    citiesFilter:string,
-    countriesFilter:string,
-    setCitiesFilter:any,
-    setCountriesFilter:any,
+    setFilterData:any,
+    filterData:any,
+    setMaps:any, 
+    setStatus:any, 
+    setError:any,
+    calendarEndDate:any, 
+    calendarStartDate:any
 }
