@@ -179,6 +179,7 @@ export const MapsOverview = (props:IPropTypes) => {
   const [ tooltipContent, setTooltipContent ] = useState<string>('')
   const [ dataMap, setDataMap ] = useState<any>([])
   const [ maps, setMaps ] = useState<IData[]>([]);
+  const [ provisionalLMAreas, setProvisionalLMAreas] = useState<any>('')
 
   
   useEffect(()=>{
@@ -193,6 +194,7 @@ export const MapsOverview = (props:IPropTypes) => {
             }
           )
           setIconsTextLeastMappedAreas(areasAMS.filter( (area) => { for(let i = 0; i < result.data.allTimeStatistics.leastMappedAreas.length; i++) if (result.data.allTimeStatistics.leastMappedAreas[i] === area[0]) return true}))
+          setProvisionalLMAreas(result.data.allTimeStatistics.leastMappedAreas)
           // setIconsTextLeastMappedAreas(areasAMS.filter( (area) => { for(let i = 0; i < result.data.allTimeStatistics.leastMappedAreas.length; i++) if (area[0].includes(result.data.allTimeStatistics.leastMappedAreas[i].toLowerCase())) return true}))
           result.data.allTimeStatistics.worldwideInsights.map((item:any) => {
             dataMap.push([i18nIsoCountries.getAlpha3Code(item.country_name, "en"), item.cantidad])
@@ -212,7 +214,7 @@ export const MapsOverview = (props:IPropTypes) => {
         })
   }, [])
 
-  if (status === "loading") {
+  if (status === "loading" || provisionalLMAreas === '') {
     return(
       <h1>Loading...</h1>
     )
@@ -494,13 +496,20 @@ export const MapsOverview = (props:IPropTypes) => {
                     height="100%"
                     justify='space-around'
                   >
-                    {iconsTextLeastMappedAreas.map((area: any) => (
+                    {/*{iconsTextLeastMappedAreas.map((area: any) => (
                       <Box color="black.800" display='inline-flex' justifyContent='space-around'>
                         <span>
                           {area[1]}
                         </span>
                         <Text marginLeft='0.7em'>
                           {area[0]}
+                        </Text>
+                      </Box>
+                    ))}*/}
+                    {provisionalLMAreas.map((area: any) => (
+                      <Box color="black.800" display='inline-flex' justifyContent='space-around' wordBreak="break-word">
+                        <Text marginLeft='0.7em'>
+                          {area.inquiry_id}
                         </Text>
                       </Box>
                     ))}
