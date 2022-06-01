@@ -21,8 +21,7 @@ function MapsTable(props: IPropTypes): JSX.Element {
 	const [ status, setStatus ] = useState<string>('loading');
 	const [ error, setError ] = useState<any>(null);
 	const [ maps, setMaps ] = useState<IData[]>([]);
-	const [countriesFilter, setCountriesFilter] = useState<string>('');
-  	const [citiesFilter, setCitiesFilter] = useState<string>('');
+	const [filterData, setFilterData] = useState<any>({cities:[], countries:[]});
 
 	let data=maps;
 
@@ -62,15 +61,24 @@ function MapsTable(props: IPropTypes): JSX.Element {
 	
 	useEffect(()=>{
 		setStatus('loading')
-		axios.get(`http://localhost:9000/maps/table/${props.calendarStartDate}/${props.calendarEndDate}`) // Devuelve lista de mappers
-		.then((result)=>{
-		  setMaps(result.data)
-		  setStatus('resolved')
+		axios({
+			method: 'post',
+			url: `http://localhost:9000/maps/table/${props.calendarStartDate}/${props.calendarEndDate}`,
+			data: filterData,
+			headers: {
+				'Content-type': 'application/json; charset=UTF-8',
+			}
 		})
-		.catch((error)=>{
-		  setError(error)
+		.then((result)=>{
+			setMaps(result.data)
+		  	setStatus('resolved')
+
+		})
+		.catch(error =>{
+			setError(error)
 		  setStatus('error')
 		})
+		
 	},[props.calendarStartDate,
         props.calendarEndDate])
 
@@ -96,11 +104,6 @@ function MapsTable(props: IPropTypes): JSX.Element {
 		)
 	}
 
-	if (Object.entries(maps[0]).length === 0 ) {
-		return (
-			<ErrorMessage error="No maps found :(" type="data"/>
-			)
-		}
 
 	else {
 		return (
@@ -119,9 +122,9 @@ function MapsTable(props: IPropTypes): JSX.Element {
 						  onChange={e=> setGlobalFilter(e.target.value)}
                         ></Input>
                       </InputGroup>
-                      <FilterMapsComp citiesFilter={citiesFilter} setCitiesFilter={setCitiesFilter} countriesFilter={countriesFilter} setCountriesFilter={setCountriesFilter}></FilterMapsComp>
+                      <FilterMapsComp filterData={filterData} setFilterData={setFilterData} setMaps={setMaps} setStatus={setStatus} setError={setError} calendarEndDate={props.calendarEndDate} calendarStartDate={props.calendarStartDate}></FilterMapsComp>
                     </HStack>
-					<Table {...getTableProps()} size="md" w="full" display="grid" >
+					{Object.entries(maps[0]).length === 0 ?<ErrorMessage error="No maps found :(" type="data"/> : <Table {...getTableProps()} size="md" w="full" display="grid" >
 				<Thead >
 					{headerGroups.map((headerGroup:any) => (
 					<Tr {...headerGroup.getHeaderGroupProps()}>
@@ -163,7 +166,8 @@ function MapsTable(props: IPropTypes): JSX.Element {
 					)
 					})}
 				</Tbody>
-			</Table>
+					</Table>}
+					
 			</>
 			
 		)

@@ -20,20 +20,17 @@ import { IPropTypes } from './filterMapsComp.types';
 
 let name:string[]= ["City","Country"];
 
-function perCity(x:string[],name:string, setCitiesFilter:any, setCountriesFilter:any, citiesFilter:string, countriesFilter:string): JSX.Element{
+function perCity(x:string[], name:string, filterData:any, setFilterData:any, setMaps:any, setStatus:any, setError:any, calendarEndDate:any, calendarStartDate:any): JSX.Element{
 	
-	const handleChange = (event:any, type:string)=>{
-		
-		
+	
+	const handleChange = async(event:any, type:string)=>{
 		if(type=="City"){
-			setCitiesFilter(event.toString())
+			await setFilterData({countries:[], cities: event})
+			
 		}
 		if(type=="Country"){
-			setCountriesFilter(event.toString())
+			await setFilterData({countries: event, cities:[]})
 		}
-
-
-		
 	}
 
 	return(
@@ -52,7 +49,7 @@ function perCity(x:string[],name:string, setCitiesFilter:any, setCountriesFilter
 						alignItems="flex-start">
 					<CheckboxGroup onChange={(e)=>{handleChange(e, name)}}>
 						{x.length !== 0 ? x.map((data,i)=> 
-						<Checkbox value= {x[i]} > {x[i]} </Checkbox>):<MenuItemOption > webos </MenuItemOption>}
+						<Checkbox value= {x[i]} > {x[i]} </Checkbox>):<MenuItemOption > </MenuItemOption>}
 					</CheckboxGroup>
 				</VStack>
 			</MenuList>
@@ -77,8 +74,26 @@ function MapsFilter(props: IPropTypes): JSX.Element {
 			setError(error)
 			setStatus('error')
 		  })
-	  },[])
-	  
+		fetchMapData(props.calendarEndDate, props.calendarStartDate)
+	  }, [props.filterData])
+	
+	const fetchMapData = (calendarEndDate:any, calendarStartDate:any) =>{
+		axios({
+			method: 'post',
+			url: `http://localhost:9000/maps/table/${calendarStartDate}/${calendarEndDate}`,
+			data: props.filterData,
+			headers: {
+				'Content-type': 'application/json; charset=UTF-8',
+			}
+		})
+		.then((result)=>{
+			props.setMaps(result.data)
+			setStatus('resolved')
+		})
+		.catch(error =>{
+			setError(error)
+		})
+	}
 	
 	return (
     <Menu closeOnSelect={false}>
@@ -107,8 +122,8 @@ function MapsFilter(props: IPropTypes): JSX.Element {
         <MenuDivider />
 
         <MenuOptionGroup defaultValue="0" type="radio" >
-          {perCity(cities, name[0], props.setCitiesFilter, props.setCountriesFilter, props.citiesFilter, props.countriesFilter)}
-          {perCity(countries, name[1], props.setCitiesFilter, props.setCountriesFilter, props.citiesFilter, props.countriesFilter)}
+          {perCity(cities, name[0],  props.filterData, props.setFilterData, props.setMaps, props.setStatus, props.setError, props.calendarEndDate, props.calendarStartDate)}
+          {perCity(countries, name[1], props.filterData, props.setFilterData, props.setMaps, props.setStatus, props.setError, props.calendarEndDate, props.calendarStartDate)}
         </MenuOptionGroup>
       </MenuList>}
       

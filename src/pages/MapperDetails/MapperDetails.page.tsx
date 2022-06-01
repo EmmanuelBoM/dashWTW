@@ -50,8 +50,6 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
   const [ data, setData ] = useState<IData[]>([]);
   const [ details, setDetails ] = useState<any>(null);
   let params = useParams();
-  const [countriesFilter, setCountriesFilter] = useState<string>('');
-  const [citiesFilter, setCitiesFilter] = useState<string>('');
   
   let dataArr: any = [];
 	  
@@ -355,7 +353,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                             onChange={(e:any)=> setGlobalFilter(e.target.value)}
                           ></Input>
                         </InputGroup>
-                        <FilterMapsComp citiesFilter={citiesFilter} setCitiesFilter={setCitiesFilter} countriesFilter={countriesFilter} setCountriesFilter={setCountriesFilter}></FilterMapsComp>
+                        {/* <FilterMapsComp countriesFilter={countriesFilter} setCountriesFilter={setCountriesFilter}></FilterMapsComp> */}
                       </HStack>
                     </HStack>
                     <MapsTable  
