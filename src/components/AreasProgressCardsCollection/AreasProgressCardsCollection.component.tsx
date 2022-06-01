@@ -37,13 +37,13 @@ import Parking from 'wtw-icons/_icons/Parking'
 import Other from 'wtw-icons/_icons/Other'
 
 // Arrays of existing areas into the AMS
-let areasAMS:any[] = [["Building Entrance", <BuildingEntrance width="1.6em" height="1.6em"/>, "buildingentrance", 0],
-                      ["Lobby Reception", <Lobby width="1.6em" height="1.6em"/>, "lobbyreception", 0],
+let areasAMS:any[] = [["Building Entrance", <BuildingEntrance width="1.6em" height="1.6em"/>, "building_entrance", 0],
+                      ["Lobby Reception", <Lobby width="1.6em" height="1.6em"/>, "lobby", 0],
                       ["Rooms", <QueenBed width="1.6em" height="1.6em"/>, "rooms", 0],
                       ["Room One", <QueenBed width="1.6em" height="1.6em"/>, "roomone", 0],
                       ["Room Two", <QueenBed width="1.6em" height="1.6em"/>, "roomtwo", 0],
                       ["Room Three", <QueenBed width="1.6em" height="1.6em"/>, "roomthree", 0],
-                      ["General Accessibility", <GeneralAttribute width="1.6em" height="1.6em"/>, "generalaccessibility", 0],
+                      ["General Accessibility", <GeneralAttribute width="1.6em" height="1.6em"/>, "general_attributes", 0],
                       ["Food Service Area", <FoodService width="1.6em" height="1.6em"/>, "foodservicearea", 0],
                       ["Swimming Pool", <SwimmingPool width="1.6em" height="1.6em"/>, "swimmingpool", 0],
                       ["Fitness Center", <Gym width="1.6em" height="1.6em"/>, "fitnesscenter", 0],
