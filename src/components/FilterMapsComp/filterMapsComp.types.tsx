@@ -5,5 +5,7 @@ export interface IPropTypes {
     setStatus:any, 
     setError:any,
     calendarEndDate:any, 
-    calendarStartDate:any
+    calendarStartDate:any,
+    tableType:string,
+    mapperId:any
 }

@@ -122,7 +122,7 @@ function MapsTable(props: IPropTypes): JSX.Element {
 						  onChange={e=> setGlobalFilter(e.target.value)}
                         ></Input>
                       </InputGroup>
-                      <FilterMapsComp filterData={filterData} setFilterData={setFilterData} setMaps={setMaps} setStatus={setStatus} setError={setError} calendarEndDate={props.calendarEndDate} calendarStartDate={props.calendarStartDate}></FilterMapsComp>
+                      <FilterMapsComp filterData={filterData} setFilterData={setFilterData} setMaps={setMaps} setStatus={setStatus} setError={setError} calendarEndDate={props.calendarEndDate} calendarStartDate={props.calendarStartDate} tableType="picker" mapperId={0}></FilterMapsComp>
                     </HStack>
 					{Object.entries(maps[0]).length === 0 ?<ErrorMessage error="No maps found :(" type="data"/> : <Table {...getTableProps()} size="md" w="full" display="grid" >
 				<Thead >
