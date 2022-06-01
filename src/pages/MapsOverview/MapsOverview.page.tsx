@@ -277,20 +277,7 @@ export const MapsOverview = (props:IPropTypes) => {
                         {datePickerSelection}
                       </Text>
                     </VStack>
-                    <HStack>
-                      <InputGroup w="80%">
-                        <InputLeftElement
-                          pointerEvents="none"
-                          children={<Search2Icon zIndex="0" color="gray.300" />}
-                        />
-                        <Input
-                          placeholder="Search by: Name"
-                          borderColor="lightgray.main"
-                          borderRadius="lg"
-                        ></Input>
-                      </InputGroup>
-                      <FilterMapsComp></FilterMapsComp>
-                    </HStack>
+                    
                   </HStack>
 
                   <MapsTablePicker calendarStartDate={calendarStartDate} calendarEndDate={calendarEndDate}></MapsTablePicker>

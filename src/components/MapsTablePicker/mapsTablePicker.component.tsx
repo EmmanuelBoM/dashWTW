@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { IPropTypes } from './mapsTablePicker.types';
 
-import {Thead, Tbody, Tr, Th, Td, chakra, Table} from '@chakra-ui/react';
-import { useTable, useSortBy, useFlexLayout, Column } from 'react-table'
-import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons'
+import {Thead, Tbody, Tr, Th, Td, chakra, Table, HStack, Input, InputGroup, InputLeftElement, VStack} from '@chakra-ui/react';
+import { useTable, useSortBy, useFlexLayout, Column, useGlobalFilter } from 'react-table'
+import { TriangleDownIcon, TriangleUpIcon, Search2Icon } from '@chakra-ui/icons'
 
 import MapProgressbar from '../MapProgressbar';
 
@@ -15,11 +15,15 @@ import {IData} from './mapsTablePicker.types'
 import axios from "axios"
 import Error404 from '../../pages/Error404';
 import ErrorMessage from '../ErrorMessage';
+import FilterMapsComp from '../FilterMapsComp';
 
 function MapsTable(props: IPropTypes): JSX.Element {
 	const [ status, setStatus ] = useState<string>('loading');
 	const [ error, setError ] = useState<any>(null);
 	const [ maps, setMaps ] = useState<IData[]>([]);
+	const [countriesFilter, setCountriesFilter] = useState<string>('');
+  	const [citiesFilter, setCitiesFilter] = useState<string>('');
+
 	let data=maps;
 
 	const columns: Column<IData>[] = React.useMemo(
@@ -71,11 +75,15 @@ function MapsTable(props: IPropTypes): JSX.Element {
         props.calendarEndDate])
 
 	const { getTableProps, 
-			getTableBodyProps, 
-			headerGroups, 
-			rows, 
-			prepareRow } = useTable({ columns, data, initialState: {hiddenColumns:["id"]} }, useSortBy, useFlexLayout,)
+		getTableBodyProps, 
+		headerGroups, 
+		state,
+		setGlobalFilter,
+		rows, 
+		prepareRow }:any = useTable({ columns, data, initialState: {hiddenColumns:["id"]}}, useFlexLayout, useGlobalFilter, useSortBy,)
 	
+	const { globalFilter } = state
+
 	if (status === "loading") {
 		return(
 			<h1>Loading...</h1>
@@ -96,9 +104,26 @@ function MapsTable(props: IPropTypes): JSX.Element {
 
 	else {
 		return (
-			<Table {...getTableProps()} size="md" w="full" display="grid" >
+			<>
+			<HStack width="full" justifyContent="space-between">
+                      <InputGroup w="50%">
+                        <InputLeftElement
+                          pointerEvents="none"
+                          children={<Search2Icon zIndex="0" color="gray.300" />}
+                        />
+                        <Input
+						 value={globalFilter || ''}
+                          placeholder="Search"
+                          borderColor="gray.400"
+                          borderRadius="lg"
+						  onChange={e=> setGlobalFilter(e.target.value)}
+                        ></Input>
+                      </InputGroup>
+                      <FilterMapsComp citiesFilter={citiesFilter} setCitiesFilter={setCitiesFilter} countriesFilter={countriesFilter} setCountriesFilter={setCountriesFilter}></FilterMapsComp>
+                    </HStack>
+					<Table {...getTableProps()} size="md" w="full" display="grid" >
 				<Thead >
-					{headerGroups.map((headerGroup) => (
+					{headerGroups.map((headerGroup:any) => (
 					<Tr {...headerGroup.getHeaderGroupProps()}>
 						{headerGroup.headers.map((column: any) => (
 						<Th
@@ -125,7 +150,7 @@ function MapsTable(props: IPropTypes): JSX.Element {
 					))}
 				</Thead>
 				<Tbody {...getTableBodyProps()} >
-					{rows.map((row) => {
+					{rows.map((row:any) => {
 					prepareRow(row)
 					return (
 						<Tr {...row.getRowProps()} fontSize="sm">
@@ -139,6 +164,8 @@ function MapsTable(props: IPropTypes): JSX.Element {
 					})}
 				</Tbody>
 			</Table>
+			</>
+			
 		)
 	}
 }
