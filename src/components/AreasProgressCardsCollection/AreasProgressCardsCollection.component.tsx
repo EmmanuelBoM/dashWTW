@@ -8,6 +8,7 @@ import axios from "axios"
 import {
     CircularProgress,
     CircularProgressLabel,
+    Grid,
     GridItem,
     Heading,
     HStack, 
@@ -27,7 +28,7 @@ export const AreasProgressCardsCollection = (props:any) => {
 
     useEffect(()=>{
         setStatus('loading')
-        axios.get(`http://localhost:9000/maps/detail/${props.accomodationId}`) // Devuelve lista de mappers
+        axios.get(`http://localhost:9000/maps/detail/${props.accomodationId}`) 
             .then((result)=>{
               setAreas(result.data.progressAreas)
               setStatus('resolved')
@@ -36,80 +37,76 @@ export const AreasProgressCardsCollection = (props:any) => {
               setError(error)
               setStatus('error')
             })
-      }, [])
-      
-      if (status === "loading" || areas === "") {
-        return(
-            <Stack
-                w="full"
-                h="60vh"
-                justifyContent="space-around"
-                alignItems="center"
-            >
-                <img src={WheelChairLoading} height='auto' width='70vh' alt='Loading...'/>
-            </Stack>
-        )
-      }
-    
-      else if (status === "error") {
-        return (
-            <HStack
-                w="full"
-                flexWrap="wrap"
-                justifyContent="space-around"
-                alignItems="start"
-            >
-                <Error404/>
-            </HStack>
-            
-        )
-      }
-    
-      else {
-        return(
-            <HStack
-                w="full"
-                flexWrap="wrap"
-                justifyContent="space-around"
-                alignItems="start"
-            >
-            {areas.progressAreas.map((item:any) => (
-                <GridItem>
-                <VStack
-                    p={5}
-                    shadow="md"
-                    borderWidth="1px"
-                    bgColor="#FFF"
-                    w="22vw"
-                    borderRadius="lg"
+        }, [props.toggleCompleted])
+        
+        if (status === "loading" || areas === "") {
+            return(
+                <Stack
+                    w="full"
+                    h="60vh"
+                    justifyContent="space-around"
+                    alignItems="center"
                 >
-                    <Heading
-                    fontSize="xl"
-                    color="black.main"
-                    fontWeight="bold"
-                    marginTop="1vw"
-                    marginBottom="2vw"
-                    >
-                    {item.name}
-                    </Heading>
-                    <CircularProgress
-                    value={item.percentage}
-                    size="120px"
-                    >
-                    <CircularProgressLabel
-                        color="#2F6FE4"
-                        fontSize="lg"
-                        fontWeight="bolder"
-                    >
-                        {item.percentage}%
-                    </CircularProgressLabel>
-                    </CircularProgress>
-                </VStack>
-                </GridItem>
-            ))}
-        </HStack>
-    )
-}
+                    <img src={WheelChairLoading} height='auto' width='70vh' alt='Loading...'/>
+                </Stack>
+            )
+        }
+        
+        else if (status === "error") {
+            return (
+                <HStack
+                    w="full"
+                    flexWrap="wrap"
+                    justifyContent="space-around"
+                    alignItems="start"
+                >
+                    <Error404/>
+                </HStack>
+                
+            )
+        }
+        
+        else {
+            return(
+                <Grid templateColumns="repeat(3, 1fr)" gap={4} w="full">
+                    {areas.map((item:any) => (
+                        <GridItem>
+                        <VStack
+                            p={5}
+                            shadow="md"
+                            borderWidth="1px"
+                            bgColor="#FFF"
+                            w="22vw"
+                            borderRadius="lg"
+                        >
+                            <Heading
+                            fontSize="xl"
+                            color="black.main"
+                            fontWeight="bold"
+                            marginTop="1vw"
+                            marginBottom="2vw"
+                            >
+                            {item.name}
+                            </Heading>
+                            <CircularProgress
+                            value={item.percentage}
+                            size="120px"
+                            >
+                            <CircularProgressLabel
+                                color="#2F6FE4"
+                                fontSize="lg"
+                                fontWeight="bolder"
+                            >
+                                {item.percentage}%
+                            </CircularProgressLabel>
+                            </CircularProgress>
+                        </VStack>
+                        </GridItem>
+                    )
+                )}
+            </Grid>
+        )
+    }
 }
 
 export default AreasProgressCardsCollection;

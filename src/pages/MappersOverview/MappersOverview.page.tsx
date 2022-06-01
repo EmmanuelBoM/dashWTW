@@ -19,21 +19,25 @@ import { Search2Icon } from "@chakra-ui/icons";
 //Imports stylesheet
 import './MappersOverview.modules.css'
 
-//Imports custom Components
+// Imports custom Components
 import FilternSort from "../../components/FilternSort";
 import MappersCardsCollection from "../../components/MappersCardsCollection";
 
 // Imports PropTypes
 import { IPropTypes } from "./MappersOverview.types";
 
-//Variables used
+// Variables used
 let username:string = "Arturo Gaona"
 
 export const MappersOverview = (props:IPropTypes) => {
   
-  const [ contenido,setContenido ]= useLocalStorage('text','');
+  const [ searchQuery, setSearchQuery ] = useState<string>('')
   const [ filterOrderSelection, setFilterOrderSelection ] = useState<string>('asc')
   const [ filterCompletionSelection, setFilterCompletionSelection ] = useState<string>('cmaps')
+
+  function querying(e:any) {
+    setSearchQuery(e.target.value)
+  }
 
   return(
     <Container maxWidth="container.xxl" bgColor="#F8F9FD">
@@ -59,8 +63,8 @@ export const MappersOverview = (props:IPropTypes) => {
                   children={<Search2Icon color="gray.300" />}
                 />
                 <Input
-                  onChange={(e:any) => (setContenido(e.target.value))}
-                  value={contenido}
+                  onChange={querying}
+                  value={searchQuery}
                   placeholder="Search by: Name"
                   borderColor="lightgray.main"
                   borderRadius="lg"
@@ -74,7 +78,8 @@ export const MappersOverview = (props:IPropTypes) => {
           <MappersCardsCollection
             filterOrderSelection={filterOrderSelection} 
             filterCompletionSelection={filterCompletionSelection}
-            setSelectedWindow={props.setSelectedWindow}/>
+            setSelectedWindow={props.setSelectedWindow}
+            searchQuery={searchQuery}/>
         </VStack>
       </Flex>
     </Container>

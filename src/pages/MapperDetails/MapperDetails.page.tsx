@@ -38,6 +38,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Error404 from "../Error404";
 import {IData} from '../../components/MapsTable/mapsTable.types'
 import MapProgressbar from "../../components/MapProgressbar";
+import ErrorMessage from "../../components/ErrorMessage";
 
 
 function MapperDetails(props: IPropTypes): JSX.Element  {
@@ -127,6 +128,12 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
         <Error404/>
       )
     }
+
+    if (Object.entries(details).length === 0) {
+      return (
+      <ErrorMessage type="general" error="Woops! An error occurred :("/>
+      )
+    }
   
     else {
       return (
@@ -152,7 +159,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                     </HStack>
 
                     <Text color="black.400" fontSize="xl">
-                      Places to stay mapper
+                      Places to Stay Mapper
                     </Text>
                   </VStack>
                 </HStack>
@@ -338,7 +345,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                             placeholder="Search by: Name"
                             borderColor="lightgray.main"
                             borderRadius="lg"
-                            onChange={e=> setGlobalFilter(e.target.value)}
+                            onChange={(e:any) => setGlobalFilter(e.target.value)}
                           ></Input>
                         </InputGroup>
                         <FilterMapsComp></FilterMapsComp>

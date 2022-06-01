@@ -14,9 +14,6 @@ import {
 import GeneralError from '../../assets/Error.svg'
 import DataError from '../../assets/ErrorData.svg'
 
-// Importing react-router-dom component
-import { useNavigate } from "react-router-dom";
-
 // ERROR404 VIEW-----------------------------------
 function ErrorMessage(props: IPropTypes): JSX.Element {
 
