@@ -47,7 +47,7 @@ export const AreasProgressCardsCollection = (props:any) => {
                     justifyContent="space-around"
                     alignItems="center"
                 >
-                    <p>hola</p>
+                    <img src={WheelChairLoading} height='auto' width='70vh' alt='Loading...'/>
                 </Stack>
             )
         }
@@ -102,7 +102,8 @@ export const AreasProgressCardsCollection = (props:any) => {
                             </CircularProgress>
                         </VStack>
                         </GridItem>
-                    ))}
+                    )
+                )}
             </Grid>
         )
     }
