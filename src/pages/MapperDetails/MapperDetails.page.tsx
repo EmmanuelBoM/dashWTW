@@ -24,10 +24,11 @@ import {
   Box
 } from "@chakra-ui/react"
 
+// Importing React Table
 import { useTable, useSortBy, useFlexLayout, Column, useGlobalFilter } from 'react-table'
 
 // Importing moment library to parse dates
-import moment, { Moment } from "moment";
+import moment from "moment";
 
 //Imports custom Componentes
 import MapsTable from "../../components/MapsTable";
@@ -56,24 +57,26 @@ import Elevator from 'wtw-icons/_icons/Elevator'
 import Gym from 'wtw-icons/_icons/Gym'
 import Beachfront from 'wtw-icons/_icons/Beachfront'
 import Parking from 'wtw-icons/_icons/Parking'
+import CloseButton from 'wtw-icons/_icons/CloseButton'
 import Other from 'wtw-icons/_icons/Other'
 
 // Arrays of existing areas into the AMS
 let areasAMS:any[] = [["Building Entrance", <BuildingEntrance width="1.6em" height="1.6em"/>, "buildingentrance"],
                       ["Lobby Reception", <Lobby width="1.6em" height="1.6em"/>, "lobbyreception"],
                       ["Rooms", <QueenBed width="1.6em" height="1.6em"/>, "rooms"],
-                      ["Room One", <QueenBed width="1.6em" height="1.6em"/>, "roomone"],
-                      ["Room Two", <QueenBed width="1.6em" height="1.6em"/>, "roomtwo"],
-                      ["Room Three", <QueenBed width="1.6em" height="1.6em"/>, "roomthree"],
+                      ["Room One", <QueenBed width="1.6em" height="1.6em"/>, "rooms_one"],
+                      ["Room Two", <QueenBed width="1.6em" height="1.6em"/>, "rooms_two"],
+                      ["Room Three", <QueenBed width="1.6em" height="1.6em"/>, "rooms_three"],
                       ["General Accessibility", <GeneralAttribute width="1.6em" height="1.6em"/>, "generalaccessibility"],
-                      ["Food Service Area", <FoodService width="1.6em" height="1.6em"/>, "foodservicearea"],
+                      ["Food Service Area", <FoodService width="1.6em" height="1.6em"/>, "foodservice"],
                       ["Swimming Pool", <SwimmingPool width="1.6em" height="1.6em"/>, "swimmingpool"],
                       ["Fitness Center", <Gym width="1.6em" height="1.6em"/>, "fitnesscenter"],
                       ["Beachfront", <Beachfront width="1.6em" height="1.6em"/>, "beachfront"],
                       ["Parking Area", <Parking width="1.6em" height="1.6em"/>, "parkingarea"],
                       ["Common Area Toilet", <Bathroom width="1.6em" height="1.6em"/>, "commonareatoilet"],
-                      ["Other Areas", <Other width="1.6em" height="1.6em"/>, "otherareas"],
-                      ["Elevator", <Elevator width="1.6em" height="1.6em"/>, "elevator"]]  
+                      ["Other Areas", <Other width="1.6em" height="1.6em"/>, "other_areas"],
+                      ["Elevator", <Elevator width="1.6em" height="1.6em"/>, "elevator"],
+                      ["No Area Available", <CloseButton width="1.6em" height="1.6em"/>, "unavailable"]]  
 
 function MapperDetails(props: IPropTypes): JSX.Element  {
 	let navigate = useNavigate();
@@ -81,12 +84,9 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
   const [ error, setError ] = useState<any>(null);
   const [ data, setData ] = useState<IData[]>([]);
   const [ details, setDetails ] = useState<any>(null);
-  let params = useParams();
   const [filterData, setFilterData] = useState<any>({cities:[], countries:[]});
-  const [ lastMappedArea, setLastMappedArea ] = useState<any>('');
-  
-  let dataArr: any = [];
-	  
+  const [ lastMappedArea, setLastMappedArea ] = useState<any>('');	  
+  let params = useParams();
 
 	const columns: Column<IData>[] = React.useMemo(
     () => [
@@ -139,7 +139,6 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
         setDetails(result.data)
         setLastMappedArea(areasAMS.filter( (area) => { if (result.data.replies.lastCompletedArea.Area === area[2]) return true }))
         setStatus('resolved')
-        
       })
       .catch((error)=>{
         setError(error)
@@ -147,7 +146,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
       })
     }, [])
 
-    if (status === "loading") {
+    if (status === "loading" || Object.entries(lastMappedArea).length === 0) {
       return(
         <h1>Loading...</h1>
       )
@@ -280,7 +279,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                         <Text color="blue.main" fontWeight="700">
                           Average completion time
                         </Text>
-                        {details.contributions.averageTime!=null ?
+                        {details.contributions.averageTime !== null ?
                         <>
                           <Text fontSize="3xl" fontWeight="800">
                             {details.contributions.averageTime}
@@ -323,10 +322,10 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                           Date and Hour
                         </Text>
                         <Text fontSize="3xl" fontWeight="800" >
-                          {details.replies.lastReply.day}
+                          {details.replies.lastReply.day === 'unavailable' ? '' : details.replies.lastReply.day}
                         </Text>
-                        <Text fontSize="md" fontWeight="600" >{`${moment.months(details.replies.lastReply.month - 1)}, ${details.replies.lastReply.year}`}</Text>
-                        <Text fontSize="md" fontWeight="600" color="gray.400">{details.replies.lastReply.hour}</Text>
+                        <Text fontSize="md" fontWeight="600" >{`${(moment.months(details.replies.lastReply.month - 1)) === undefined ? 'No Date Available' : (moment.months(details.replies.lastReply.month - 1))} ${details.replies.lastReply.year === 'unavailable'? '' : `, ${details.replies.lastReply.year}`}`}</Text>
+                        <Text fontSize="md" fontWeight="600" color="gray.400">{details.replies.lastReply.hour === 'unavailable' ? 'No Hour Available' : details.replies.lastReply.hour}</Text>
                       </VStack>
                       <Divider
                         w="80%"
@@ -348,13 +347,10 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                             {lastMappedArea[0][0]}
                           </Text>
                         </Box>
-                        <Text fontSize="md">{details.replies.lastCompletedArea.location.name}</Text>
+                        <Text fontSize="md">{details.replies.lastCompletedArea.location.name === 'unavailable' ? 'No Location Available' : details.replies.lastCompletedArea.location.name}</Text>
                       </VStack>
                     </VStack>
-                    
-
                   </VStack>
-
                   <VStack
                     alignItems="start"
                     h="full"
@@ -403,7 +399,5 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
       );
     }
 }
-	
-
 
 export default MapperDetails;
