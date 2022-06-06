@@ -33,7 +33,6 @@ import {
   Stack,
   propNames
 } from "@chakra-ui/react"
-import { Search2Icon } from "@chakra-ui/icons";
 
 // Imports of custom components
 import CalendarDatePicker from '../../components/CalendarDatePicker/CalendarDatePicker.component';
@@ -43,8 +42,6 @@ import SummaryOnDatePicking from "../../components/SummaryOnDatePicking";
 import MapProgressbar from "../../components/MapProgressbar";
 
 // Imports of icons from wtw icons
-import Entrance from 'wtw-icons/_icons/Entrance'
-import Restaurant from 'wtw-icons/_icons/Restaurant'
 import BuildingEntrance from 'wtw-icons/_icons/Buildingentrance'
 import Lobby from 'wtw-icons/_icons/Lobby'
 import FoodService from 'wtw-icons/_icons/FoodService'
@@ -57,6 +54,9 @@ import Gym from 'wtw-icons/_icons/Gym'
 import Beachfront from 'wtw-icons/_icons/Beachfront'
 import Parking from 'wtw-icons/_icons/Parking'
 import Other from 'wtw-icons/_icons/Other'
+import Countries from 'wtw-icons/_icons/Countries'; 
+import Destinations from 'wtw-icons/_icons/Destinations'; 
+import CloseButton from 'wtw-icons/_icons/CloseButton';
 
 // Imports of Map Items from React Simple Maps
 import {
@@ -72,21 +72,14 @@ import {
 import { Chart } from "react-google-charts";
 import FilterMapsComp from "../../components/FilterMapsComp";
 
-// Importing WTW Icons
-import Countries from 'wtw-icons/_icons/Countries'; 
-import Destinations from 'wtw-icons/_icons/Destinations'; 
-
 //Imports interface for table info
 import {IData} from '../../components/MapsTable/mapsTable.types'
-
-//Imports react router components
-import { Link } from 'react-router-dom';
 
 import {  Column } from 'react-table'
 import MapsTablePicker from '../../components/MapsTablePicker';
 import { IPropTypes } from './MapsOverview.types';
 
-
+// Require for parsing the country codes
 i18nIsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
 // VARS-------------------------------------------------------------
@@ -95,38 +88,25 @@ i18nIsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 let username:string = 'Arturo Gaona'
 
 // Arrays of existing areas into the AMS
-let areasAMS:any[] = [["Building Entrance", <BuildingEntrance width="1em" height="1em"/>, "buildingentrance"],
-                      ["Lobby Reception", <Lobby width="1em" height="1em"/>, "lobbyreception"],
-                      ["Room One", <QueenBed width="1em" height="1em"/>, "roomone"],
-                      ["Room Two", <QueenBed width="1em" height="1em"/>, "roomtwo"],
-                      ["Room Three", <QueenBed width="1em" height="1em"/>, "roomthree"],
-                      ["General Accessibility", <GeneralAttribute width="1em" height="1em"/>, "generalaccessibility"],
-                      ["Food Service Area", <FoodService width="1em" height="1em"/>, "foodservicearea"],
-                      ["Swimming Pool", <SwimmingPool width="1em" height="1em"/>, "swimmingpool"],
-                      ["Fitness Center", <Gym width="1em" height="1em"/>, "fitnesscenter"],
-                      ["Beachfront", <Beachfront width="1em" height="1em"/>, "beachfront"],
-                      ["Parking Area", <Parking/>, "parkingarea"],
-                      ["Common Area Toilet", <Bathroom width="1em" height="1em"/>, "commonareatoilet"],
-                      ["Other Areas", <Other width="1em" height="1em"/>, "otherareas"],
-                      ["Elevator", <Elevator width="1em" height="1em"/>, "elevator"]]                        
+let areasAMS:any[] = [["Building Entrance", <BuildingEntrance width="1.6em" height="1.6em"/>, "buildingentrance"],
+                      ["Lobby Reception", <Lobby width="1.6em" height="1.6em"/>, "lobbyreception"],
+                      ["Rooms", <QueenBed width="1.6em" height="1.6em"/>, "rooms"],
+                      ["Room One", <QueenBed width="1.6em" height="1.6em"/>, "rooms_one"],
+                      ["Room Two", <QueenBed width="1.6em" height="1.6em"/>, "rooms_two"],
+                      ["Room Three", <QueenBed width="1.6em" height="1.6em"/>, "rooms_three"],
+                      ["General Accessibility", <GeneralAttribute width="1.6em" height="1.6em"/>, "generalaccessibility"],
+                      ["Food Service Area", <FoodService width="1.6em" height="1.6em"/>, "foodservice"],
+                      ["Swimming Pool", <SwimmingPool width="1.6em" height="1.6em"/>, "swimmingpool"],
+                      ["Fitness Center", <Gym width="1.6em" height="1.6em"/>, "fitnesscenter"],
+                      ["Beachfront", <Beachfront width="1.6em" height="1.6em"/>, "beachfront"],
+                      ["Parking Area", <Parking width="1.6em" height="1.6em"/>, "parkingarea"],
+                      ["Common Area Toilet", <Bathroom width="1.6em" height="1.6em"/>, "commonareatoilet"],
+                      ["Other Areas", <Other width="1.6em" height="1.6em"/>, "other_areas"],
+                      ["Elevator", <Elevator width="1.6em" height="1.6em"/>, "elevator"],
+                      ["No Area Available", <CloseButton width="1.6em" height="1.6em"/>, "unavailable"]]                        
 
 // Data of map
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
-
-// Data of bar chart
-const data = [
-  [
-    "Element",
-    "Maps",
-    { role: "style" },
-    {
-      sourceColumn: 0,
-      role: "annotation",
-      type: "string",
-      calc: "stringify",
-    },
-  ]
-];
 
 // Options of bar chart
 const options = {
@@ -137,11 +117,6 @@ const options = {
   bar: { groupWidth: "95%" },
   legend: { position: "none" },
 };
-
-// Data of line chart
-const dataLineChart = [
-  ["Month", "Maps"],
-];
 
 // enum of Typescript
 enum MonthsOfTheYear {
@@ -171,7 +146,6 @@ export const MapsOverview = (props:IPropTypes) => {
   const [ calendarStartDate, setCalendarStartDate ] = useState<any>(moment().startOf("week").format("YYYY-MM-DD"))
   const [ calendarEndDate, setCalendarEndDate ] = useState<any>(moment().format("YYYY-MM-DD"))
   const [ datePickerSelection, setDatePickerSelection ] = useState<string>("This Week")
-
   const [ status, setStatus ] = useState<string>('loading');
 	const [ error, setError ] = useState<any>(null);
   const [ mapsOverviewData, setMapsOverviewData ] = useState<any>(null);
@@ -180,6 +154,24 @@ export const MapsOverview = (props:IPropTypes) => {
   const [ dataMap, setDataMap ] = useState<any>([])
   const [ maps, setMaps ] = useState<IData[]>([]);
   const [ provisionalLMAreas, setProvisionalLMAreas] = useState<any>('')
+  const [ data, setData ] = useState<any>([
+    [
+      "Element",
+      "Maps",
+      { role: "style" },
+      {
+        sourceColumn: 0,
+        role: "annotation",
+        type: "string",
+        calc: "stringify",
+      },
+    ]
+  ]);
+
+  const [ dataLineChart, setDataLineChart ] = useState<any>([
+    ["Month", "Maps"],
+  ]);
+  const [ highestNumberOfMaps, setHighestNumberOfMaps ] = useState<number>(0)
 
   
   useEffect(()=>{
@@ -193,9 +185,9 @@ export const MapsOverview = (props:IPropTypes) => {
             data.push([item.country_name, item.cantidad, "#FF7562", item.cantidad])
             }
           )
-          setIconsTextLeastMappedAreas(areasAMS.filter( (area) => { for(let i = 0; i < result.data.allTimeStatistics.leastMappedAreas.length; i++) if (result.data.allTimeStatistics.leastMappedAreas[i] === area[0]) return true}))
+          setHighestNumberOfMaps(parseInt(result.data.allTimeStatistics.highlights[0].cantidad))
+          setIconsTextLeastMappedAreas(areasAMS.filter( (area) => { for(let i = 0; i < result.data.allTimeStatistics.leastMappedAreas.length; i++) if (result.data.allTimeStatistics.leastMappedAreas[i].inquiry_id === area[2]) return true}))
           setProvisionalLMAreas(result.data.allTimeStatistics.leastMappedAreas)
-          // setIconsTextLeastMappedAreas(areasAMS.filter( (area) => { for(let i = 0; i < result.data.allTimeStatistics.leastMappedAreas.length; i++) if (area[0].includes(result.data.allTimeStatistics.leastMappedAreas[i].toLowerCase())) return true}))
           result.data.allTimeStatistics.worldwideInsights.map((item:any) => {
             dataMap.push([i18nIsoCountries.getAlpha3Code(item.country_name, "en"), item.cantidad])
           })
@@ -259,7 +251,10 @@ export const MapsOverview = (props:IPropTypes) => {
 
             <VStack spacing={6} w="full">
               {/* /Summary Card */}
-              <SummaryOnDatePicking calendarStartDate={calendarStartDate} calendarEndDate={calendarEndDate} datePickerSelection={datePickerSelection}/>
+              <SummaryOnDatePicking calendarStartDate={calendarStartDate} 
+                                    calendarEndDate={calendarEndDate} 
+                                    datePickerSelection={datePickerSelection}
+              />
 
               {/* /All Maps Table Card */}
               <VStack
@@ -370,7 +365,7 @@ export const MapsOverview = (props:IPropTypes) => {
                               const d:any[] = dataMap.find((s:any[]) => s[0] === geo.properties.ISO_A3);
                               const colours:any[] = ["#ffedea", "#ff5233"]
                               const colorScale = scaleLinear()
-                                .domain([0, 337])
+                                .domain([0, highestNumberOfMaps])
                                 .range(colours)
                               let colourToBeUsed:string = colorScale(d? d[1]: 0).toString()
                               return (
@@ -496,7 +491,7 @@ export const MapsOverview = (props:IPropTypes) => {
                     height="100%"
                     justify='space-around'
                   >
-                    {/*{iconsTextLeastMappedAreas.map((area: any) => (
+                    {iconsTextLeastMappedAreas.map((area: any) => (
                       <Box color="black.800" display='inline-flex' justifyContent='space-around'>
                         <span>
                           {area[1]}
@@ -505,14 +500,14 @@ export const MapsOverview = (props:IPropTypes) => {
                           {area[0]}
                         </Text>
                       </Box>
-                    ))}*/}
-                    {provisionalLMAreas.map((area: any) => (
+                    ))}
+                    {/*provisionalLMAreas.map((area: any) => (
                       <Box color="black.800" display='inline-flex' justifyContent='space-around' wordBreak="break-word">
                         <Text marginLeft='0.7em'>
                           {area.inquiry_id}
                         </Text>
                       </Box>
-                    ))}
+                    ))*/}
                   </VStack>
                 </Stack>
 
