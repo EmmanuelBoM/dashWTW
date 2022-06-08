@@ -42,7 +42,12 @@ export const MappersOverview = (props:IPropTypes) => {
 
   useEffect( () => {
     if(!props.loading && !props.user) {
-        navigate("/")
+      navigate("/")
+      console.log("effect")
+      console.log(props.loading)
+      console.log(props.loading)
+    } else {
+      navigate("/mappers")
     }
   }, [props.user, props.loading]) 
 

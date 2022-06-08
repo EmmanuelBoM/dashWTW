@@ -137,6 +137,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
     if(!props.loading && !props.user) {
       navigate("/")
     } else {
+      navigate(`/mappers/${params.mapperId}`)
       axios.get(`http://localhost:9000/mappers/details/${params.mapperId}`) // Devuelve lista de mappers
       .then((result)=>{
         setDetails(result.data)

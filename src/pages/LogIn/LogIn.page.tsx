@@ -32,7 +32,7 @@ function LogIn () {
 
   useEffect( () => {
     if(!loading && user) {
-        navigate("/dashboard")
+        navigate("/maps")
       }
   }, [user, loading])
 
