@@ -1,3 +1,4 @@
 export interface IPropTypes {
-    selectedWindow:string
+    selectedWindow:string,
+    handleLogout:any
 }

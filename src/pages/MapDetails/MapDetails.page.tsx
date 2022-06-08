@@ -89,7 +89,10 @@ function MapDetails(props: IPropTypes): JSX.Element {
   useEffect(() => {
     setStatus('loading')
     props.setSelectedWindow('ams')
-    axios.get(`http://localhost:9000/maps/detail/${accomodationId}`) 
+    if(!props.loading && !props.user) {
+      navigate("/")
+    } else {
+      axios.get(`http://localhost:9000/maps/detail/${accomodationId}`) 
       .then((result)=>{
         setPlaceToStay(result.data)
         setStatus('resolved')
@@ -98,7 +101,8 @@ function MapDetails(props: IPropTypes): JSX.Element {
         setError(error)
         setStatus('error')
       })
-  }, [])
+    }
+  }, [props.user, props.loading])
 
   if (status === "loading" || placeToStay === '') {
     return(
@@ -115,7 +119,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
 
   if (status === "error") {
     return (
-      <Error404/>
+      <Error404 loading={props.loading} user={props.user}/>
     )
   }
 

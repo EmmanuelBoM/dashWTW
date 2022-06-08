@@ -44,7 +44,7 @@ export const SummaryOnDatePicking = (props:any) => {
 
     if (status === "error") {
         return (
-            <Error404/>
+            <Error404 loading={props.loading} user={props.user}/>
         )
     }
 

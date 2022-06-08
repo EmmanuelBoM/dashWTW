@@ -1,6 +1,5 @@
 import * as React from "react"
-import { useState } from "react"
-import { useLocalStorage } from "../../useLocalStorage";
+import { useState, useEffect } from "react"
 
 //Imports chakra ui Components
 import {
@@ -16,6 +15,9 @@ import {
 } from "@chakra-ui/react"
 import { Search2Icon } from "@chakra-ui/icons";
 
+// Importing react-router-dom library
+import { useNavigate } from "react-router-dom";
+
 //Imports stylesheet
 import './MappersOverview.modules.css'
 
@@ -26,9 +28,6 @@ import MappersCardsCollection from "../../components/MappersCardsCollection";
 // Imports PropTypes
 import { IPropTypes } from "./MappersOverview.types";
 
-// Variables used
-let username:string = "Arturo Gaona"
-
 export const MappersOverview = (props:IPropTypes) => {
   
   const [ searchQuery, setSearchQuery ] = useState<string>('')
@@ -38,6 +37,14 @@ export const MappersOverview = (props:IPropTypes) => {
   function querying(e:any) {
     setSearchQuery(e.target.value)
   }
+
+  let navigate = useNavigate();
+
+  useEffect( () => {
+    if(!props.loading && !props.user) {
+        navigate("/")
+    }
+  }, [props.user, props.loading]) 
 
   return(
     <Container maxWidth="container.xxl" bgColor="#F8F9FD">
@@ -51,7 +58,7 @@ export const MappersOverview = (props:IPropTypes) => {
             <VStack alignItems="flex-start">
               <Box>
                 <Heading fontSize="1.5em" color="blue.600">
-                  Welcome, {username}
+                  {`Welcome, ${props.user?.displayName}`}
                 </Heading>
               </Box>
               <Heading size="xl">Mappers Overview</Heading>
