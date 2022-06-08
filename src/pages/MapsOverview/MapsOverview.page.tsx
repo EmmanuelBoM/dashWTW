@@ -58,6 +58,9 @@ import Countries from 'wtw-icons/_icons/Countries';
 import Destinations from 'wtw-icons/_icons/Destinations'; 
 import CloseButton from 'wtw-icons/_icons/CloseButton';
 
+// Importing react-router-dom library
+import { useNavigate } from "react-router-dom";
+
 // Imports of Map Items from React Simple Maps
 import {
   ComposableMap,
@@ -173,38 +176,42 @@ export const MapsOverview = (props:IPropTypes) => {
   ]);
   const [ highestNumberOfMaps, setHighestNumberOfMaps ] = useState<number>(0)
 
-  
+  let navigate = useNavigate();
+
   useEffect(()=>{
     setStatus('loading')
     props.setSelectedWindow('ams')
-    axios.get(`http://localhost:9000/maps/overview/${calendarStartDate}/${calendarEndDate}`) // Devuelve data de mapsOverview
-        .then((result)=>{
-          setMapsOverviewData(result.data)
-          setStatus('resolved')
-          result.data.allTimeStatistics.highlights.map((item:any) => {
-            data.push([item.country_name, item.cantidad, "#FF7562", item.cantidad])
-            }
-          )
-          setHighestNumberOfMaps(parseInt(result.data.allTimeStatistics.highlights[0].cantidad))
-          setIconsTextLeastMappedAreas(areasAMS.filter( (area) => { for(let i = 0; i < result.data.allTimeStatistics.leastMappedAreas.length; i++) if (result.data.allTimeStatistics.leastMappedAreas[i].inquiry_id === area[2]) return true}))
-          setProvisionalLMAreas(result.data.allTimeStatistics.leastMappedAreas)
-          result.data.allTimeStatistics.worldwideInsights.map((item:any) => {
-            dataMap.push([i18nIsoCountries.getAlpha3Code(item.country_name, "en"), item.cantidad])
+    if(!props.loading && !props.user) {
+      navigate("/")
+    } else {
+      axios.get(`http://localhost:9000/maps/overview/${calendarStartDate}/${calendarEndDate}`) // Devuelve data de mapsOverview
+          .then((result)=>{
+            setMapsOverviewData(result.data)
+            setStatus('resolved')
+            result.data.allTimeStatistics.highlights.map((item:any) => {
+              data.push([item.country_name, item.cantidad, "#FF7562", item.cantidad])
+              }
+            )
+            setHighestNumberOfMaps(parseInt(result.data.allTimeStatistics.highlights[0].cantidad))
+            setIconsTextLeastMappedAreas(areasAMS.filter( (area) => { for(let i = 0; i < result.data.allTimeStatistics.leastMappedAreas.length; i++) if (result.data.allTimeStatistics.leastMappedAreas[i].inquiry_id === area[2]) return true}))
+            setProvisionalLMAreas(result.data.allTimeStatistics.leastMappedAreas)
+            result.data.allTimeStatistics.worldwideInsights.map((item:any) => {
+              dataMap.push([i18nIsoCountries.getAlpha3Code(item.country_name, "en"), item.cantidad])
+            })
+            result.data.allTimeStatistics.worldwideInsights.map((item:any) => {
+              dataMap.push([i18nIsoCountries.getAlpha3Code(item.country_name, "en"), item.cantidad])
+            })
+            
+            result.data.allTimeStatistics.completedAMSMaps.map((item:any) => {
+              let axisTag:string = `${MonthsOfTheYear[item.mes]} ${item.año}`
+              dataLineChart.push([axisTag, item.cant])
+            })
           })
-          result.data.allTimeStatistics.worldwideInsights.map((item:any) => {
-            dataMap.push([i18nIsoCountries.getAlpha3Code(item.country_name, "en"), item.cantidad])
-          })
-          
-          result.data.allTimeStatistics.completedAMSMaps.map((item:any) => {
-            let axisTag:string = `${MonthsOfTheYear[item.mes]} ${item.año}`
-            dataLineChart.push([axisTag, item.cant])
-          })
-        })
-        .catch((error)=>{
-          setError(error)
-          setStatus('error')
-        })
-  }, [])
+          .catch((error)=>{
+            setError(error)
+            setStatus('error')
+          })}
+  }, [props.user, props.loading])
 
   if (status === "loading" || provisionalLMAreas === '') {
     return(
@@ -214,7 +221,7 @@ export const MapsOverview = (props:IPropTypes) => {
 
   if (status === "error") {
     return (
-			<Error404/>
+			<Error404 user={props.user} loading={props.loading}/>
 		)
   }
 
@@ -233,7 +240,7 @@ export const MapsOverview = (props:IPropTypes) => {
               <VStack alignItems="flex-start">
                 <Box>
                   <Heading fontSize="1.5em" color="blue.600">
-                    Welcome, {username}
+                  {`Welcome, ${props.user?.displayName}`}
                   </Heading>
                 </Box>
                 <Heading size="xl">AMS Maps Overview</Heading>

@@ -104,7 +104,7 @@ export const AreasProgressCardsCollection = (props:any) => {
                     justifyContent="space-around"
                     alignItems="start"
                 >
-                    <Error404/>
+                    <Error404 loading={props.loading} user={props.user}/>
                 </HStack>
                 
             )

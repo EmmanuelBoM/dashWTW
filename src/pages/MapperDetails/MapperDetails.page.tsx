@@ -134,7 +134,10 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
   useEffect(()=>{
     setStatus('loading')
     props.setSelectedWindow('mappers')
-    axios.get(`http://localhost:9000/mappers/details/${params.mapperId}`) // Devuelve lista de mappers
+    if(!props.loading && !props.user) {
+      navigate("/")
+    } else {
+      axios.get(`http://localhost:9000/mappers/details/${params.mapperId}`) // Devuelve lista de mappers
       .then((result)=>{
         setDetails(result.data)
         setLastMappedArea(areasAMS.filter( (area) => { if (result.data.replies.lastCompletedArea.Area === area[2]) return true }))
@@ -144,7 +147,8 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
         setError(error)
         setStatus('error')
       })
-    }, [])
+    }
+    }, [props.user, props.loading])
 
     if (status === "loading" || Object.entries(lastMappedArea).length === 0) {
       return(
@@ -154,7 +158,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
   
     if (status === "error") {
       return (
-        <Error404/>
+        <Error404 user={props.user} loading={props.loading}/>
       )
     }
 

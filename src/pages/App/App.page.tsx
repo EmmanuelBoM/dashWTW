@@ -1,5 +1,8 @@
-import * as React from "react"
-import { useState } from "react"
+import * as React from "react";
+import { useState, useEffect } from "react";
+
+// Importing Firebase hooks
+import { useAuthState } from "react-firebase-hooks/auth";
 
 // Imports of app views
 import MapDetails from "../MapDetails";
@@ -19,9 +22,26 @@ import {
 // Renders menu at first using Outlet
 import MenuComponent from "../../components/Menu/menu.component";
 
-export function App() {
+// Importing Firebase functions
+import {
+  auth,
+  logout
+} from "../../utils/firebase";
 
+export function App() {
+  
   const [ selectedWindow, setSelectedWindow ] = useState("ams")
+  const [ user, loading, error ] = useAuthState(auth);
+  const [ errorMessage, setErrorMessage ] = useState("");
+
+  const handleLogout = async () => {
+    setErrorMessage("");
+    try {
+      await logout();
+    } catch(error:any) {
+        setErrorMessage(error);
+    }
+  }
   
   return(
     <React.Fragment>
@@ -29,12 +49,22 @@ export function App() {
         <Routes>
           <Route path="/" element={<LogIn />}/>
           <Route path="login" element={<LogIn />} />
-          <Route element={<MenuComponent selectedWindow={selectedWindow}/>}>
-            <Route path="maps" element={<MapsOverview selectedWindow={selectedWindow} setSelectedWindow={setSelectedWindow}/>}/>
-            <Route path="mappers" element={<MappersOverview setSelectedWindow={setSelectedWindow}/>} />
-            <Route path="mappers/:mapperId" element={<MapperDetails setSelectedWindow={setSelectedWindow}/>}/>
-            <Route path="maps/:accomodationId" element={<MapDetails setSelectedWindow={setSelectedWindow}/>} />
-            <Route path="*" element={<Error404/>} />
+          <Route element={<MenuComponent selectedWindow={selectedWindow} handleLogout={handleLogout}/>}>
+            <Route path="maps" element={<MapsOverview selectedWindow={selectedWindow} 
+                                                      setSelectedWindow={setSelectedWindow} 
+                                                      loading={loading} 
+                                                      user={user}/>}/>
+            <Route path="mappers" element={<MappersOverview setSelectedWindow={setSelectedWindow}
+                                                            loading={loading} 
+                                                            user={user}/>} />
+            <Route path="mappers/:mapperId" element={<MapperDetails setSelectedWindow={setSelectedWindow}
+                                                                    loading={loading} 
+                                                                    user={user}/>}/>
+            <Route path="maps/:accomodationId" element={<MapDetails setSelectedWindow={setSelectedWindow}
+                                                                    loading={loading} 
+                                                                    user={user}/>} />
+            <Route path="*" element={<Error404 loading={loading} 
+                                               user={user}/>} />
           </Route>
         </Routes>
       </BrowserRouter>

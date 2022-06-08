@@ -30,6 +30,19 @@ function SignInForm(props: IPropTypes): JSX.Element {
                                                 // 'login-button' to test the not-clicked style
 	let navigate = useNavigate();
 
+	const handleSubmit = async (event:any) => {
+		event.preventDefault();
+			const {email, password} = event.target.elements;
+			props.setErrorMessage("");
+			try {
+				await props.signInWithEmail(email.value, password.value);
+			} catch(err:any){
+				props.setErrorMessage(err);
+			}
+	}
+
+	let disabled = props.loading
+
 	return (
 		<VStack
 			h="full" 
@@ -52,7 +65,8 @@ function SignInForm(props: IPropTypes): JSX.Element {
 				<Button variant='with-shadow' 
                 leftIcon={<Google width='1em'/>} 
                 isLoading={false} 
-                loadingText='CONNECTING TO GOOGLE'>SIGN IN WITH GOOGLE
+                loadingText='CONNECTING TO GOOGLE'
+				onClick={props.signInWithGoogle}>SIGN IN WITH GOOGLE
 				</Button>
 			</VStack>
 
@@ -89,49 +103,55 @@ function SignInForm(props: IPropTypes): JSX.Element {
 				</GridItem>
 			</Grid>
 
-			<Grid column={2} 
-            columnGap={3} 
-            rowGap={6} 
-            w="full" 
-            color='white'>
-				<GridItem colSpan={2}>
-					<FormControl>
-						<FormLabel htmlFor='email'>Email Address</FormLabel>
-						<Input placeholder="Enter your email address" 
-                   borderRadius="lg" 
-                   type='email'/>
-					</FormControl>
-				</GridItem>
+			<form onSubmit={handleSubmit}>
+				<Grid column={2} 
+				columnGap={3} 
+				rowGap={6} 
+				w="full" 
+				color='white'>
+					<GridItem colSpan={2}>
+						<FormControl>
+							<FormLabel htmlFor='email'>Email Address</FormLabel>
+							<Input placeholder="Enter your email address" 
+								borderRadius="lg" 
+								type='email'
+								disabled={disabled}/>
+						</FormControl>
+					</GridItem>
 
-				<GridItem colSpan={2}>
-					<FormControl>
-						<FormLabel htmlFor='password'>Password</FormLabel>
-						<Input placeholder="Enter your password" 
-                   borderRadius="lg" 
-                   type='Password' />
-					</FormControl>
-				</GridItem>
+					<GridItem colSpan={2}>
+						<FormControl>
+							<FormLabel htmlFor='password'>Password</FormLabel>
+							<Input placeholder="Enter your password" 
+								borderRadius="lg" 
+								type='Password' 
+								disabled={disabled}/>
+						</FormControl>
+					</GridItem>
 
-				<GridItem colSpan={1}/>
+					<GridItem colSpan={1}/>
 
-				<GridItem colSpan={2}/>
+					<GridItem colSpan={2}/>
 
-				<GridItem colSpan={2}>
-					<Button w="full" 
-                  borderRadius="lg" 
-                  borderColor='transparent' 
-                  variant={styleLoginButton} 
-                  onClick={()=>{navigate(`/maps`)}}>Sign In</Button>
-				</GridItem>
+					<GridItem colSpan={2}>
 
-				<GridItem colSpan={1} 
-                  w='90%' 
-                  paddingLeft='20%'>
-					<Text fontSize='xs' 
-						    textAlign='center'>This site is protected by the Google Privacy Policy and Terms of Service apply.
-					</Text>
-				</GridItem>
-			</Grid>
+						<Button w="full" 
+							borderRadius="lg" 
+							borderColor='transparent' 
+							variant={styleLoginButton} 
+							onClick={()=>{navigate(`/maps`)}}
+							disabled={disabled}>Sign In</Button>
+					</GridItem>
+
+					<GridItem colSpan={1} 
+					w='90%' 
+					paddingLeft='20%'>
+						<Text fontSize='xs' 
+								textAlign='center'>This site is protected by the Google Privacy Policy and Terms of Service apply.
+						</Text>
+					</GridItem>
+				</Grid>
+			</form>
 		</VStack>
 	);
 }
