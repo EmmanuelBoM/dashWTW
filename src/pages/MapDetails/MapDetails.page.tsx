@@ -1,4 +1,3 @@
-import * as React from "react"
 import { useEffect, useState } from "react";
 
 // Importing axios
@@ -20,7 +19,6 @@ import {
   Text,
   Image,
   Divider,
-  Switch,
   Button,
   Stack
 } from "@chakra-ui/react"
@@ -78,13 +76,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
   const [ status, setStatus ] = useState<string>('');
   const [ error, setError ] = useState<any>(null);
   const [ placeToStay, setPlaceToStay ] = useState<any>('');
-  const [ toggleCompleted, setToggleCompleted ] = useState<boolean>(true);
   const [ totalPercentage, setTotalPercentage ] = useState<number>(0);
-
-  function changeToggle(e:any) {
-    console.log(e)
-    setToggleCompleted(!toggleCompleted)
-  }
   
   useEffect(() => {
     setStatus('loading')
@@ -92,6 +84,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
     if(!props.loading && !props.user) {
       navigate("/")
     } else {
+      navigate(`/maps/${accomodationId}`)
       axios.get(`http://localhost:9000/maps/detail/${accomodationId}`) 
       .then((result)=>{
         setPlaceToStay(result.data)
@@ -154,7 +147,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
                   </Box>
                 </HStack>
                 <Text color="black.400" fontSize="xl">
-                  Accesibility Mapping Progress | <b>{category}</b>{" "}
+                  Accessibility Mapping Progress | <b>{category}</b>{" "}
                 </Text>
               </VStack>
               <Button
@@ -375,17 +368,8 @@ function MapDetails(props: IPropTypes): JSX.Element {
                 </GridItem>
               </Grid>
             </HStack>
-            <AreasProgressCardsCollection accomodationId={accomodationId} toggleCompleted={toggleCompleted} setTotalPercentage={setTotalPercentage} totalPercentage={totalPercentage}/>
+            <AreasProgressCardsCollection accomodationId={accomodationId} setTotalPercentage={setTotalPercentage} totalPercentage={totalPercentage}/>
             <HStack alignItems="left" width="100%">
-              <Text
-                textAlign="left"
-                color="black.500"
-                size="lg"
-                fontWeight="bold"
-              >
-                Show non completed areas
-              </Text>
-              <Switch size="lg" defaultChecked={toggleCompleted} onChange={changeToggle} />
             </HStack>
           </VStack>
         </Flex>

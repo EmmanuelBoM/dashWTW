@@ -81,7 +81,7 @@ export const AreasProgressCardsCollection = (props:any) => {
               setError(error)
               setStatus('error')
             })
-        }, [props.toggleCompleted])
+        }, [])
         
         if (status === "loading" || areas === "") {
             return(

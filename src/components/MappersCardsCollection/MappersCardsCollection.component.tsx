@@ -37,7 +37,7 @@ export const MappersCardsCollection = (props:any) => {
             setStatus('error')
           })
       } else {
-      axios.get(`http://localhost:9000/mappers/overview?maps=${props.filterCompletionSelection}&order=${props.filterOrderSelection}`) // Devuelve lista de mappers
+      axios.get(`http://localhost:9000/mappers/overview?maps=${props.filterCompletionSelection}&order=${props.filterOrderSelection}&page=1`) // Devuelve lista de mappers
           .then((result)=>{
             setMappers(result.data)
             setStatus('resolved')
