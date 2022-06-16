@@ -37,28 +37,27 @@ import Parking from 'wtw-icons/_icons/Parking'
 import Other from 'wtw-icons/_icons/Other'
 
 // Arrays of existing areas into the AMS
-let areasAMS:any[] = [["Building Entrance", <BuildingEntrance width="1.6em" height="1.6em"/>, "building_entrance", 0],
-                      ["Lobby Reception", <Lobby width="1.6em" height="1.6em"/>, "lobby", 0],
-                      ["Rooms", <QueenBed width="1.6em" height="1.6em"/>, "rooms", 0],
-                      ["Room One", <QueenBed width="1.6em" height="1.6em"/>, "roomone", 0],
-                      ["Room Two", <QueenBed width="1.6em" height="1.6em"/>, "roomtwo", 0],
-                      ["Room Three", <QueenBed width="1.6em" height="1.6em"/>, "roomthree", 0],
-                      ["General Accessibility", <GeneralAttribute width="1.6em" height="1.6em"/>, "general_attributes", 0],
-                      ["Food Service Area", <FoodService width="1.6em" height="1.6em"/>, "foodservicearea", 0],
-                      ["Swimming Pool", <SwimmingPool width="1.6em" height="1.6em"/>, "swimmingpool", 0],
-                      ["Fitness Center", <Gym width="1.6em" height="1.6em"/>, "fitnesscenter", 0],
-                      ["Beachfront", <Beachfront width="1.6em" height="1.6em"/>, "beachfront", 0],
-                      ["Parking Area", <Parking width="1.6em" height="1.6em"/>, "parkingarea", 0],
-                      ["Common Area Toilet", <Bathroom width="1.6em" height="1.6em"/>, "commonareatoilet", 0],
-                      ["Other Areas", <Other width="1.6em" height="1.6em"/>, "otherareas", 0],
-                      ["Elevator", <Elevator width="1.6em" height="1.6em"/>, "elevator", 0]]  
+let areasAMS:any[] = [["Building Entrance", <BuildingEntrance width="1.6em" height="1.6em"/>, "building_entrance", 0, 0],
+                      ["Lobby Reception", <Lobby width="1.6em" height="1.6em"/>, "lobby", 0, 0],
+                      ["Rooms", <QueenBed width="1.6em" height="1.6em"/>, "rooms", 0, 0],
+                      ["Room One", <QueenBed width="1.6em" height="1.6em"/>, "roomone", 0, 0],
+                      ["Room Two", <QueenBed width="1.6em" height="1.6em"/>, "roomtwo", 0, 0],
+                      ["Room Three", <QueenBed width="1.6em" height="1.6em"/>, "roomthree", 0, 0],
+                      ["General Accessibility", <GeneralAttribute width="1.6em" height="1.6em"/>, "general_attributes", 0, 0],
+                      ["Food Service Area", <FoodService width="1.6em" height="1.6em"/>, "foodservicearea", 0, 0],
+                      ["Swimming Pool", <SwimmingPool width="1.6em" height="1.6em"/>, "swimmingpool", 0, 0],
+                      ["Fitness Center", <Gym width="1.6em" height="1.6em"/>, "fitnesscenter", 0, 0],
+                      ["Beachfront", <Beachfront width="1.6em" height="1.6em"/>, "beachfront", 0, 0],
+                      ["Parking Area", <Parking width="1.6em" height="1.6em"/>, "parkingarea", 0, 0],
+                      ["Common Area Toilet", <Bathroom width="1.6em" height="1.6em"/>, "commonareatoilet", 0, 0],
+                      ["Other Areas", <Other width="1.6em" height="1.6em"/>, "otherareas", 0, 0],
+                      ["Elevator", <Elevator width="1.6em" height="1.6em"/>, "elevator", 0, 0]]  
 
 export const AreasProgressCardsCollection = (props:any) => {
 
     const [ status, setStatus ] = useState<string>('loading');
 	const [ error, setError ] = useState<any>(null);
     const [ areas, setAreas ] = useState<any>("");
-    let percentageToAssign:number = 0
 
     useEffect(()=>{
         setStatus('loading')
@@ -67,14 +66,18 @@ export const AreasProgressCardsCollection = (props:any) => {
                 setAreas(areasAMS.filter( (area) => { 
                     for(let i = 0; i < result.data.progressAreas.length; i++) { 
                         if (area[2].includes(result.data.progressAreas[i].name)) {
-                            area[3] = result.data.progressAreas[i].process
-                            percentageToAssign = percentageToAssign + (parseInt(result.data.progressAreas[i].process)*0.25)
-                            return true
+                            area[3] = result.data.progressAreas[i].process;
+                            for(let j = 0; j < result.data.photos.length; j++) { 
+                                if (area[2] === result.data.photos[j].inquiry_id) {
+                                    area[4] = result.data.photos[j].cant;
+                                } 
+                            }
+                            return true;
                         } 
                     }
                 }
             ))
-                props.setTotalPercentage(percentageToAssign)
+                
                 setStatus('resolved')
             })
             .catch((error)=>{
@@ -150,6 +153,8 @@ export const AreasProgressCardsCollection = (props:any) => {
                                 {item[3]}%
                             </CircularProgressLabel>
                             </CircularProgress>
+                            <Text fontWeight="bold">Submitted photos: </Text>
+                            <Text>{item[4]}</Text>
                         </VStack>
                         </GridItem>
                     )
