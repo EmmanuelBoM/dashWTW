@@ -40,7 +40,8 @@
     "web-vitals": "^0.2.4",
     "wtw-icons": "^1.41.2",
     "react-firebase-hooks": "^5.0.3",
-    "firebase": "^9.8.2"
+    "firebase": "^9.8.2",
+    "qs": "^6.10.3"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -38,6 +38,7 @@ import { RiArrowGoBackLine } from "react-icons/ri";
 import Error404 from "../Error404";
 import WheelChairLoading from '../../assets//wheelchairLoading.svg';
 import AreasProgressCardsCollection from "../../components/AreasProgressCardsCollection/AreasProgressCardsCollection.component";
+import ErrorMessage from "../../components/ErrorMessage";
 
 // Vars that contain the main info of the view
 let category:string = "Place To Stay"
@@ -73,9 +74,9 @@ function MapDetails(props: IPropTypes): JSX.Element {
   let { accomodationId } = params;
 
   // States
-  const [ status, setStatus ] = useState<string>('');
+  const [ status, setStatus ] = useState<string>('loading');
   const [ error, setError ] = useState<any>(null);
-  const [ placeToStay, setPlaceToStay ] = useState<any>('');
+  const [ placeToStay, setPlaceToStay ] = useState<any>({});
   const [ totalPercentage, setTotalPercentage ] = useState<number>(0);
   
   useEffect(() => {
@@ -97,7 +98,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
     }
   }, [props.user, props.loading])
 
-  if (status === "loading" || placeToStay === '') {
+  if (status === 'loading') {
     return(
       <Stack
           w="full"
@@ -110,13 +111,16 @@ function MapDetails(props: IPropTypes): JSX.Element {
     )
   }
 
-  if (status === "error") {
+  if (status === 'error' ) {
     return (
-      <Error404 loading={props.loading} user={props.user}/>
+      <>
+			    {error.message === "Request failed with status code 404" ? <Error404 user={props.user} loading={props.loading}/>  : <ErrorMessage error="Woops! Something went wrong" type="general"/>  }
+		  </>
     )
   }
 
-  else {
+  else{
+    console.log(status)
     return (
       <Container maxWidth="container.xxl" bgColor="#F8F9FD">
         <Flex

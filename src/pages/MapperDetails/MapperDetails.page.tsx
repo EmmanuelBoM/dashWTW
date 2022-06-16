@@ -21,7 +21,8 @@ import {
   Input, 
   InputLeftElement,
   Button,
-  Box
+  Box, 
+  Stack
 } from "@chakra-ui/react"
 
 // Importing React Table
@@ -37,6 +38,7 @@ import FilterMapsComp from "../../components/FilterMapsComp";
 //Imports icons 
 import { Search2Icon } from "@chakra-ui/icons";
 import { RiArrowGoBackLine } from "react-icons/ri";
+import WheelChairLoading from '../../assets//wheelchairLoading.svg';
 
 //Imports useNavigate and useParams hook from React Router
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -84,7 +86,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
   const [ error, setError ] = useState<any>(null);
   const [ data, setData ] = useState<IData[]>([]);
   const [ details, setDetails ] = useState<any>(null);
-  const [filterData, setFilterData] = useState<any>({cities:[], countries:[]});
+  const [filterData, setFilterData] = useState<any>({cities:[], countries:[], filter:""});
   const [ lastMappedArea, setLastMappedArea ] = useState<any>('');	  
   let params = useParams();
 
@@ -151,21 +153,25 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
     }
     }, [props.user, props.loading])
 
-    if (status === "loading" || Object.entries(lastMappedArea).length === 0) {
+    if (status === "loading") {
       return(
-        <h1>Loading...</h1>
+        <Stack
+        w="full"
+        h="60vh"
+        justifyContent="space-around"
+        alignItems="center"
+        >
+        <img src={WheelChairLoading} height='auto' width='70vh' alt='Loading...'/>
+      </Stack>
       )
     }
   
     if (status === "error") {
       return (
-        <Error404 user={props.user} loading={props.loading}/>
-      )
-    }
-
-    if (Object.entries(details).length === 0) {
-      return (
-      <ErrorMessage type="general" error="Woops! An error occurred :("/>
+        <>
+			    {error.message === "Request failed with status code 404" ? <Error404 user={props.user} loading={props.loading}/>  : <ErrorMessage error="Woops! Something went wrong" type="general"/>  }
+		    </>
+        
       )
     }
   

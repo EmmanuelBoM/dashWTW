@@ -62,24 +62,15 @@ export const MappersCardsCollection = (props:any) => {
       )
     }
   
-    if (status === "error") {
+    if (status === "error"  ) {
       return (
-        <HStack
-            w="full"
-            flexWrap="wrap"
-            justifyContent="space-around"
-            alignItems="start"
-        >
-          <Error404 loading={props.loading} user={props.user}/>
-        </HStack>  
+        <>
+        {error.message === "Request failed with status code 404" ?  <ErrorMessage type="data" error="No results found :("/>  : <ErrorMessage error="Woops! Something went wrong" type="general"/>  }
+      </>
       )
     }
 
-    if (Object.entries(mappers[0]).length === 0) {
-      return (
-      <ErrorMessage type="general" error="No results found :("/>
-      )
-    }
+    
   
     else {
       return(
