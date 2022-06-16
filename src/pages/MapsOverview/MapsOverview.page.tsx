@@ -137,9 +137,9 @@ const optionsLineChart = {
 
 export const MapsOverview = (props:IPropTypes) => {
 
-  const [ calendarStartDate, setCalendarStartDate ] = useState<any>(moment().startOf("week").format("YYYY-MM-DD"))
+  const [ calendarStartDate, setCalendarStartDate ] = useState<any>(moment().startOf("month").format("YYYY-MM-DD"))
   const [ calendarEndDate, setCalendarEndDate ] = useState<any>(moment().format("YYYY-MM-DD"))
-  const [ datePickerSelection, setDatePickerSelection ] = useState<string>("This Week")
+  const [ datePickerSelection, setDatePickerSelection ] = useState<string>("This Month")
   const [ status, setStatus ] = useState<string>('loading');
 	const [ error, setError ] = useState<any>(null);
   const [ mapsOverviewData, setMapsOverviewData ] = useState<any>(null);
