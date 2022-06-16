@@ -23,7 +23,7 @@ export const SummaryOnDatePicking = (props:any) => {
 
     useEffect(()=>{
         setStatus('loading')
-        axios.get(`http://localhost:9000/maps/overview/${props.calendarStartDate}/${props.calendarEndDate}`) // Devuelve data de mapsOverview
+        axios.get(`https://apidash2.herokuapp.com/maps/overview/${props.calendarStartDate}/${props.calendarEndDate}`) // Devuelve data de mapsOverview
             .then((result)=>{
               setMapsOverviewData(result.data)
               setStatus('resolved')

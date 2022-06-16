@@ -188,7 +188,7 @@ export const MapsOverview = (props:IPropTypes) => {
     if(!props.loading && !props.user) {
       navigate("/")
     } else {
-      axios.get(`http://localhost:9000/maps/overview/${calendarStartDate}/${calendarEndDate}`) // Devuelve data de mapsOverview
+      axios.get(`https://apidash2.herokuapp.com/maps/overview/${calendarStartDate}/${calendarEndDate}`) // Devuelve data de mapsOverview
           .then((result)=>{
             setMapsOverviewData(result.data)
             setStatus('resolved')

@@ -140,7 +140,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
       navigate("/")
     } else {
       navigate(`/mappers/${params.mapperId}`)
-      axios.get(`http://localhost:9000/mappers/details/${params.mapperId}`) // Devuelve lista de mappers
+      axios.get(`https://apidash2.herokuapp.com/mappers/details/${params.mapperId}`) // Devuelve lista de mappers
       .then((result)=>{
         setDetails(result.data)
         setLastMappedArea(areasAMS.filter( (area) => { if (result.data.replies.lastCompletedArea.Area === area[2]) return true }))
