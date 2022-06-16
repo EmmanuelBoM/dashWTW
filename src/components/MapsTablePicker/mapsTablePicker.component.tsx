@@ -63,7 +63,7 @@ function MapsTable(props: IPropTypes): JSX.Element {
 		setStatus('loading')
 		axios({
 			method: 'post',
-			url: `http://localhost:9000/maps/table/${props.calendarStartDate}/${props.calendarEndDate}`,
+			url: `https://apidash2.herokuapp.com/maps/table/${props.calendarStartDate}/${props.calendarEndDate}`,
 			data: filterData,
 			headers: {
 				'Content-type': 'application/json; charset=UTF-8',

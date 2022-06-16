@@ -26,7 +26,7 @@ export const MappersCardsCollection = (props:any) => {
       setStatus('loading')
       props.setSelectedWindow('mappers')
       if (props.searchQuery.length > 0) {
-          axios.get(`http://localhost:9000/mappers/overview?nombre=${props.searchQuery}`) // Devuelve lista de mappers
+          axios.get(`https://apidash2.herokuapp.com/mappers/overview?nombre=${props.searchQuery}`) // Devuelve lista de mappers
           .then((result)=>{
             setMappers(result.data)
             setStatus('resolved')
@@ -37,7 +37,7 @@ export const MappersCardsCollection = (props:any) => {
             setStatus('error')
           })
       } else {
-      axios.get(`http://localhost:9000/mappers/overview?maps=${props.filterCompletionSelection}&order=${props.filterOrderSelection}&page=1`) // Devuelve lista de mappers
+      axios.get(`https://apidash2.herokuapp.com/mappers/overview?maps=${props.filterCompletionSelection}&order=${props.filterOrderSelection}&page=1`) // Devuelve lista de mappers
           .then((result)=>{
             setMappers(result.data)
             setStatus('resolved')
