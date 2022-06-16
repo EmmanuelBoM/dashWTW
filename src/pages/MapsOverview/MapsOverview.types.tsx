@@ -1,3 +1,6 @@
 export interface IPropTypes {
-    setSelectedWindow:any
+    setSelectedWindow:any,
+    selectedWindow:any,
+    loading:any,
+    user:any
 }

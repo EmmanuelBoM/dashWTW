@@ -20,10 +20,16 @@ import {
   InputGroup,
   Input, 
   InputLeftElement,
-  Button
+  Button,
+  Box, 
+  Stack
 } from "@chakra-ui/react"
 
+// Importing React Table
 import { useTable, useSortBy, useFlexLayout, Column, useGlobalFilter } from 'react-table'
+
+// Importing moment library to parse dates
+import moment from "moment";
 
 //Imports custom Componentes
 import MapsTable from "../../components/MapsTable";
@@ -32,13 +38,47 @@ import FilterMapsComp from "../../components/FilterMapsComp";
 //Imports icons 
 import { Search2Icon } from "@chakra-ui/icons";
 import { RiArrowGoBackLine } from "react-icons/ri";
+import WheelChairLoading from '../../assets//wheelchairLoading.svg';
 
 //Imports useNavigate and useParams hook from React Router
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Error404 from "../Error404";
 import {IData} from '../../components/MapsTable/mapsTable.types'
 import MapProgressbar from "../../components/MapProgressbar";
+import ErrorMessage from "../../components/ErrorMessage";
 
+// Imports of icons from wtw icons
+import BuildingEntrance from 'wtw-icons/_icons/Buildingentrance'
+import Lobby from 'wtw-icons/_icons/Lobby'
+import FoodService from 'wtw-icons/_icons/FoodService'
+import SwimmingPool from 'wtw-icons/_icons/SwimmingPool'
+import QueenBed from 'wtw-icons/_icons/QueenBed'
+import GeneralAttribute from 'wtw-icons/_icons/GeneralAttribute'
+import Bathroom from 'wtw-icons/_icons/Bathroom'
+import Elevator from 'wtw-icons/_icons/Elevator'
+import Gym from 'wtw-icons/_icons/Gym'
+import Beachfront from 'wtw-icons/_icons/Beachfront'
+import Parking from 'wtw-icons/_icons/Parking'
+import CloseButton from 'wtw-icons/_icons/CloseButton'
+import Other from 'wtw-icons/_icons/Other'
+
+// Arrays of existing areas into the AMS
+let areasAMS:any[] = [["Building Entrance", <BuildingEntrance width="1.6em" height="1.6em"/>, "building_entrance"],
+                      ["Lobby Reception", <Lobby width="1.6em" height="1.6em"/>, "lobby"],
+                      ["Rooms", <QueenBed width="1.6em" height="1.6em"/>, "rooms"],
+                      ["Room One", <QueenBed width="1.6em" height="1.6em"/>, "rooms_one"],
+                      ["Room Two", <QueenBed width="1.6em" height="1.6em"/>, "rooms_two"],
+                      ["Room Three", <QueenBed width="1.6em" height="1.6em"/>, "rooms_three"],
+                      ["General Accessibility", <GeneralAttribute width="1.6em" height="1.6em"/>, "general_attributes"],
+                      ["Food Service Area", <FoodService width="1.6em" height="1.6em"/>, "foodservice"],
+                      ["Swimming Pool", <SwimmingPool width="1.6em" height="1.6em"/>, "swimming_pool"],
+                      ["Fitness Center", <Gym width="1.6em" height="1.6em"/>, "fitness_center"],
+                      ["Beachfront", <Beachfront width="1.6em" height="1.6em"/>, "beach_front"],
+                      ["Parking Area", <Parking width="1.6em" height="1.6em"/>, "parking"],
+                      ["Common Area Toilet", <Bathroom width="1.6em" height="1.6em"/>, "common_area_toilet"],
+                      ["Other Areas", <Other width="1.6em" height="1.6em"/>, "other_areas"],
+                      ["Elevator", <Elevator width="1.6em" height="1.6em"/>, "elevator"],
+                      ["No Area Available", <CloseButton width="1.6em" height="1.6em"/>, "unavailable"]]  
 
 function MapperDetails(props: IPropTypes): JSX.Element  {
 	let navigate = useNavigate();
@@ -46,9 +86,9 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
   const [ error, setError ] = useState<any>(null);
   const [ data, setData ] = useState<IData[]>([]);
   const [ details, setDetails ] = useState<any>(null);
+  const [filterData, setFilterData] = useState<any>({cities:[], countries:[], filter:""});
+  const [ lastMappedArea, setLastMappedArea ] = useState<any>('');	  
   let params = useParams();
-  let dataArr: any = [];
-	  
 
 	const columns: Column<IData>[] = React.useMemo(
     () => [
@@ -96,35 +136,42 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
   useEffect(()=>{
     setStatus('loading')
     props.setSelectedWindow('mappers')
-    axios.get(`http://localhost:9000/mappers/details/${params.mapperId}`) // Devuelve lista de mappers
+    if(!props.loading && !props.user) {
+      navigate("/")
+    } else {
+      navigate(`/mappers/${params.mapperId}`)
+      axios.get(`https://apidash2.herokuapp.com/mappers/details/${params.mapperId}`) // Devuelve lista de mappers
       .then((result)=>{
         setDetails(result.data)
+        setLastMappedArea(areasAMS.filter( (area) => { if (result.data.replies.lastCompletedArea.Area === area[2]) return true }))
         setStatus('resolved')
-        axios.get(`http://localhost:9000/mappers/contributions/${params.mapperId}`) // Devuelve lista de mappers
-          .then((result)=>{
-            setData(result.data)
-            setStatus('resolved')
-          })
-          .catch((error)=>{
-            setError(error)
-            setStatus('error')
-          })
       })
       .catch((error)=>{
         setError(error)
         setStatus('error')
       })
-    }, [])
+    }
+    }, [props.user, props.loading])
 
     if (status === "loading") {
       return(
-        <h1>Loading...</h1>
+        <Stack
+        w="full"
+        h="60vh"
+        justifyContent="space-around"
+        alignItems="center"
+        >
+        <img src={WheelChairLoading} height='auto' width='70vh' alt='Loading...'/>
+      </Stack>
       )
     }
   
     if (status === "error") {
       return (
-        <Error404/>
+        <>
+			    {error.message === "Request failed with status code 404" ? <Error404 user={props.user} loading={props.loading}/>  : <ErrorMessage error="Woops! Something went wrong" type="general"/>  }
+		    </>
+        
       )
     }
   
@@ -152,7 +199,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                     </HStack>
 
                     <Text color="black.400" fontSize="xl">
-                      Places to stay mapper
+                      Places to Stay Mapper
                     </Text>
                   </VStack>
                 </HStack>
@@ -196,7 +243,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                     <HStack justifyContent="space-around" w="full">
                       <VStack textAlign="center" w="full">
                         <Text color="blue.main" fontWeight="700">
-                          Total Contributions
+                          Done Contributions
                         </Text>
                         <Text fontSize="3xl" fontWeight="800">
                           {details.contributions.total}
@@ -243,10 +290,10 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                         <Text color="blue.main" fontWeight="700">
                           Average completion time
                         </Text>
-                        {details.contributions.averageTime!=null ?
+                        {details.contributions.averageTime !== null ?
                         <>
                           <Text fontSize="3xl" fontWeight="800">
-                            {details.contributions.averageTime}
+                            {parseInt(details.contributions.averageTime)}
                           </Text>
                           <Text fontWeight="700" fontSize="sm">
                             Days
@@ -285,9 +332,11 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                         <Text color="blue.main" fontWeight="400" fontSize="md">
                           Date and Hour
                         </Text>
-                        <Text fontSize="3xl" fontWeight="800">
-                          Pending
+                        <Text fontSize="3xl" fontWeight="800" >
+                          {details.replies.lastReply.day === 'unavailable' ? '' : details.replies.lastReply.day}
                         </Text>
+                        <Text fontSize="md" fontWeight="600" >{`${(moment.months(details.replies.lastReply.month - 1)) === undefined ? 'No Date Available' : (moment.months(details.replies.lastReply.month - 1))} ${details.replies.lastReply.year === 'unavailable'? '' : `, ${details.replies.lastReply.year}`}`}</Text>
+                        <Text fontSize="md" fontWeight="600" color="gray.400">{details.replies.lastReply.hour === 'unavailable' ? 'No Hour Available' : details.replies.lastReply.hour}</Text>
                       </VStack>
                       <Divider
                         w="80%"
@@ -301,17 +350,18 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                         <Text color="blue.main" fontWeight="700" fontSize="lg">
                           Last completed area
                         </Text>
-                        
-                        <Text fontSize="2xl" fontWeight="700">
-                          {details.replies.lastCompletedArea.Area}
-                        </Text>
-                        <Text fontSize="md">{details.replies.lastCompletedArea.location.name}</Text>
+                        <Box color="black.800" display='inline-flex' justifyContent='space-around' alignItems='baseline' width='max-content'>
+                          <span>
+                            {lastMappedArea[0][1]}
+                          </span>
+                          <Text fontSize="2xl" fontWeight="700" marginLeft='0.5em'>
+                            {lastMappedArea[0][0]}
+                          </Text>
+                        </Box>
+                        <Text fontSize="md">{details.replies.lastCompletedArea.location.name === 'unavailable' ? 'No Location Available' : details.replies.lastCompletedArea.location.name}</Text>
                       </VStack>
                     </VStack>
-                    
-
                   </VStack>
-
                   <VStack
                     alignItems="start"
                     h="full"
@@ -325,7 +375,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                     spacing={8}
                   >
                     <HStack justifyContent="space-between" w="100%">
-                      <Heading fontSize="xl">Contributions in progress</Heading>
+                      <Heading fontSize="xl">All Contributions</Heading>
 
                       <HStack>
                         <InputGroup w="80%">
@@ -335,13 +385,13 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                           />
                           <Input
                             value={globalFilter || ''}
-                            placeholder="Search by: Name"
-                            borderColor="lightgray.main"
+                            placeholder="Search"
+                            borderColor="gray.400"
                             borderRadius="lg"
-                            onChange={e=> setGlobalFilter(e.target.value)}
+                            onChange={(e:any)=> setGlobalFilter(e.target.value)}
                           ></Input>
                         </InputGroup>
-                        <FilterMapsComp></FilterMapsComp>
+                        <FilterMapsComp filterData={filterData} setFilterData={setFilterData} setMaps={setData} setStatus={setStatus} setError={setError} tableType="contributions"  calendarEndDate={""} calendarStartDate={""} mapperId={params.mapperId}></FilterMapsComp>
                       </HStack>
                     </HStack>
                     <MapsTable  
@@ -360,7 +410,5 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
       );
     }
 }
-	
-
 
 export default MapperDetails;

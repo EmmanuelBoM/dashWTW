@@ -13,8 +13,8 @@ import {
   HStack
 } from "@chakra-ui/react"
 
-
 import Error404 from '../../pages/Error404/Error404.page';
+import ErrorMessage from '../ErrorMessage';
 
 export const SummaryOnDatePicking = (props:any) => {
     const [ mapsOverviewData, setMapsOverviewData ] = useState<any>(null);
@@ -23,7 +23,7 @@ export const SummaryOnDatePicking = (props:any) => {
 
     useEffect(()=>{
         setStatus('loading')
-        axios.get(`http://localhost:9000/maps/overview/${props.calendarStartDate}/${props.calendarEndDate}`) // Devuelve data de mapsOverview
+        axios.get(`https://apidash2.herokuapp.com/maps/overview/${props.calendarStartDate}/${props.calendarEndDate}`) // Devuelve data de mapsOverview
             .then((result)=>{
               setMapsOverviewData(result.data)
               setStatus('resolved')
@@ -44,7 +44,9 @@ export const SummaryOnDatePicking = (props:any) => {
 
     if (status === "error") {
         return (
-            <Error404/>
+            <>
+			    {error.message === "Request failed with status code 404" ? <ErrorMessage error="No results found :(" type="data"/>  : <ErrorMessage error="Woops! Something went wrong" type="general"/>  }
+		    </>
         )
     }
 

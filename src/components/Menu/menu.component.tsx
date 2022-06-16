@@ -115,7 +115,7 @@ function MenuComponent(props: IPropTypes): JSX.Element {
           }}
         >
             <VStack>
-              <Image src={LogOutIMG} paddingLeft="0px" />
+              <Image src={LogOutIMG} paddingLeft="0px" onClick={props.handleLogout} />
               <Text paddingLeft="0px" color="white">
                 Sign Out
               </Text>

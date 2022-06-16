@@ -27,24 +27,15 @@ import {
   GridItem,
   StackDivider,
   Divider,
-  InputGroup,
-  InputLeftElement,
-  Input,
   Stack,
-  propNames
 } from "@chakra-ui/react"
-import { Search2Icon } from "@chakra-ui/icons";
 
 // Imports of custom components
 import CalendarDatePicker from '../../components/CalendarDatePicker/CalendarDatePicker.component';
-import MapsTable from '../../components/MapsTable/mapsTable.component';
-import Error404 from "../Error404"
 import SummaryOnDatePicking from "../../components/SummaryOnDatePicking";
-import MapProgressbar from "../../components/MapProgressbar";
+import ErrorMessage from '../../components/ErrorMessage';
 
 // Imports of icons from wtw icons
-import Entrance from 'wtw-icons/_icons/Entrance'
-import Restaurant from 'wtw-icons/_icons/Restaurant'
 import BuildingEntrance from 'wtw-icons/_icons/Buildingentrance'
 import Lobby from 'wtw-icons/_icons/Lobby'
 import FoodService from 'wtw-icons/_icons/FoodService'
@@ -57,6 +48,12 @@ import Gym from 'wtw-icons/_icons/Gym'
 import Beachfront from 'wtw-icons/_icons/Beachfront'
 import Parking from 'wtw-icons/_icons/Parking'
 import Other from 'wtw-icons/_icons/Other'
+import Countries from 'wtw-icons/_icons/Countries'; 
+import Destinations from 'wtw-icons/_icons/Destinations'; 
+import CloseButton from 'wtw-icons/_icons/CloseButton';
+
+// Importing react-router-dom library
+import { useNavigate } from "react-router-dom";
 
 // Imports of Map Items from React Simple Maps
 import {
@@ -70,23 +67,13 @@ import {
 
 // Imports of charts from React Google Charts
 import { Chart } from "react-google-charts";
-import FilterMapsComp from "../../components/FilterMapsComp";
 
-// Importing WTW Icons
-import Countries from 'wtw-icons/_icons/Countries'; 
-import Destinations from 'wtw-icons/_icons/Destinations'; 
-
-//Imports interface for table info
-import {IData} from '../../components/MapsTable/mapsTable.types'
-
-//Imports react router components
-import { Link } from 'react-router-dom';
-
-import {  Column } from 'react-table'
 import MapsTablePicker from '../../components/MapsTablePicker';
 import { IPropTypes } from './MapsOverview.types';
+import { setUserToken } from '../../utils/axios';
 
 
+// Require for parsing the country codes
 i18nIsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
 // VARS-------------------------------------------------------------
@@ -95,38 +82,25 @@ i18nIsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 let username:string = 'Arturo Gaona'
 
 // Arrays of existing areas into the AMS
-let areasAMS:any[] = [["Building Entrance", <BuildingEntrance width="1em" height="1em"/> ],
-                      ["Lobby Reception", <Lobby width="1em" height="1em"/>],
-                      ["Room One", <QueenBed width="1em" height="1em"/>],
-                      ["Room Two", <QueenBed width="1em" height="1em"/>],
-                      ["Room Three", <QueenBed width="1em" height="1em"/>],
-                      ["General Accessibility", <GeneralAttribute width="1em" height="1em"/>],
-                      ["Food Service Area", <FoodService width="1em" height="1em"/>],
-                      ["Swimming Pool", <SwimmingPool width="1em" height="1em"/>],
-                      ["Fitness Center", <Gym width="1em" height="1em"/>],
-                      ["Beachfront", <Beachfront width="1em" height="1em"/>],
-                      ["Parking Area", <Parking/>],
-                      ["Common Area Toilet", <Bathroom width="1em" height="1em"/>],
-                      ["Other Areas", <Other width="1em" height="1em"/>],
-                      ["Elevator", <Elevator width="1em" height="1em"/>]]                        
+let areasAMS:any[] = [["Building Entrance", <BuildingEntrance width="1.6em" height="1.6em"/>, "buildingentrance"],
+                      ["Lobby Reception", <Lobby width="1.6em" height="1.6em"/>, "lobbyreception"],
+                      ["Rooms", <QueenBed width="1.6em" height="1.6em"/>, "rooms"],
+                      ["Room One", <QueenBed width="1.6em" height="1.6em"/>, "rooms_one"],
+                      ["Room Two", <QueenBed width="1.6em" height="1.6em"/>, "rooms_two"],
+                      ["Room Three", <QueenBed width="1.6em" height="1.6em"/>, "rooms_three"],
+                      ["General Accessibility", <GeneralAttribute width="1.6em" height="1.6em"/>, "generalaccessibility"],
+                      ["Food Service Area", <FoodService width="1.6em" height="1.6em"/>, "foodservice"],
+                      ["Swimming Pool", <SwimmingPool width="1.6em" height="1.6em"/>, "swimmingpool"],
+                      ["Fitness Center", <Gym width="1.6em" height="1.6em"/>, "fitnesscenter"],
+                      ["Beachfront", <Beachfront width="1.6em" height="1.6em"/>, "beachfront"],
+                      ["Parking Area", <Parking width="1.6em" height="1.6em"/>, "parkingarea"],
+                      ["Common Area Toilet", <Bathroom width="1.6em" height="1.6em"/>, "commonareatoilet"],
+                      ["Other Areas", <Other width="1.6em" height="1.6em"/>, "other_areas"],
+                      ["Elevator", <Elevator width="1.6em" height="1.6em"/>, "elevator"],
+                      ["No Area Available", <CloseButton width="1.6em" height="1.6em"/>, "unavailable"]]                        
 
 // Data of map
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
-
-// Data of bar chart
-const data = [
-  [
-    "Element",
-    "Maps",
-    { role: "style" },
-    {
-      sourceColumn: 0,
-      role: "annotation",
-      type: "string",
-      calc: "stringify",
-    },
-  ]
-];
 
 // Options of bar chart
 const options = {
@@ -137,11 +111,6 @@ const options = {
   bar: { groupWidth: "95%" },
   legend: { position: "none" },
 };
-
-// Data of line chart
-const dataLineChart = [
-  ["Month", "Maps"],
-];
 
 // enum of Typescript
 enum MonthsOfTheYear {
@@ -168,47 +137,99 @@ const optionsLineChart = {
 
 export const MapsOverview = (props:IPropTypes) => {
 
-  const [ calendarStartDate, setCalendarStartDate ] = useState<any>(moment().startOf("week").format("YYYY-MM-DD"))
+  const [ calendarStartDate, setCalendarStartDate ] = useState<any>(moment().startOf("month").format("YYYY-MM-DD"))
   const [ calendarEndDate, setCalendarEndDate ] = useState<any>(moment().format("YYYY-MM-DD"))
-  const [ datePickerSelection, setDatePickerSelection ] = useState<string>("This Week")
-
+  const [ datePickerSelection, setDatePickerSelection ] = useState<string>("This Month")
   const [ status, setStatus ] = useState<string>('loading');
 	const [ error, setError ] = useState<any>(null);
   const [ mapsOverviewData, setMapsOverviewData ] = useState<any>(null);
   const [ iconsTextLeastMappedAreas,setIconsTextLeastMappedAreas ] = useState<any>([]);
   const [ tooltipContent, setTooltipContent ] = useState<string>('')
   const [ dataMap, setDataMap ] = useState<any>([])
-  const [ maps, setMaps ] = useState<IData[]>([]);
+  const [ provisionalLMAreas, setProvisionalLMAreas] = useState<any>('')
+  const [ data, setData ] = useState<any>([
+    [
+      "Element",
+      "Maps",
+      { role: "style" },
+      {
+        sourceColumn: 0,
+        role: "annotation",
+        type: "string",
+        calc: "stringify",
+      },
+    ]
+  ]);
 
-  
+  const [ dataLineChart, setDataLineChart ] = useState<any>([
+    ["Month", "Maps"],
+  ]);
+  const [ highestNumberOfMaps, setHighestNumberOfMaps ] = useState<number>(0)
+  const [ isHeaderLoading, setIsHeaderLoading ] = useState(true);
+
+  const setHeader = async(user:any) => {
+    setIsHeaderLoading(true)
+
+    try {
+      const token = await user.getIdToken();
+      setUserToken(token)
+    } catch (error) {
+      console.log(error)
+    }
+    setIsHeaderLoading(false)
+    
+  }
+
+  let navigate = useNavigate();
+
   useEffect(()=>{
     setStatus('loading')
     props.setSelectedWindow('ams')
-    axios.get(`http://localhost:9000/maps/overview/${calendarStartDate}/${calendarEndDate}`) // Devuelve data de mapsOverview
-        .then((result)=>{
-          setMapsOverviewData(result.data)
-          setStatus('resolved')
-          result.data.allTimeStatistics.highlights.map((item:any) => {
-            data.push([item.country_name, item.cantidad, "#FF7562", item.cantidad])
-            }
-          )
-          setIconsTextLeastMappedAreas(areasAMS.filter( (area) => { for(let i = 0; i < result.data.allTimeStatistics.leastMappedAreas.length; i++) if (result.data.allTimeStatistics.leastMappedAreas[i] === area[0]) return true}))
-          result.data.allTimeStatistics.worldwideInsights.map((item:any) => {
-            dataMap.push([i18nIsoCountries.getAlpha3Code(item.country_name, "en"), item.cantidad])
+    if(!props.loading && !props.user) {
+      navigate("/")
+    } else {
+      axios.get(`https://apidash2.herokuapp.com/maps/overview/${calendarStartDate}/${calendarEndDate}`) // Devuelve data de mapsOverview
+          .then((result)=>{
+            setMapsOverviewData(result.data)
+            setStatus('resolved')
+            result.data.allTimeStatistics.highlights.map((item:any) => {
+              if (data.length > result.data.allTimeStatistics.highlights.length + 0.5) {
+                setData(data)
+              } else {
+                  data.push([item.country_name, item.cantidad, "#FF7562", item.cantidad])
+                }
+              }
+            )
+            setHighestNumberOfMaps(parseInt(result.data.allTimeStatistics.highlights[0].cantidad))
+            setIconsTextLeastMappedAreas(areasAMS.filter( (area) => { for(let i = 0; i < result.data.allTimeStatistics.leastMappedAreas.length; i++) if (result.data.allTimeStatistics.leastMappedAreas[i].inquiry_id === area[2]) return true}))
+            setProvisionalLMAreas(result.data.allTimeStatistics.leastMappedAreas)
+            result.data.allTimeStatistics.worldwideInsights.map((item:any) => {
+              dataMap.push([i18nIsoCountries.getAlpha3Code(item.country_name, "en"), item.cantidad])
+            })
+            result.data.allTimeStatistics.worldwideInsights.map((item:any) => {
+              dataMap.push([i18nIsoCountries.getAlpha3Code(item.country_name, "en"), item.cantidad])
+            })
+            result.data.allTimeStatistics.completedAMSMaps.map((item:any) => {
+              if (dataLineChart.length > result.data.allTimeStatistics.completedAMSMaps.length + 0.5) {
+                setDataLineChart(dataLineChart)
+              } else {
+                  let axisTag:string = `${MonthsOfTheYear[item.mes]} ${item.año}`
+                  dataLineChart.push([axisTag, item.cant])
+                }
+              }
+            )
           })
-          
-          result.data.allTimeStatistics.completedAMSMaps.map((item:any) => {
-            let axisTag:string = `${MonthsOfTheYear[item.mes]} ${item.año}`
-            dataLineChart.push([axisTag, item.cant])
-          })
-        })
-        .catch((error)=>{
-          setError(error)
-          setStatus('error')
-        })
-  }, [])
+          .catch((error)=>{
+            setError(error)
+            setStatus('error')
+          })}
 
-  if (status === "loading") {
+    if(props.user){
+      setHeader(props.user);
+    }
+  }, [props.user, props.loading])
+
+  if (status === "loading" || provisionalLMAreas === '' ) {
     return(
       <h1>Loading...</h1>
     )
@@ -216,7 +237,9 @@ export const MapsOverview = (props:IPropTypes) => {
 
   if (status === "error") {
     return (
-			<Error404/>
+			<>
+			  {error.message === "Request failed with status code 404" ? <ErrorMessage error="No results found :(" type="data"/>  : <ErrorMessage error="Woops! Something went wrong" type="general"/>  }
+		  </>
 		)
   }
 
@@ -235,7 +258,7 @@ export const MapsOverview = (props:IPropTypes) => {
               <VStack alignItems="flex-start">
                 <Box>
                   <Heading fontSize="1.5em" color="blue.600">
-                    Welcome, {username}
+                  {props.user ? `Welcome, ${props.user?.displayName}` : ""}
                   </Heading>
                 </Box>
                 <Heading size="xl">AMS Maps Overview</Heading>
@@ -253,7 +276,10 @@ export const MapsOverview = (props:IPropTypes) => {
 
             <VStack spacing={6} w="full">
               {/* /Summary Card */}
-              <SummaryOnDatePicking calendarStartDate={calendarStartDate} calendarEndDate={calendarEndDate} datePickerSelection={datePickerSelection}/>
+              <SummaryOnDatePicking calendarStartDate={calendarStartDate} 
+                                    calendarEndDate={calendarEndDate} 
+                                    datePickerSelection={datePickerSelection}
+              />
 
               {/* /All Maps Table Card */}
               <VStack
@@ -273,20 +299,7 @@ export const MapsOverview = (props:IPropTypes) => {
                         {datePickerSelection}
                       </Text>
                     </VStack>
-                    <HStack>
-                      <InputGroup w="80%">
-                        <InputLeftElement
-                          pointerEvents="none"
-                          children={<Search2Icon zIndex="0" color="gray.300" />}
-                        />
-                        <Input
-                          placeholder="Search by: Name"
-                          borderColor="lightgray.main"
-                          borderRadius="lg"
-                        ></Input>
-                      </InputGroup>
-                      <FilterMapsComp></FilterMapsComp>
-                    </HStack>
+                    
                   </HStack>
 
                   <MapsTablePicker calendarStartDate={calendarStartDate} calendarEndDate={calendarEndDate}></MapsTablePicker>
@@ -348,13 +361,14 @@ export const MapsOverview = (props:IPropTypes) => {
                 alignItems="start"
                 spacing={4}
               >
-                <VStack>
-                  <Heading fontSize="xl">Worldwide Insights</Heading>
-                  <Text color="black.400" marginBottom="1.5vw">
-                    Zoom and Pan | This Week
-                  </Text>
-                </VStack>
-                
+                <HStack justifyContent="space-between" w="100%">
+                    <VStack alignItems="flex-start">
+                      <Heading fontSize="xl">Worldwide Maps</Heading>
+                      <Text color="black.400" marginBottom="1.5vw" width="50vw">
+                        Zoom and Pan
+                      </Text>
+                    </VStack>
+                </HStack>
                 
                 <HStack justifyContent="space-evenly">
                   <ReactTooltip>{tooltipContent}</ReactTooltip>
@@ -377,7 +391,7 @@ export const MapsOverview = (props:IPropTypes) => {
                               const d:any[] = dataMap.find((s:any[]) => s[0] === geo.properties.ISO_A3);
                               const colours:any[] = ["#ffedea", "#ff5233"]
                               const colorScale = scaleLinear()
-                                .domain([0, 337])
+                                .domain([0, highestNumberOfMaps])
                                 .range(colours)
                               let colourToBeUsed:string = colorScale(d? d[1]: 0).toString()
                               return (

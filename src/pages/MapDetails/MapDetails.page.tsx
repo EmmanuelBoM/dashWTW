@@ -1,4 +1,3 @@
-import * as React from "react"
 import { useEffect, useState } from "react";
 
 // Importing axios
@@ -20,9 +19,6 @@ import {
   Text,
   Image,
   Divider,
-  CircularProgress, 
-  CircularProgressLabel,
-  Switch,
   Button,
   Stack
 } from "@chakra-ui/react"
@@ -42,15 +38,10 @@ import { RiArrowGoBackLine } from "react-icons/ri";
 import Error404 from "../Error404";
 import WheelChairLoading from '../../assets//wheelchairLoading.svg';
 import AreasProgressCardsCollection from "../../components/AreasProgressCardsCollection/AreasProgressCardsCollection.component";
+import ErrorMessage from "../../components/ErrorMessage";
 
 // Vars that contain the main info of the view
-let hotelName:string = "The Grand Mayan"
 let category:string = "Place To Stay"
-let mapperName:string = "Tom Cruise"
-
-// These vars contain the mapped areas and their progress, respectively
-let areasMapped:string[] = ["Building Entrance", "Food Service Area", "Lobby/Reception"]
-let percentagePerMappedArea:number[] = [100, 70, 50]
 
 // These vars contain the statuses of completion of all maps
 let progressCompletionMaps:string[] = ["In progress", "Completed", "Not started"]
@@ -58,7 +49,7 @@ let colorsProgressCompletionMaps:string[] = ["#FFB800", "green", "red"]
 
 // enum of Typescript for storing the months of the year
 enum MonthsOfTheYear {
-  "Jan" = 0,
+  "Jan" = 1,
   "Feb",
   "Mar",
   "Apr",
@@ -83,14 +74,19 @@ function MapDetails(props: IPropTypes): JSX.Element {
   let { accomodationId } = params;
 
   // States
-  const [ status, setStatus ] = useState<string>('');
+  const [ status, setStatus ] = useState<string>('loading');
   const [ error, setError ] = useState<any>(null);
-  const [ placeToStay, setPlaceToStay ] = useState<any>('');
+  const [ placeToStay, setPlaceToStay ] = useState<any>({});
+  const [ totalPercentage, setTotalPercentage ] = useState<number>(0);
   
   useEffect(() => {
     setStatus('loading')
     props.setSelectedWindow('ams')
-    axios.get(`http://localhost:9000/maps/detail/${accomodationId}`) 
+    if(!props.loading && !props.user) {
+      navigate("/")
+    } else {
+      navigate(`/maps/${accomodationId}`)
+      axios.get(`https://apidash2.herokuapp.com/maps/detail/${accomodationId}`) 
       .then((result)=>{
         setPlaceToStay(result.data)
         setStatus('resolved')
@@ -99,9 +95,10 @@ function MapDetails(props: IPropTypes): JSX.Element {
         setError(error)
         setStatus('error')
       })
-  }, [])
+    }
+  }, [props.user, props.loading])
 
-  if (status === "loading" || placeToStay === '') {
+  if (status === 'loading') {
     return(
       <Stack
           w="full"
@@ -109,18 +106,21 @@ function MapDetails(props: IPropTypes): JSX.Element {
           justifyContent="space-around"
           alignItems="center"
       >
-          <img src={WheelChairLoading} height='auto' width='70vh' alt='Loading...'/>
+        <img src={WheelChairLoading} height='auto' width='70vh' alt='Loading...'/>
       </Stack>
     )
   }
 
-  if (status === "error") {
+  if (status === 'error' ) {
     return (
-      <Error404/>
+      <>
+			    {error.message === "Request failed with status code 404" ? <Error404 user={props.user} loading={props.loading}/>  : <ErrorMessage error="Woops! Something went wrong" type="general"/>  }
+		  </>
     )
   }
 
-  else {
+  else{
+    console.log(status)
     return (
       <Container maxWidth="container.xxl" bgColor="#F8F9FD">
         <Flex
@@ -151,7 +151,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
                   </Box>
                 </HStack>
                 <Text color="black.400" fontSize="xl">
-                  Accesibility Mapping Progress | <b>{category}</b>{" "}
+                  Accessibility Mapping Progress | <b>{category}</b>{" "}
                 </Text>
               </VStack>
               <Button
@@ -189,6 +189,8 @@ function MapDetails(props: IPropTypes): JSX.Element {
                 borderColor="black.200"
                 borderRadius="lg"
                 bgColor="#FFF"
+                _hover={{ cursor: "pointer" }}
+                onClick={() => {navigate(`/mappers/${placeToStay.mapper.idMapper}`)}}
               >
                 <Box>
                   <Image 
@@ -323,10 +325,10 @@ function MapDetails(props: IPropTypes): JSX.Element {
                     Last Update
                   </Text>
                   <Text fontSize="3xl" fontWeight="800">
-                    {`${placeToStay.progress.lastUpdate[8]}${placeToStay.progress.lastUpdate[9]}`}
+                    {`${placeToStay.progress.lastUpdate?placeToStay.progress.lastUpdate[8]:""}${placeToStay.progress.lastUpdate?placeToStay.progress.lastUpdate[9]:""}`}
                   </Text>
                   <Text fontWeight="700" fontSize="sm">
-                    {`${MonthsOfTheYear[parseInt(placeToStay.progress.lastUpdate.slice(5,7))]} ${placeToStay.progress.lastUpdate.slice(0,4)}`}
+                    {placeToStay.progress.lastUpdate?`${MonthsOfTheYear[parseInt(placeToStay.progress.lastUpdate.slice(5,7))]} ${placeToStay.progress.lastUpdate.slice(0,4)}`:""}
                   </Text>
                 </VStack>
               </HStack>
@@ -370,19 +372,8 @@ function MapDetails(props: IPropTypes): JSX.Element {
                 </GridItem>
               </Grid>
             </HStack>
-            <Grid templateColumns="repeat(3, 1fr)" gap={4} w="full">
-              <AreasProgressCardsCollection accomodationId={accomodationId}/>
-            </Grid>
+            <AreasProgressCardsCollection accomodationId={accomodationId} setTotalPercentage={setTotalPercentage} totalPercentage={totalPercentage}/>
             <HStack alignItems="left" width="100%">
-              <Text
-                textAlign="left"
-                color="black.500"
-                size="lg"
-                fontWeight="bold"
-              >
-                Show non completed areas
-              </Text>
-              <Switch size="lg" />
             </HStack>
           </VStack>
         </Flex>

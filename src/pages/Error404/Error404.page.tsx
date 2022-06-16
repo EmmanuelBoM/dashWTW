@@ -1,4 +1,5 @@
-import * as React from "react"
+import * as React from "react";
+import { useEffect } from "react";
 
 // Imports of PropTypes
 import { IPropTypes } from './Error404.types';
@@ -20,6 +21,12 @@ function Error404(props: IPropTypes): JSX.Element {
 
 	// Function that allows navigation using react-router-dom
 	let navigate = useNavigate()
+
+  useEffect( () => {
+    if(!props.loading && !props.user) {
+        navigate("/")
+    }
+  }, [props.user, props.loading]) 
 
 	return(
 		<Container maxWidth="container.xxl" 
