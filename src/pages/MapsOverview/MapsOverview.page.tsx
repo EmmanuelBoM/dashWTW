@@ -67,10 +67,6 @@ import {
 
 // Imports of charts from React Google Charts
 import { Chart } from "react-google-charts";
-import FilterMapsComp from "../../components/FilterMapsComp";
-
-//Imports interface for table info
-import {IData} from '../../components/MapsTable/mapsTable.types'
 
 import MapsTablePicker from '../../components/MapsTablePicker';
 import { IPropTypes } from './MapsOverview.types';
@@ -169,7 +165,7 @@ export const MapsOverview = (props:IPropTypes) => {
     ["Month", "Maps"],
   ]);
   const [ highestNumberOfMaps, setHighestNumberOfMaps ] = useState<number>(0)
-  const [isHeaderLoading, setIsHeaderLoading] = useState(true);
+  const [ isHeaderLoading, setIsHeaderLoading ] = useState(true);
 
   const setHeader = async(user:any) => {
     setIsHeaderLoading(true)
@@ -197,7 +193,11 @@ export const MapsOverview = (props:IPropTypes) => {
             setMapsOverviewData(result.data)
             setStatus('resolved')
             result.data.allTimeStatistics.highlights.map((item:any) => {
-              data.push([item.country_name, item.cantidad, "#FF7562", item.cantidad])
+              if (data.length > result.data.allTimeStatistics.highlights.length + 0.5) {
+                setData(data)
+              } else {
+                  data.push([item.country_name, item.cantidad, "#FF7562", item.cantidad])
+                }
               }
             )
             setHighestNumberOfMaps(parseInt(result.data.allTimeStatistics.highlights[0].cantidad))
@@ -209,11 +209,15 @@ export const MapsOverview = (props:IPropTypes) => {
             result.data.allTimeStatistics.worldwideInsights.map((item:any) => {
               dataMap.push([i18nIsoCountries.getAlpha3Code(item.country_name, "en"), item.cantidad])
             })
-            
             result.data.allTimeStatistics.completedAMSMaps.map((item:any) => {
-              let axisTag:string = `${MonthsOfTheYear[item.mes]} ${item.año}`
-              dataLineChart.push([axisTag, item.cant])
-            })
+              if (dataLineChart.length > result.data.allTimeStatistics.completedAMSMaps.length + 0.5) {
+                setDataLineChart(dataLineChart)
+              } else {
+                  let axisTag:string = `${MonthsOfTheYear[item.mes]} ${item.año}`
+                  dataLineChart.push([axisTag, item.cant])
+                }
+              }
+            )
           })
           .catch((error)=>{
             setError(error)
