@@ -229,7 +229,7 @@ export const MapsOverview = (props:IPropTypes) => {
     }
   }, [props.user, props.loading])
 
-  if (status === "loading" || provisionalLMAreas === '') {
+  if (status === "loading" || provisionalLMAreas === '' ) {
     return(
       <h1>Loading...</h1>
     )
@@ -258,7 +258,7 @@ export const MapsOverview = (props:IPropTypes) => {
               <VStack alignItems="flex-start">
                 <Box>
                   <Heading fontSize="1.5em" color="blue.600">
-                  {`Welcome, ${props.user?.displayName}`}
+                  {props.user ? `Welcome, ${props.user?.displayName}` : ""}
                   </Heading>
                 </Box>
                 <Heading size="xl">AMS Maps Overview</Heading>

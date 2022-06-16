@@ -25,10 +25,10 @@ function CalendarDatePicker(props:any) {
   const [ endDate, setEndDate ] = useState<any>(moment());
   const [ focusedInput, setFocusedInput ] = useState<any>(null);
 
-  const [ thisWeekController, setThisWeekController ] = useState<string|undefined>('clicked');
+  const [ thisWeekController, setThisWeekController ] = useState<string|undefined>(undefined);
   const [ lastWeekController, setLastWeekController ] = useState<string|undefined>(undefined);
 
-  const [ thisMonthController, setThisMonthController ] = useState<string|undefined>(undefined);
+  const [ thisMonthController, setThisMonthController ] = useState<string|undefined>("clicked");
   const [ lastMonthController, setLastMonthController ] = useState<string|undefined>(undefined);
 
   const [ thisTrimesterController, setThisTrimesterController ] = useState<string|undefined>(undefined);
