@@ -63,19 +63,19 @@ import CloseButton from 'wtw-icons/_icons/CloseButton'
 import Other from 'wtw-icons/_icons/Other'
 
 // Arrays of existing areas into the AMS
-let areasAMS:any[] = [["Building Entrance", <BuildingEntrance width="1.6em" height="1.6em"/>, "buildingentrance"],
-                      ["Lobby Reception", <Lobby width="1.6em" height="1.6em"/>, "lobbyreception"],
+let areasAMS:any[] = [["Building Entrance", <BuildingEntrance width="1.6em" height="1.6em"/>, "building_entrance"],
+                      ["Lobby Reception", <Lobby width="1.6em" height="1.6em"/>, "lobby"],
                       ["Rooms", <QueenBed width="1.6em" height="1.6em"/>, "rooms"],
                       ["Room One", <QueenBed width="1.6em" height="1.6em"/>, "rooms_one"],
                       ["Room Two", <QueenBed width="1.6em" height="1.6em"/>, "rooms_two"],
                       ["Room Three", <QueenBed width="1.6em" height="1.6em"/>, "rooms_three"],
-                      ["General Accessibility", <GeneralAttribute width="1.6em" height="1.6em"/>, "generalaccessibility"],
+                      ["General Accessibility", <GeneralAttribute width="1.6em" height="1.6em"/>, "general_attributes"],
                       ["Food Service Area", <FoodService width="1.6em" height="1.6em"/>, "foodservice"],
-                      ["Swimming Pool", <SwimmingPool width="1.6em" height="1.6em"/>, "swimmingpool"],
-                      ["Fitness Center", <Gym width="1.6em" height="1.6em"/>, "fitnesscenter"],
-                      ["Beachfront", <Beachfront width="1.6em" height="1.6em"/>, "beachfront"],
-                      ["Parking Area", <Parking width="1.6em" height="1.6em"/>, "parkingarea"],
-                      ["Common Area Toilet", <Bathroom width="1.6em" height="1.6em"/>, "commonareatoilet"],
+                      ["Swimming Pool", <SwimmingPool width="1.6em" height="1.6em"/>, "swimming_pool"],
+                      ["Fitness Center", <Gym width="1.6em" height="1.6em"/>, "fitness_center"],
+                      ["Beachfront", <Beachfront width="1.6em" height="1.6em"/>, "beach_front"],
+                      ["Parking Area", <Parking width="1.6em" height="1.6em"/>, "parking"],
+                      ["Common Area Toilet", <Bathroom width="1.6em" height="1.6em"/>, "common_area_toilet"],
                       ["Other Areas", <Other width="1.6em" height="1.6em"/>, "other_areas"],
                       ["Elevator", <Elevator width="1.6em" height="1.6em"/>, "elevator"],
                       ["No Area Available", <CloseButton width="1.6em" height="1.6em"/>, "unavailable"]]  
@@ -293,7 +293,7 @@ function MapperDetails(props: IPropTypes): JSX.Element  {
                         {details.contributions.averageTime !== null ?
                         <>
                           <Text fontSize="3xl" fontWeight="800">
-                            {details.contributions.averageTime}
+                            {parseInt(details.contributions.averageTime)}
                           </Text>
                           <Text fontWeight="700" fontSize="sm">
                             Days

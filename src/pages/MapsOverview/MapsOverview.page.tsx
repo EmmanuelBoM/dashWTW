@@ -27,16 +27,11 @@ import {
   GridItem,
   StackDivider,
   Divider,
-  InputGroup,
-  InputLeftElement,
-  Input,
   Stack,
-  propNames
 } from "@chakra-ui/react"
 
 // Imports of custom components
 import CalendarDatePicker from '../../components/CalendarDatePicker/CalendarDatePicker.component';
-import Error404 from "../Error404"
 import SummaryOnDatePicking from "../../components/SummaryOnDatePicking";
 import ErrorMessage from '../../components/ErrorMessage';
 
@@ -72,12 +67,7 @@ import {
 
 // Imports of charts from React Google Charts
 import { Chart } from "react-google-charts";
-import FilterMapsComp from "../../components/FilterMapsComp";
 
-//Imports interface for table info
-import {IData} from '../../components/MapsTable/mapsTable.types'
-
-import {  Column } from 'react-table'
 import MapsTablePicker from '../../components/MapsTablePicker';
 import { IPropTypes } from './MapsOverview.types';
 import { setUserToken } from '../../utils/axios';
@@ -147,16 +137,15 @@ const optionsLineChart = {
 
 export const MapsOverview = (props:IPropTypes) => {
 
-  const [ calendarStartDate, setCalendarStartDate ] = useState<any>(moment().startOf("week").format("YYYY-MM-DD"))
+  const [ calendarStartDate, setCalendarStartDate ] = useState<any>(moment().startOf("month").format("YYYY-MM-DD"))
   const [ calendarEndDate, setCalendarEndDate ] = useState<any>(moment().format("YYYY-MM-DD"))
-  const [ datePickerSelection, setDatePickerSelection ] = useState<string>("This Week")
+  const [ datePickerSelection, setDatePickerSelection ] = useState<string>("This Month")
   const [ status, setStatus ] = useState<string>('loading');
 	const [ error, setError ] = useState<any>(null);
   const [ mapsOverviewData, setMapsOverviewData ] = useState<any>(null);
   const [ iconsTextLeastMappedAreas,setIconsTextLeastMappedAreas ] = useState<any>([]);
   const [ tooltipContent, setTooltipContent ] = useState<string>('')
   const [ dataMap, setDataMap ] = useState<any>([])
-  const [ maps, setMaps ] = useState<IData[]>([]);
   const [ provisionalLMAreas, setProvisionalLMAreas] = useState<any>('')
   const [ data, setData ] = useState<any>([
     [
@@ -176,7 +165,7 @@ export const MapsOverview = (props:IPropTypes) => {
     ["Month", "Maps"],
   ]);
   const [ highestNumberOfMaps, setHighestNumberOfMaps ] = useState<number>(0)
-  const [isHeaderLoading, setIsHeaderLoading] = useState(true);
+  const [ isHeaderLoading, setIsHeaderLoading ] = useState(true);
 
   const setHeader = async(user:any) => {
     setIsHeaderLoading(true)
@@ -204,7 +193,11 @@ export const MapsOverview = (props:IPropTypes) => {
             setMapsOverviewData(result.data)
             setStatus('resolved')
             result.data.allTimeStatistics.highlights.map((item:any) => {
-              data.push([item.country_name, item.cantidad, "#FF7562", item.cantidad])
+              if (data.length > result.data.allTimeStatistics.highlights.length + 0.5) {
+                setData(data)
+              } else {
+                  data.push([item.country_name, item.cantidad, "#FF7562", item.cantidad])
+                }
               }
             )
             setHighestNumberOfMaps(parseInt(result.data.allTimeStatistics.highlights[0].cantidad))
@@ -216,11 +209,15 @@ export const MapsOverview = (props:IPropTypes) => {
             result.data.allTimeStatistics.worldwideInsights.map((item:any) => {
               dataMap.push([i18nIsoCountries.getAlpha3Code(item.country_name, "en"), item.cantidad])
             })
-            
             result.data.allTimeStatistics.completedAMSMaps.map((item:any) => {
-              let axisTag:string = `${MonthsOfTheYear[item.mes]} ${item.año}`
-              dataLineChart.push([axisTag, item.cant])
-            })
+              if (dataLineChart.length > result.data.allTimeStatistics.completedAMSMaps.length + 0.5) {
+                setDataLineChart(dataLineChart)
+              } else {
+                  let axisTag:string = `${MonthsOfTheYear[item.mes]} ${item.año}`
+                  dataLineChart.push([axisTag, item.cant])
+                }
+              }
+            )
           })
           .catch((error)=>{
             setError(error)
@@ -232,7 +229,7 @@ export const MapsOverview = (props:IPropTypes) => {
     }
   }, [props.user, props.loading])
 
-  if (status === "loading" || provisionalLMAreas === '') {
+  if (status === "loading" || provisionalLMAreas === '' ) {
     return(
       <h1>Loading...</h1>
     )
@@ -261,7 +258,7 @@ export const MapsOverview = (props:IPropTypes) => {
               <VStack alignItems="flex-start">
                 <Box>
                   <Heading fontSize="1.5em" color="blue.600">
-                  {`Welcome, ${props.user?.displayName}`}
+                  {props.user ? `Welcome, ${props.user?.displayName}` : ""}
                   </Heading>
                 </Box>
                 <Heading size="xl">AMS Maps Overview</Heading>
@@ -364,13 +361,14 @@ export const MapsOverview = (props:IPropTypes) => {
                 alignItems="start"
                 spacing={4}
               >
-                <VStack>
-                  <Heading fontSize="xl">Worldwide Insights</Heading>
-                  <Text color="black.400" marginBottom="1.5vw">
-                    Zoom and Pan | This Week
-                  </Text>
-                </VStack>
-                
+                <HStack justifyContent="space-between" w="100%">
+                    <VStack alignItems="flex-start">
+                      <Heading fontSize="xl">Worldwide Maps</Heading>
+                      <Text color="black.400" marginBottom="1.5vw" width="50vw">
+                        Zoom and Pan
+                      </Text>
+                    </VStack>
+                </HStack>
                 
                 <HStack justifyContent="space-evenly">
                   <ReactTooltip>{tooltipContent}</ReactTooltip>
@@ -529,13 +527,6 @@ export const MapsOverview = (props:IPropTypes) => {
                         </Text>
                       </Box>
                     ))}
-                    {/*provisionalLMAreas.map((area: any) => (
-                      <Box color="black.800" display='inline-flex' justifyContent='space-around' wordBreak="break-word">
-                        <Text marginLeft='0.7em'>
-                          {area.inquiry_id}
-                        </Text>
-                      </Box>
-                    ))*/}
                   </VStack>
                 </Stack>
 

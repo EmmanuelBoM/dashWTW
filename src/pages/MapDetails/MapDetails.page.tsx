@@ -273,7 +273,7 @@ function MapDetails(props: IPropTypes): JSX.Element {
                     Percentage Completed
                   </Text>
                   <MapProgressbar
-                    progress={totalPercentage}
+                    progress={placeToStay.progress.completedpercentage}
                     showProgress={true}
                   ></MapProgressbar>
                 </VStack>

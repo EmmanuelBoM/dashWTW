@@ -21,14 +21,14 @@ import { Grid, GridItem, Center } from "@chakra-ui/react";
 function CalendarDatePicker(props:any) {
 
   // Hooks for changing date selection on screen
-  const [ startDate, setStartDate ] = useState<any>(moment().startOf("week"));
+  const [ startDate, setStartDate ] = useState<any>(moment().startOf("month"));
   const [ endDate, setEndDate ] = useState<any>(moment());
   const [ focusedInput, setFocusedInput ] = useState<any>(null);
 
-  const [ thisWeekController, setThisWeekController ] = useState<string|undefined>('clicked');
+  const [ thisWeekController, setThisWeekController ] = useState<string|undefined>(undefined);
   const [ lastWeekController, setLastWeekController ] = useState<string|undefined>(undefined);
 
-  const [ thisMonthController, setThisMonthController ] = useState<string|undefined>(undefined);
+  const [ thisMonthController, setThisMonthController ] = useState<string|undefined>("clicked");
   const [ lastMonthController, setLastMonthController ] = useState<string|undefined>(undefined);
 
   const [ thisTrimesterController, setThisTrimesterController ] = useState<string|undefined>(undefined);

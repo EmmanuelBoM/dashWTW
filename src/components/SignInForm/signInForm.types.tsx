@@ -4,6 +4,5 @@ export interface IPropTypes {
     error:any,
     errorMessage:any,
     setErrorMessage:any,
-    signInWithEmail:any,
     signInWithGoogle:any
 }
