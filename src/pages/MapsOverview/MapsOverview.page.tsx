@@ -81,6 +81,7 @@ import {IData} from '../../components/MapsTable/mapsTable.types'
 import {  Column } from 'react-table'
 import MapsTablePicker from '../../components/MapsTablePicker';
 import { IPropTypes } from './MapsOverview.types';
+import { setUserToken } from '../../utils/axios';
 
 // Require for parsing the country codes
 i18nIsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json"));
@@ -175,6 +176,20 @@ export const MapsOverview = (props:IPropTypes) => {
     ["Month", "Maps"],
   ]);
   const [ highestNumberOfMaps, setHighestNumberOfMaps ] = useState<number>(0)
+  const [isHeaderLoading, setIsHeaderLoading] = useState(true);
+
+  const setHeader = async(user:any) => {
+    setIsHeaderLoading(true)
+
+    try {
+      const token = await user.getIdToken();
+      setUserToken(token)
+    } catch (error) {
+      console.log(error)
+    }
+    setIsHeaderLoading(false)
+    
+  }
 
   let navigate = useNavigate();
 
@@ -211,6 +226,10 @@ export const MapsOverview = (props:IPropTypes) => {
             setError(error)
             setStatus('error')
           })}
+
+    if(props.user){
+      setHeader(props.user);
+    }
   }, [props.user, props.loading])
 
   if (status === "loading" || provisionalLMAreas === '') {
