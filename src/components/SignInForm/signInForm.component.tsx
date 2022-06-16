@@ -152,6 +152,8 @@ function SignInForm(props: IPropTypes): JSX.Element {
 					</GridItem>
 				</Grid>
 			</form>
+			{props.errorMessage ? <Text color="red.400">{props.errorMessage}</Text> :null}
+			
 		</VStack>
 	);
 }

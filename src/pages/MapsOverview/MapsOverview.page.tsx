@@ -36,10 +36,9 @@ import {
 
 // Imports of custom components
 import CalendarDatePicker from '../../components/CalendarDatePicker/CalendarDatePicker.component';
-import MapsTable from '../../components/MapsTable/mapsTable.component';
 import Error404 from "../Error404"
 import SummaryOnDatePicking from "../../components/SummaryOnDatePicking";
-import MapProgressbar from "../../components/MapProgressbar";
+import ErrorMessage from '../../components/ErrorMessage';
 
 // Imports of icons from wtw icons
 import BuildingEntrance from 'wtw-icons/_icons/Buildingentrance'
@@ -82,6 +81,7 @@ import {  Column } from 'react-table'
 import MapsTablePicker from '../../components/MapsTablePicker';
 import { IPropTypes } from './MapsOverview.types';
 import { setUserToken } from '../../utils/axios';
+
 
 // Require for parsing the country codes
 i18nIsoCountries.registerLocale(require("i18n-iso-countries/langs/en.json"));
@@ -240,7 +240,9 @@ export const MapsOverview = (props:IPropTypes) => {
 
   if (status === "error") {
     return (
-			<Error404 user={props.user} loading={props.loading}/>
+			<>
+			  {error.message === "Request failed with status code 404" ? <ErrorMessage error="No results found :(" type="data"/>  : <ErrorMessage error="Woops! Something went wrong" type="general"/>  }
+		  </>
 		)
   }
 
