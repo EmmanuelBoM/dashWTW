@@ -19,7 +19,6 @@ import WTWLogo from '../../assets/WTW-logo.jpg';
 // Importing Firebase functions
 import {
   auth,
-  signInWithEmail,
   signInWithGoogle
 } from "../../utils/firebase";
 
@@ -59,7 +58,6 @@ function LogIn () {
           error={error}
           errorMessage={errorMessage}
           setErrorMessage={setErrorMessage}
-          signInWithEmail={signInWithEmail}
           signInWithGoogle={signInWithGoogle}/>
       </Flex>
     </Container>

@@ -6,8 +6,6 @@ import {
     GoogleAuthProvider,
     signInWithPopup,
     signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    sendPasswordResetEmail,
     signOut,
 } from "firebase/auth";
 
@@ -54,45 +52,9 @@ const signInWithGoogle = async () => {
     }
 }
 
-const signInWithEmail = async (email, password) => {
-    try {
-        await signInWithEmailAndPassword(auth, email, password);
-    } catch(error) {
-        throw new Error(error.message);
-    }
-}
-
-const signUpWithEmail = async (name, email, password) => {
-    try {
-        const response = await createUserWithEmailAndPassword(auth, email, password);
-        const user = response.user;
-
-        await addDoc(
-            collection(db, "users"), {
-                uid: user.uid,
-                name,
-                authProvider: "local",
-                email
-            }
-        )
-    } catch(error) {
-        throw new Error(error.message);
-    }
-}
-
-const resetPassword = async (email) => {
-    try {
-        await sendPasswordResetEmail(auth, email);
-        alert("Correo enviado")
-    } catch(error) {
-        throw new Error(error.message);
-    }
-}
-
 const logout = async (email) => {
     try {
         await signOut(auth);
-        alert("Fin de sesión exitoso")
     } catch(error) {
         throw new Error(error.message);
     }
@@ -102,8 +64,5 @@ export {
     auth,
     db,
     signInWithGoogle,
-    signInWithEmail,
-    signUpWithEmail,
-    resetPassword,
     logout
 } 
