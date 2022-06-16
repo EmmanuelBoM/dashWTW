@@ -27,16 +27,11 @@ import {
   GridItem,
   StackDivider,
   Divider,
-  InputGroup,
-  InputLeftElement,
-  Input,
   Stack,
-  propNames
 } from "@chakra-ui/react"
 
 // Imports of custom components
 import CalendarDatePicker from '../../components/CalendarDatePicker/CalendarDatePicker.component';
-import Error404 from "../Error404"
 import SummaryOnDatePicking from "../../components/SummaryOnDatePicking";
 import ErrorMessage from '../../components/ErrorMessage';
 
@@ -77,7 +72,6 @@ import FilterMapsComp from "../../components/FilterMapsComp";
 //Imports interface for table info
 import {IData} from '../../components/MapsTable/mapsTable.types'
 
-import {  Column } from 'react-table'
 import MapsTablePicker from '../../components/MapsTablePicker';
 import { IPropTypes } from './MapsOverview.types';
 import { setUserToken } from '../../utils/axios';
@@ -156,7 +150,6 @@ export const MapsOverview = (props:IPropTypes) => {
   const [ iconsTextLeastMappedAreas,setIconsTextLeastMappedAreas ] = useState<any>([]);
   const [ tooltipContent, setTooltipContent ] = useState<string>('')
   const [ dataMap, setDataMap ] = useState<any>([])
-  const [ maps, setMaps ] = useState<IData[]>([]);
   const [ provisionalLMAreas, setProvisionalLMAreas] = useState<any>('')
   const [ data, setData ] = useState<any>([
     [
@@ -364,13 +357,14 @@ export const MapsOverview = (props:IPropTypes) => {
                 alignItems="start"
                 spacing={4}
               >
-                <VStack>
-                  <Heading fontSize="xl">Worldwide Insights</Heading>
-                  <Text color="black.400" marginBottom="1.5vw">
-                    Zoom and Pan | This Week
-                  </Text>
-                </VStack>
-                
+                <HStack justifyContent="space-between" w="100%">
+                    <VStack alignItems="flex-start">
+                      <Heading fontSize="xl">Worldwide Maps</Heading>
+                      <Text color="black.400" marginBottom="1.5vw" width="50vw">
+                        Zoom and Pan
+                      </Text>
+                    </VStack>
+                </HStack>
                 
                 <HStack justifyContent="space-evenly">
                   <ReactTooltip>{tooltipContent}</ReactTooltip>
@@ -529,13 +523,6 @@ export const MapsOverview = (props:IPropTypes) => {
                         </Text>
                       </Box>
                     ))}
-                    {/*provisionalLMAreas.map((area: any) => (
-                      <Box color="black.800" display='inline-flex' justifyContent='space-around' wordBreak="break-word">
-                        <Text marginLeft='0.7em'>
-                          {area.inquiry_id}
-                        </Text>
-                      </Box>
-                    ))*/}
                   </VStack>
                 </Stack>
 
