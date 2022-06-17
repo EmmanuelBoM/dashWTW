@@ -48,16 +48,16 @@ $ npm start
 
 ## Give it a try!
 You can also see our demo live! Just click in this link:
-[https://wtwdashboard.netlify.app/](url)
+[https://wtwdashboard.netlify.app/]
 
 
 ## Interesting links
 - Wheel the World Website:
-[https://wheeltheworld.com/](url)
+[https://wheeltheworld.com/]
 - About Wheel the World:
-[https://wheeltheworld.com/about-us](url)
+[https://wheeltheworld.com/about-us]
 - Backend Repository:
-[https://github.com/VicReyes1/apiWTW](url)
+[https://github.com/VicReyes1/apiWTW]
 
 
 ## Contributors
