@@ -83,7 +83,7 @@ export const MappersOverview = (props:IPropTypes) => {
               <VStack alignItems="flex-start">
                 <Box>
                   <Heading fontSize="1.5em" color="blue.600">
-                    {`Welcome, ${props.user?.displayName}`}
+                    {props.user ? `Welcome, ${props.user?.displayName}` : ""}
                   </Heading>
                 </Box>
                 <Heading size="xl">Mappers Overview</Heading>

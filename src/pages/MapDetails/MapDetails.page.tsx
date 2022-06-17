@@ -45,7 +45,7 @@ let category:string = "Place To Stay"
 
 // These vars contain the statuses of completion of all maps
 let progressCompletionMaps:string[] = ["In progress", "Completed", "Not started"]
-let colorsProgressCompletionMaps:string[] = ["#FFB800", "green", "red"]
+let colorsProgressCompletionMaps:string[] = ["#FFB800", "#60935D", "#720E07"]
 
 // enum of Typescript for storing the months of the year
 enum MonthsOfTheYear {
@@ -137,17 +137,17 @@ function MapDetails(props: IPropTypes): JSX.Element {
                     {placeToStay.accomodation.nameHotel}
                   </Heading>
                   <Box
-                    backgroundColor={colorsProgressCompletionMaps[0]}
+                    backgroundColor={parseInt(placeToStay.progress.completedpercentage) === 100 ? colorsProgressCompletionMaps[1] : parseInt(placeToStay.progress.completedpercentage) === 0 ? colorsProgressCompletionMaps[2] : colorsProgressCompletionMaps[0] }
                     p="0% 2% 0% 2%"
                     w="10vw"
                     textAlign="center"
                     borderRadius="2em"
                     borderWidth="3px"
-                    borderColor="#858585"
-                    color="black.700"
+                    borderColor={parseInt(placeToStay.progress.completedpercentage) === 100 ? colorsProgressCompletionMaps[1] : parseInt(placeToStay.progress.completedpercentage) === 0 ? colorsProgressCompletionMaps[2] : colorsProgressCompletionMaps[0] }
+                    color="gray.100"
                     fontWeight="bold"
                   >
-                    {progressCompletionMaps[0]}
+                    {parseInt(placeToStay.progress.completedpercentage) === 100 ? progressCompletionMaps[1] : parseInt(placeToStay.progress.completedpercentage) === 0 ? progressCompletionMaps[2] : progressCompletionMaps[0] }
                   </Box>
                 </HStack>
                 <Text color="black.400" fontSize="xl">
