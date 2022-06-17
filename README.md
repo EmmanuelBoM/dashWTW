@@ -5,7 +5,10 @@ A straightforward visual tool for WTW people to keep a track on the maps and map
 ![Wheel The World Logo](https://yt3.ggpht.com/ytc/AKedOLTqfmzzNJXFj_68GOpz6aZDrXKWDXlp_SCpc5Vr=s900-c-k-c0x00ffffff-no-rj)
 
 ## Project demo
-(Insert demo link here).
+▶️ [Watch Full Demo](https://www.loom.com/share/e045c92a5cbd464ea3f3cd7166d1f2b3)
+
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/69735919/174389239-4cc7b053-42ad-4aea-9568-e86dfc64d1ec.gif)
+
 
 ## System Features
 - AMS Maps: A view where you can find global insights, related to the presence of WTW in the world and its growing features throughout time. It includes a date picker for the user to choose their preferred statistics.
@@ -47,7 +50,7 @@ $ npm start
 ```
 
 ## Give it a try!
-You can also see our demo live! Just click in this link:
+You can also use our app live! Just click in this link:
 [https://wtwdashboard.netlify.app/]
 
 
@@ -66,6 +69,3 @@ You can also see our demo live! Just click in this link:
 - José Herón Samperio León @HeronSamperio
 - Edgar Daniel Acosta Rosales @DonKatsun
 - Víctor Serrano Reyes @VicReyes1
-
-### [Tasks distribution]: https://github.com/VicReyes1/dashWTW/projects/1
-### [Backend Repository]: https://github.com/VicReyes1/apiWTW
