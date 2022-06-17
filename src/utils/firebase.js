@@ -5,7 +5,6 @@ import {
     getAuth,
     GoogleAuthProvider,
     signInWithPopup,
-    signInWithEmailAndPassword,
     signOut,
 } from "firebase/auth";
 
@@ -52,7 +51,7 @@ const signInWithGoogle = async () => {
     }
 }
 
-const logout = async (email) => {
+const logout = async () => {
     try {
         await signOut(auth);
     } catch(error) {
